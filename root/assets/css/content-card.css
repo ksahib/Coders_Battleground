@@ -25,12 +25,13 @@
 }
 
 .content-card:hover, .content-card:focus-within {
+    cursor: pointer;
     transform: translateY(-8px) scale(1.04);
     box-shadow: 0 12px 32px rgba(80, 80, 120, 0.25), 0 2px 8px rgba(30, 144, 255, 0.12);
     filter: brightness(1.08) saturate(1.08);
-    z-index: 10; /* ensures it’s above nearby cards */
+    z-index: 10; 
 }
 
 .content-card:hover, .content-card:focus-within {
-    border: 2px solid rgba(30, 144, 255, 0.24); /* optional, for extra pop */
+    border: 2px solid rgba(30, 144, 255, 0.24); 
 }
