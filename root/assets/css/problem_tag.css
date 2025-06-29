@@ -1,0 +1,23 @@
+#tag_holder_row{
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+#tag_card{
+      background: #f0f4f8;
+      border: 2px black solid;
+      border-radius: 6px;
+      padding: 8px 12px;
+      margin: 6px;
+      text-align: center;
+      font-weight: 600;
+      box-shadow: 2px black;
+      transition: background 0.3s ease;
+      max-width: auto;
+}
+ .tag-card:hover {
+      background: #dbeafe;
+      cursor: pointer;
+    }
+
