@@ -10,7 +10,7 @@ require(['vs/editor/editor.main'], function () {
     automaticLayout: true,
   });
 
-  // Language selector changes the editor language dynamically
+ 
   document.getElementById('language-select').addEventListener('change', function () {
     const newLang = this.value;
     monaco.editor.setModelLanguage(editor.getModel(), newLang);

@@ -67,7 +67,7 @@
       transform: translateY(-50%) scale(1.05);
     }
 
-    /* Responsive Adjustments */
+    
     @media (max-width: 768px) {
       .search-box {
         max-width: 80%;
@@ -90,7 +90,7 @@
       }
     }
 
-    /* Dark mode support */
+    
     .search-box.dark {
       background-color: #212529;
     }

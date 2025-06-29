@@ -1,4 +1,4 @@
-// Wait until the DOM is fully loaded
+
 $(document).ready(function () {
   const problemData = {
     title: "Two Sum",
@@ -23,11 +23,11 @@ Output: [0,1]</code></pre>
     `
   };
 
-  // Populate fields using jQuery
+  
   $('#problem-title').text(problemData.title);
   $('#problem-difficulty')
     .text(problemData.difficulty)
-    .addClass(problemData.difficulty.toLowerCase()); // add class 'easy', 'medium', or 'hard'
+    .addClass(problemData.difficulty.toLowerCase()); 
 
   $('#problem-acceptance').text(`Acceptance: ${problemData.acceptance}`);
   $('#problem-description').html(problemData.description);

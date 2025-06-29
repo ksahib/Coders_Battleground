@@ -1,23 +1,23 @@
-/* Reset default margin & padding */
+
 html, body {
   margin: 0;
   padding: 0;
   height: 100%;
 }
 
-/* General layout */
+
 .ide-wrapper {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background-color: #000; /* pure black */
+  background-color: #000; 
   color: #ccc;
   padding: 15px 20px;
   box-sizing: border-box;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Logo */
+
 .ide-logo {
   font-size: 28px;
   font-weight: 900;
@@ -28,10 +28,10 @@ html, body {
 }
 
 .ide-logo .highlight {
-  color: #bbb; /* subtle lighter gray */
+  color: #bbb; 
 }
 
-/* Toolbar */
+
 .ide-toolbar {
   width: 100%;
   display: flex;
@@ -40,8 +40,8 @@ html, body {
 }
 
 .ide-toolbar select {
-  background-color: #222; /* dark gray background */
-  border: 1px solid #444; /* subtle border */
+  background-color: #222; 
+  border: 1px solid #444; 
   color: #ccc;
   border-radius: 6px;
   padding: 6px 12px;
@@ -57,7 +57,7 @@ html, body {
   border-color: #666;
 }
 
-/* Main content flex container */
+
 .ide-main-content {
   flex: 1;
   display: flex;
@@ -65,20 +65,20 @@ html, body {
   overflow: hidden;
 }
 
-/* Left side */
+
 .ide-left-section {
-  flex: 1 1 70%; /* wider editor section */
+  flex: 1 1 70%; 
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  border: 1px solid #222; /* subtle dark border */
+  border: 1px solid #222; 
   border-radius: 10px;
   background-color: #111;
   padding: 15px;
   box-sizing: border-box;
 }
 
-/* Editor box */
+
 .editor-box {
   flex: 1 1 auto;
   min-height: 350px;
@@ -87,7 +87,7 @@ html, body {
   background-color: #181818;
 }
 
-/* IO Section */
+
 .io-section {
   display: flex;
   gap: 20px;
@@ -126,12 +126,12 @@ html, body {
   box-shadow: none;
 }
 
-/* Right side problem description */
+
 .problem-description-section {
-  flex: 1 1 30%; /* smaller description section */
+  flex: 1 1 30%; 
   max-width: 350px;
   background-color: #111;
-  border: 1px solid #222; /* subtle border */
+  border: 1px solid #222; 
   border-radius: 10px;
   padding: 20px 25px;
   box-sizing: border-box;
@@ -141,7 +141,7 @@ html, body {
   color: #bbb;
 }
 
-/* Scrollbar styling */
+
 .problem-description-section::-webkit-scrollbar {
   width: 8px;
 }
@@ -182,7 +182,7 @@ html, body {
   margin-bottom: 20px;
 }
 
-/* Scrollable IDE on smaller screens */
+
 @media (max-width: 992px) {
   .ide-main-content {
     flex-direction: column;
@@ -206,7 +206,7 @@ html, body {
   }
 }
 
-/* Smaller screens adjustments */
+
 @media (max-width: 480px) {
   .ide-logo {
     font-size: 22px;
