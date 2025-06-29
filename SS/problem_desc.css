@@ -1,0 +1,129 @@
+/* Global Reset */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #000;
+  color: #ddd;
+  line-height: 1.6;
+}
+
+/* Main Container */
+.problem-wrapper {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 30px 20px;
+  background-color: #000;
+  color: white;
+}
+
+
+
+
+/* Problem Title */
+.problem-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Meta Info */
+.problem-meta {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: #aaa;
+}
+
+/* Difficulty Badges */
+.difficulty {
+  padding: 3px 8px;
+  border-radius: 5px;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 12px;
+}
+
+.difficulty.easy {
+  background-color: #14532d;
+  color: #4ade80;
+}
+
+.difficulty.medium {
+  background-color: #4a300b;
+  color: #fbbf24;
+}
+
+.difficulty.hard {
+  background-color: #4c1d1d;
+  color: #f87171;
+}
+
+/* Problem Content Styling */
+.problem-description code {
+  background-color: #1c1c1c;
+  color: #eee;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.problem-description pre {
+  background-color: #1c1c1c;
+  padding: 12px;
+  border-radius: 6px;
+  overflow-x: auto;
+  color: #ccc;
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.problem-description ul {
+  padding-left: 20px;
+  margin-top: 10px;
+}
+
+.problem-description li {
+  margin-bottom: 6px;
+}
+
+/* Try Button */
+.try-button-wrapper {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.try-button {
+  background-color: #00aaff;
+  color: #fff;
+  padding: 12px 25px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  display: inline-block;
+  box-shadow: 0 4px 10px rgba(0, 170, 255, 0.3);
+}
+
+.try-button:hover {
+  background-color: #0099dd;
+  transform: scale(1.03);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .problem-wrapper {
+    padding: 20px 15px;
+  }
+
+  .problem-title {
+    font-size: 20px;
+  }
+
+  .problem-logo {
+    font-size: 22px;
+  }
+}

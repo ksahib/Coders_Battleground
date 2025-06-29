@@ -1,0 +1,223 @@
+/* Reset default margin & padding */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+/* General layout */
+.ide-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #000; /* pure black */
+  color: #ccc;
+  padding: 15px 20px;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Logo */
+.ide-logo {
+  font-size: 28px;
+  font-weight: 900;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 25px;
+  user-select: none;
+}
+
+.ide-logo .highlight {
+  color: #bbb; /* subtle lighter gray */
+}
+
+/* Toolbar */
+.ide-toolbar {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.ide-toolbar select {
+  background-color: #222; /* dark gray background */
+  border: 1px solid #444; /* subtle border */
+  color: #ccc;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.ide-toolbar select:hover,
+.ide-toolbar select:focus {
+  background-color: #333;
+  outline: none;
+  border-color: #666;
+}
+
+/* Main content flex container */
+.ide-main-content {
+  flex: 1;
+  display: flex;
+  gap: 20px;
+  overflow: hidden;
+}
+
+/* Left side */
+.ide-left-section {
+  flex: 1 1 70%; /* wider editor section */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid #222; /* subtle dark border */
+  border-radius: 10px;
+  background-color: #111;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+/* Editor box */
+.editor-box {
+  flex: 1 1 auto;
+  min-height: 350px;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #181818;
+}
+
+/* IO Section */
+.io-section {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.io-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.io-label {
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: #999;
+  font-weight: 600;
+  user-select: none;
+}
+
+.io-textarea {
+  background-color: #222;
+  border: 1px solid #333;
+  border-radius: 8px;
+  color: #ccc;
+  padding: 12px;
+  font-family: 'Consolas', monospace;
+  height: 110px;
+  resize: vertical;
+  transition: border-color 0.3s ease;
+}
+
+.io-textarea:focus {
+  outline: none;
+  border-color: #555;
+  box-shadow: none;
+}
+
+/* Right side problem description */
+.problem-description-section {
+  flex: 1 1 30%; /* smaller description section */
+  max-width: 350px;
+  background-color: #111;
+  border: 1px solid #222; /* subtle border */
+  border-radius: 10px;
+  padding: 20px 25px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #bbb;
+}
+
+/* Scrollbar styling */
+.problem-description-section::-webkit-scrollbar {
+  width: 8px;
+}
+
+.problem-description-section::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border-radius: 5px;
+}
+
+.problem-description-section h2,
+.problem-description-section h4 {
+  margin-top: 0;
+  color: #ddd;
+  font-weight: 700;
+}
+
+.problem-description-section code {
+  background-color: #222;
+  padding: 3px 6px;
+  border-radius: 5px;
+  color: #bbb;
+  font-size: 14px;
+}
+
+.problem-description-section pre {
+  background-color: #222;
+  padding: 14px;
+  border-radius: 8px;
+  overflow-x: auto;
+  color: #aaa;
+  font-size: 14px;
+  line-height: 1.4;
+  margin-bottom: 22px;
+}
+
+.problem-description-section ul {
+  padding-left: 22px;
+  margin-bottom: 20px;
+}
+
+/* Scrollable IDE on smaller screens */
+@media (max-width: 992px) {
+  .ide-main-content {
+    flex-direction: column;
+  }
+
+  .ide-left-section {
+    max-height: 50vh;
+    overflow-y: auto;
+  }
+
+  .ide-left-section,
+  .problem-description-section {
+    flex: 1 1 100%;
+    max-height: 50vh;
+  }
+
+  .problem-description-section {
+    margin-top: 25px;
+    max-height: 45vh;
+    max-width: 100%;
+  }
+}
+
+/* Smaller screens adjustments */
+@media (max-width: 480px) {
+  .ide-logo {
+    font-size: 22px;
+  }
+
+  .io-textarea {
+    height: 90px;
+  }
+
+  .problem-description-section {
+    font-size: 14px;
+    padding: 15px 20px;
+  }
+}
