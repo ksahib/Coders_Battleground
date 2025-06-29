@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Form Validation</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <h2>Form Validation</h2>
+  <form id="myForm">
+    Name: <input type="text" id="name"><br><br>
+    Username: <input type="text" id="username"><br><br>
+    Password: <input type="password" id="password"><br><br>
+    Re-type password: <input type="password" id="repassword"><br><br>
+
+    Gender:
+    <input type="radio" name="gender" value="Male">Male
+    <input type="radio" name="gender" value="Female">Female
+    <input type="radio" name="gender" value="Other">Other
+    <br><br>
+
+    Programming skills:
+    <input type="checkbox" name="skill" value="Java">Java
+    <input type="checkbox" name="skill" value="Android">Android
+    <input type="checkbox" name="skill" value="Ruby">Ruby
+    <input type="checkbox" name="skill" value=".Net">.Net
+    <br><br>
+
+    Contact no: <input type="text" id="contact"><br><br>
+    Email: <input type="text" id="email"><br><br>
+    
+    College:
+    <select id="college">
+      <option value="">Select college</option>
+      <option value="ABC College">ABC College</option>
+      <option value="XYZ University">XYZ University</option>
+    </select><br><br>
+
+    <input type="checkbox" id="remember"> Remember me<br><br>
+
+    <input type="submit" value="Submit">
+  </form>
+
+  <script>
+    $(document).ready(function () {
+      
+      if (document.cookie.includes("skills=")) {
+        const cookies = document.cookie.split("; ").reduce((acc, curr) => {
+          const [key, val] = curr.split("=");
+          acc[key] = decodeURIComponent(val);
+          return acc;
+        }, {});
+        
+        if (cookies.skills) {
+          cookies.skills.split(",").forEach(skill => {
+            $("input[name='skill'][value='" + skill + "']").prop("checked", true);
+          });
+        }
+
+        if (cookies.college) {
+          $("#college").val(cookies.college);
+        }
+
+        $("#remember").prop("checked", true);
+      }
+
+      $("#myForm").submit(function (e) {
+        e.preventDefault();
+
+        
+        if (!$('#name').val() || !$('#username').val() || !$('#password').val() || !$('#repassword').val()) {
+          alert("Please fill all required fields.");
+          return;
+        }
+
+        if ($('#password').val() !== $('#repassword').val()) {
+          alert("Passwords do not match.");
+          return;
+        }
+
+        if (!$("input[name='gender']:checked").length) {
+          alert("Please select a gender.");
+          return;
+        }
+
+        if (!$("input[name='skill']:checked").length) {
+          alert("Please select at least one programming skill.");
+          return;
+        }
+
+        if (!$('#email').val().includes('@')) {
+          alert("Enter a valid email.");
+          return;
+        }
+
+        if (!$('#contact').val().match(/^\d+$/)) {
+          alert("Enter a valid contact number.");
+          return;
+        }
+
+        if ($('#college').val() === "") {
+          alert("Please select a college.");
+          return;
+        }
+
+
+        if ($('#remember').is(":checked")) {
+          const selectedSkills = $("input[name='skill']:checked").map(function () {
+            return this.value;
+          }).get().join(",");
+
+          document.cookie = "skills=" + encodeURIComponent(selectedSkills) + "; path=/";
+          document.cookie = "college=" + encodeURIComponent($('#college').val()) + "; path=/";
+        }
+
+        alert("Form submitted successfully!");
+      });
+    });
+  </script>
+</body>
+</html>

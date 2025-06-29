@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    div {
+      border: 2px solid black;
+      margin-bottom: 1rem;
+      height: 5rem;
+      width: 20rem;
+      text-align: center;
+      font-size: 2rem;
+      color: black;
+      padding: 0.5rem;
+    }
+    input {
+      font-size: 1rem;
+      padding: 0.25rem;
+    }
+    button {
+      font-size: 1rem;
+      padding: 0.25rem 0.5rem;
+      margin: 0.25rem;
+      background-color: #e0e0e0;
+      border: none;
+      border-radius: 0.25rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Skincare Product Tracker by JS</h1>
+  <div id="div_show"></div><br>
+
+  <input type="text" id="productName" placeholder="Skincare Name">
+  <input type="text" id="productValue" placeholder="Price or Details">
+  <button onclick="addOrUpdateProduct()">Add/Update Product</button><br><br>
+
+  <button onclick="showProducts()">Show Products</button>
+  <button onclick="removeProduct()">Remove Product</button>
+
+  <script>
+    let skincare = {}; // empty object
+    const div_show = document.getElementById("div_show");
+
+    function addOrUpdateProduct() {
+      const name = document.getElementById("productName").value;
+      const value = document.getElementById("productValue").value;
+      if (name !== "") {
+        skincare[name] = value;
+        div_show.innerHTML = `Set: ${name} = ${value}`;
+      } else {
+        div_show.innerHTML = "Skincare name required!";
+      }
+      document.getElementById("productName").value = "";
+      document.getElementById("productValue").value = "";
+    }
+
+    function showProducts() {
+      let result = JSON.stringify(skincare, null, 2);
+      div_show.innerHTML = `<pre>${result}</pre>`;
+    }
+
+    function removeProduct() {
+      const name = document.getElementById("productName").value;
+      if (name in skincare) {
+        delete skincare[name];
+        div_show.innerHTML = `Removed product: ${name}`;
+      } else {
+        div_show.innerHTML = `Product not found: ${name}`;
+      }
+      document.getElementById("productName").value = "";
+    }
+  </script>
+
+</body>
+</html>
+
