@@ -1,5 +1,0 @@
-1.  awk -F'\t' '{split ($7,a," "); if (a[1]>=20)  print $2,$3,$4,$5,$7}' courses.txt| egrep ^CEE| egrep -v CEE...L |egrep -v CEE499... | egrep -v CEE5...
- 
-2.awk -F'\t' '{split ($7,a," "); if (a[1]>=10)  print $2,$3,$4,$5,$7}' courses.txt| egrep ^CEE...L
-
-3.  awk -F'\t' '{split ($7,a," "); if (a[1]>=10)  print $2,$3,$4,$5,$7}' courses.txt| egrep ^CEE4...| egrep RA  
