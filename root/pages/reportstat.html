@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Suspicious Activity Reports</title>
+   <link rel="stylesheet" href="reportstat.css">
+  <style>
+  </style>
+</head>
+<body>
+
+  <h2>Administrator</h2>
+  <h1><strong>Suspicious Activity Reports</strong></h1>
+
+  <div class="container">
+    <table>
+      <thead>
+        <tr>
+          <th>Contest ID</th>
+          <th>Problem Number</th>
+          <th>Suspected User</th>
+          <th>Language</th>
+          <th>Reported By</th>
+          <th>
+            Status
+            <div class="dropdown" id="statusDropdown">
+              <button class="filter-select" onclick="toggleDropdown()">▼</button>
+              <div class="dropdown-content">
+                <label><input type="radio" name="status" /> New</label>
+                <label><input type="radio" name="status" /> Under Investigation</label>
+                <label><input type="radio" name="status" /> Resolved - No Action</label>
+                <label><input type="radio" name="status" /> Resolved - Action Taken</label>
+              </div>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody id="reportTableBody">
+       
+      </tbody>
+    </table>
+  </div>
+   <script src ="reportstat.js"></script>
+  
+</body>
+</html>
