@@ -1,0 +1,25 @@
+body {
+            background-color: #f8f9fa;
+        }
+        .content-section {
+            background-color: #ffffff;
+            border: 1px solid #dee2e6;
+            border-radius: 0.25rem;
+            padding: 1.5rem;
+        }
+        .interview-round-group {
+            padding: 1.25rem;
+            background-color: #fdfdff;
+            border: 1px solid #e9ecef;
+            border-radius: .25rem;
+        }
+        .question-field-group {
+            padding: 0.75rem;
+            background-color: #f8f9fa;
+            border: 1px dashed #ced4da;
+            border-radius: .25rem;
+        }
+        .form-control-plaintext {
+            padding-top: .375rem;
+            padding-bottom: .375rem;
+        }
