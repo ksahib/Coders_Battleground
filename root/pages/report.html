@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Suspicious Activity Report</title>
+  <link rel="stylesheet" href="report.css">
+  <style>
+    
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Reporting Suspicious Activity on CODERS BATTLEGROUND</h2>
+
+    <p><strong>Contest Information</strong></p>
+    <label>Contest ID:</label>
+    <input type="text" placeholder="Problem Number/Name" />
+
+    <label>Problem Number:</label>
+    <select>
+      <option> </option>
+    </select>
+
+    <p><strong>Submission Details</strong></p>
+    <input type="text" placeholder="Suspected User’s Handle/Username" />
+    <input type="text" placeholder="Language Used" />
+
+    <p><strong>Suspected AI Involvement</strong></p>
+    <label>Level of Certainty:</label>
+    <div class="certainty-level">
+      <label><input type="radio" name="certainty" /> Low</label>
+      <label><input type="radio" name="certainty" /> Medium</label>
+      <label><input type="radio" name="certainty" /> High</label>
+    </div>
+
+    <div class="flags">
+      <label><input type="checkbox" checked /> Unusually Fast Solving Time</label>
+      <label><input type="checkbox" /> Overly Complex Solutions</label>
+      <label><input type="checkbox" /> Unusually Fast Solving Time</label>
+      <label><input type="checkbox" /> Overly Complex Solutions</label>
+    </div>
+
+    <p><strong>Detailed Explanation</strong></p>
+    <textarea rows="4" placeholder="Text Explanation..."></textarea>
+
+    <div class="upload-section">
+      <label>Upload Supporting Evidence</label>
+      <input type="file" />
+    </div>
+
+    <button class="submit-button">Submit</button>
+
+   
+    </div>
+  </div>
+<script src ="report.js"></script>
+  
+
+</body>
+</html>
