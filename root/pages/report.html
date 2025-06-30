@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Suspicious Activity Reports</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f7fa;
+      margin: 0;
+      padding: 40px;
+    }
+
+    h2 {
+      margin-bottom: 10px;
+    }
+
+    .container {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+
+    th {
+      background-color: #f0f2f5;
+      color: #333;
+      font-weight: bold;
+    }
+
+    .status-button {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 20px;
+      background-color: #357edd;
+      color: white;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: white;
+      box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      z-index: 1;
+      min-width: 220px;
+    }
+
+    .dropdown-content label {
+      display: block;
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .dropdown-content label:hover {
+      background-color: #f0f0f0;
+    }
+
+    .dropdown.active .dropdown-content {
+      display: block;
+    }
+
+    .filter-select {
+      padding: 5px 10px;
+      font-size: 14px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Administrator</h2>
+  <h1><strong>Suspicious Activity Reports</strong></h1>
+
+  <div class="container">
+    <table>
+      <thead>
+        <tr>
+          <th>Contest ID</th>
+          <th>Problem Number</th>
+          <th>Suspected User</th>
+          <th>Language</th>
+          <th>Reported By</th>
+          <th>
+            Status
+            <div class="dropdown" id="statusDropdown">
+              <button class="filter-select" onclick="toggleDropdown()">▼</button>
+              <div class="dropdown-content">
+                <label><input type="radio" name="status" /> New</label>
+                <label><input type="radio" name="status" /> Under Investigation</label>
+                <label><input type="radio" name="status" /> Resolved - No Action</label>
+                <label><input type="radio" name="status" /> Resolved - Action Taken</label>
+              </div>
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody id="reportTableBody">
+        <!-- Rows will be inserted here by JS -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    const tableData = [
+      { id: 1, problem: 20001, user: "000", lang: "SOIM", reporter: "UM" },
+      { id: 2, problem: 20001, user: "000", lang: "SOIM", reporter: "UM" },
+      { id: 3, problem: 20021, user: "000", lang: "SOIM", reporter: "UM" },
+      { id: 4, problem: 20022, user: "000", lang: "SOIM", reporter: "UM" },
+      { id: 5, problem: 20027, user: "000", lang: "SOIM", reporter: "UM" },
+      { id: 6, problem: 20024, user: "000", lang: "SOIM", reporter: "UM" },
+      { id: 7, problem: 20021, user: "000", lang: "SOIM", reporter: "UM" },
+      { id: 8, problem: 20024, user: "000", lang: "SOIM", reporter: "UM" },
+      { id: 9, problem: 20023, user: "000", lang: "SOIM", reporter: "UM" },
+      { id: 10, problem: 20023, user: "000", lang: "SOIM", reporter: "UM" },
+    ];
+
+    const tbody = document.getElementById("reportTableBody");
+
+    tableData.forEach(row => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${row.id}</td>
+        <td>${row.problem}</td>
+        <td>${row.user}</td>
+        <td>${row.lang}</td>
+        <td>${row.reporter}</td>
+        <td><button class="status-button">Resolved Shion</button></td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    function toggleDropdown() {
+      document.getElementById("statusDropdown").classList.toggle("active");
+    }
+
+    // Close dropdown when clicking outside
+    document.addEventListener("click", function(event) {
+      if (!event.target.closest("#statusDropdown")) {
+        document.getElementById("statusDropdown").classList.remove("active");
+      }
+    });
+  </script>
+</body>
+</html>
