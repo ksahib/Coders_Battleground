@@ -86,7 +86,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- Logic for Contest Type Settings ---
             const contestTypeSelect = document.getElementById('contestType');
             const passwordField = document.getElementById('password-field');
             const allowedUsersField = document.getElementById('allowed-users-field');
@@ -99,7 +98,6 @@
             contestTypeSelect.addEventListener('change', toggleSettingsFields);
             toggleSettingsFields();
 
-            // --- Logic for Dynamic Problem Fields ---
             const problemsContainer = document.getElementById('problems-container');
             const addProblemBtn = document.getElementById('add-problem-btn');
 
@@ -110,7 +108,6 @@
                 const problemFieldGroup = document.createElement('div');
                 problemFieldGroup.className = 'problem-field-group mb-3';
 
-                // creating the HTML for the new fields
                 problemFieldGroup.innerHTML = `
                     <div class="row align-items-end">
                         <div class="col-md-4">

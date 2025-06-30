@@ -22,7 +22,6 @@ function getChart(id, { easy, medium, hard, total }) {
         }
     });
 
-    // Update labels
     document.querySelector(".center-label").innerHTML = `
         <div>${percent}%</div>
         <small>Accepted</small>
