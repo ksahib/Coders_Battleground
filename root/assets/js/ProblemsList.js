@@ -6,7 +6,7 @@
     { id: 4, title: "Median of Two Sorted Arrays", difficulty: "Hard", acceptance: "29.4%" },
     { id: 5, title: "Valid Parentheses", difficulty: "Easy", acceptance: "41.5%" },
   ];
-
+  // Generate Problems List
   const $tableBody = $('#problem-list');
   problems.forEach(problem => {
     const row = `
@@ -25,7 +25,8 @@
     `;
     $tableBody.append(row);
   });
-
+   
+  // Content Card Section
    $(document).ready(function () {
         const $container = $('#cards-row-feature');
 
@@ -39,7 +40,7 @@
         $container.append(createContentCard('Interview', 'Linux <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #29323c 0%, #485563 100%)'));
     });
 
-
+  //  Problem Type Tag Section
      const tags = [
     "Array", "Linked List", "Hash Table", "String", "Math", "Greedy", "Dynamic Programming",
     "Backtracking", "Stack", "Queue", "Heap", "Tree", "Graph", "DFS", "BFS",

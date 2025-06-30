@@ -1,5 +1,5 @@
 require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs' } });
-
+// Configuration for the IDE
 let editor;
 require(['vs/editor/editor.main'], function () {
   editor = monaco.editor.create(document.getElementById('editor-container'), {

@@ -19,7 +19,7 @@ $(document).ready(function () {
       code: `function twoSum(nums, target) {\n  const map = new Map();\n  for (let i = 0; i < nums.length; i++) {\n    const diff = target - nums[i];\n    if (map.has(diff)) return [map.get(diff), i];\n    map.set(nums[i], i);\n  }\n}`
     }
   ];
-
+  // Generate Solutions dynamically
   dummySolutions.forEach(sol => {
     const solutionHTML = `
       <div class="solution-card">
