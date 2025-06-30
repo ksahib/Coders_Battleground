@@ -1,0 +1,17 @@
+body {
+            background-color: #f8f9fa;
+        }
+
+        .content-section {
+            background-color: #ffffff;
+            border: 1px solid #dee2e6;
+            border-radius: 0.25rem;
+            padding: 1.5rem;
+        }
+
+        .problem-field-group {
+            padding: 1rem;
+            background-color: #fdfdff;
+            border: 1px solid #e9ecef;
+            border-radius: .25rem;
+        }

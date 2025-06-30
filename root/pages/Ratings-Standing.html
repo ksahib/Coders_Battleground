@@ -7,50 +7,9 @@
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="../assets/js/include.js"></script>
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
-
-        .ranking-section {
-            background-color: #ffffff;
-            border: 1px solid #dee2e6;
-            border-radius: 0.25rem;
-            padding: 1.5rem;
-        }
-        .table th, .table td {
-            vertical-align: middle;
-            font-size: 0.95rem;
-        }
-        .table thead th {
-            border-bottom-width: 1px;
-        }
-        .form-control, .form-select {
-            font-size: 0.9rem;
-        }
-        .rating-tabs .nav-link {
-            color: #495057;
-            border-bottom: 3px solid transparent;
-            padding: 0.5rem 1rem;
-        }
-        .rating-tabs .nav-link.active {
-            color: #0d6efd;
-            border-bottom-color: #0d6efd;
-            background-color: transparent;
-            border-top: none;
-            border-left: none;
-            border-right: none;
-        }
-        
-        .user-red {
-            color: #dc3545;
-            font-weight: bold;
-        }
-        .user-purple {
-            color: #6f42c1;
-            font-weight: bold;
-        }
-    </style>
+    
+    <link rel="stylesheet" href="../assets/css/ratings-standing.css">
+    
 </head>
 <body>
 
@@ -79,16 +38,6 @@
         
         <div id="pagination-controls" class="d-flex justify-content-center mt-3"></div>
     </div>
-
-    <script>
-        function includeHtml(elementId, filePath) {
-            const el = document.getElementById(elementId);
-            if (el) {
-                el.innerHTML = `<div class="alert alert-info">Note: The main navigation bar would be dynamically loaded here from '<strong>${filePath}</strong>'.</div>`;
-            }
-        }
-        includeHtml('navbar-placeholder', '../components/navbar.html');
-    </script>
     
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -127,18 +76,15 @@
             const datasets = { recent: ratingDataRecent, all: ratingDataAll };
             const titles = { recent: "Rating: users participated in recent 6 months", all: "Rating: All-time users" };
 
-            // --- PAGINATION & APP STATE ---
             let currentPage = 1;
             const rowsPerPage = 10;
             let activeDataset = datasets.recent;
 
-            // --- DOM ELEMENTS ---
             const tabs = [document.getElementById('rating-recent-btn'), document.getElementById('rating-all-btn')];
             const rankingTitle = document.getElementById('ranking-title');
             const tableContainer = document.getElementById('ranking-table-placeholder');
             const paginationContainer = document.getElementById('pagination-controls');
 
-            /** pagination controls */
             function renderPaginationControls() {
                 paginationContainer.innerHTML = "";
                 const pageCount = Math.ceil(activeDataset.length / rowsPerPage);
@@ -147,7 +93,6 @@
                 const ul = document.createElement('ul');
                 ul.className = 'pagination';
                 
-                // Previous button
                 let prevLi = document.createElement('li');
                 prevLi.className = `page-item ${currentPage === 1 ? 'disabled' : ''}`;
                 prevLi.innerHTML = `<a class="page-link">Previous</a>`;
@@ -156,7 +101,6 @@
                 });
                 ul.appendChild(prevLi);
 
-                // Page number buttons
                 for (let i = 1; i <= pageCount; i++) {
                     let li = document.createElement('li');
                     li.className = `page-item ${i === currentPage ? 'active' : ''}`;
@@ -165,7 +109,6 @@
                     ul.appendChild(li);
                 }
 
-                // Next button
                 let nextLi = document.createElement('li');
                 nextLi.className = `page-item ${currentPage === pageCount ? 'disabled' : ''}`;
                 nextLi.innerHTML = `<a class="page-link">Next</a>`;
@@ -177,7 +120,6 @@
                 paginationContainer.appendChild(ul);
             }
 
-            /** Renders a slice of data into the table */
             function renderRankingTable(dataSlice) {
                 let tableRowsHtml = dataSlice.map(user => `
                     <tr>
@@ -200,7 +142,6 @@
                     </table>`;
             }
             
-            /** Slices data and triggers rendering for a specific page */
             function displayPage(page) {
                 currentPage = page;
                 const start = (currentPage - 1) * rowsPerPage;
@@ -211,7 +152,6 @@
                 renderPaginationControls();
             }
 
-            /** Switches the main view between 'recent' and 'all' */
             function updateView(type) {
                 activeDataset = datasets[type];
                 rankingTitle.textContent = titles[type];
@@ -221,12 +161,10 @@
                 displayPage(1);
             }
             
-            // --- EVENT LISTENERS ---
             tabs.forEach(tab => {
                 tab.addEventListener('click', () => updateView(tab.dataset.type));
             });
 
-            // --- INITIALIZE VIEW ---
             updateView('recent');
         });
     </script>
