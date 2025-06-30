@@ -1,5 +1,6 @@
-
+// Wait till Page is loaded Properly
 $(document).ready(function () {
+  // Placeholder Problem
   const problemData = {
     title: "Two Sum",
     difficulty: "Easy",
@@ -23,7 +24,7 @@ Output: [0,1]</code></pre>
     `
   };
 
-  
+  // To generate the Problem description
   $('#problem-title').text(problemData.title);
   $('#problem-difficulty')
     .text(problemData.difficulty)
