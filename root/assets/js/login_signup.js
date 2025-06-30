@@ -11,3 +11,7 @@ registerLink.addEventListener('click', () => {
 loginLink.addEventListener('click', () => {
   loginSection.classList.remove('active');
 });
+
+signInBtn.addEventListener('click', () => {
+  window.location.href = '../pages/home.html';
+});

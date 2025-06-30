@@ -62,15 +62,19 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             const contests = [
-                "Contest A", "Contest B", "Contest C","Contest D", "Contest E", "Contest F","Contest G", "Contest H", "Contest I","Contest J", "Contest K", "Contest L",
+                { label: "Contest A", url: "../pages/wee" },
+                { label: "Contest B", url: "../pages/contest-B.html" },
+                { label: "Contest C", url: "../pages/contest-C.html" },
             ];
-            const contestB = [];
+            const myContests = [
+                { label: "My Contest X", url: "../pages/my-contest-X.html" },
+            ];
 
             new ListRenderer({
                 containerId: 'list-group-ul',
                 dataSets: {
                     contests: contests,
-                    mycontests: contestB
+                    mycontests: myContests
                 },
                 defaultKey: 'contests',
                 buttonMap: {
@@ -81,6 +85,7 @@
                 emptyClass: 'list-empty'
             });
         });
+
 
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
