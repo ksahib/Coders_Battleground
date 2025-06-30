@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Contest - Coders Battleground</title>
-    
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="../assets/js/include.js"></script>
     <style>
         body {
             background-color: #f8f9fa;
@@ -27,48 +29,35 @@
         }
     </style>
 </head>
-<body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container-fluid">
-        <a class="me-3 navbar-brand" href="#">Coders Battleground</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item"><a class="nav-link" href="#">Problems</a></li>
-            <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Contests</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Ranking</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Interviews</a></li>
-          </ul>
-          <div class="ms-auto d-flex align-items-center">
-            <img src="https://via.placeholder.com/50" alt="Avatar" class="rounded-circle me-3" style="width: 50px; height: 50px;">
-            <span class="navbar-text me-3"><a href="#" class="text-decoration-none text-white">Username</a></span>
-          </div>
-        </div>
-      </div>
-    </nav>
+<body>
+    <div id="navbar-placeholder"></div>
+    <script>
+        includeHtml('navbar-placeholder', '../components/admin-navbar.html');
+    </script>
+
 
     <div class="content-section container my-4">
-        
+
         <h2 class="mb-4">Create New Contest</h2>
 
         <form>
             <div class="mb-3">
                 <label for="contestName" class="form-label">Contest Name</label>
-                <input type="text" class="form-control" id="contestName" placeholder="e.g., Coders Battleground Weekly #1" required>
+                <input type="text" class="form-control" id="contestName"
+                    placeholder="e.g., Coders Battleground Weekly #1" required>
             </div>
             <div class="mb-3">
                 <label for="contestDescription" class="form-label">Description</label>
-                <textarea class="form-control" id="contestDescription" rows="3" placeholder="Provide a brief description of the contest, rules, and topics."></textarea>
+                <textarea class="form-control" id="contestDescription" rows="3"
+                    placeholder="Provide a brief description of the contest, rules, and topics."></textarea>
             </div>
 
             <hr class="my-4">
 
             <h4 class="mb-3">Problems</h4>
             <div id="problems-container">
-                </div>
+            </div>
             <button type="button" id="add-problem-btn" class="btn btn-outline-success mt-2">Add Problem</button>
 
             <hr class="my-4">
@@ -100,7 +89,8 @@
             </div>
             <div class="mb-3" id="allowed-users-field" style="display: none;">
                 <label for="allowedUsers" class="form-label">Allowed Users</label>
-                <textarea class="form-control" id="allowedUsers" rows="3" placeholder="Enter usernames, one per line."></textarea>
+                <textarea class="form-control" id="allowedUsers" rows="3"
+                    placeholder="Enter usernames, one per line."></textarea>
                 <div class="form-text">Only these users will be able to register for the contest.</div>
             </div>
 
@@ -109,7 +99,7 @@
             <button type="submit" class="btn btn-primary btn-lg">Create Contest</button>
         </form>
     </div>
-    
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // --- Logic for Contest Type Settings ---
@@ -128,14 +118,14 @@
             // --- Logic for Dynamic Problem Fields ---
             const problemsContainer = document.getElementById('problems-container');
             const addProblemBtn = document.getElementById('add-problem-btn');
-            
+
             let problemCount = 0;
 
             function addProblemField() {
                 problemCount++;
                 const problemFieldGroup = document.createElement('div');
                 problemFieldGroup.className = 'problem-field-group mb-3';
-                
+
                 // creating the HTML for the new fields
                 problemFieldGroup.innerHTML = `
                     <div class="row align-items-end">
@@ -156,7 +146,7 @@
                         </div>
                     </div>
                 `;
-                
+
                 problemsContainer.appendChild(problemFieldGroup);
 
                 problemFieldGroup.querySelector('.remove-problem-btn').addEventListener('click', () => {
@@ -169,8 +159,11 @@
             addProblemField();
         });
     </script>
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
 
 </body>
+
 </html>
