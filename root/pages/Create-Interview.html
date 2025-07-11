@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Interview - Coders Battleground</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="../assets/js/include.js"></script>
+    <link rel="stylesheet" href="../assets/css/create-interview.css">
+    
+</head>
+<body>
+
+    <div id="navbar-placeholder"></div>
+    <script>
+        includeHtml('navbar-placeholder', '../components/admin-navbar.html');
+    </script>
+
+    <div class="content-section container my-4">
+        
+        <h2 class="mb-4">Create New Interview</h2>
+
+        <form>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="companyName" class="form-label">Company Name</label>
+                    <input type="text" readonly class="form-control-plaintext ps-2" id="companyName" value="Tech Innovators Inc.">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="roleName" class="form-label">Role / Position</label>
+                    <input type="text" class="form-control" id="roleName" placeholder="e.g., Senior Software Engineer" required>
+                </div>
+            </div>
+
+             <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="applicationDate" class="form-label">Posting Date</label>
+                    <input type="date" class="form-control" id="applicationDate" value="2025-06-30" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="jobType" class="form-label">Job Type</label>
+                     <select id="jobType" class="form-select">
+                        <option selected>Full-time</option>
+                        <option>Part-time</option>
+                        <option>Internship</option>
+                        <option>Contract</option>
+                    </select>
+                </div>
+            </div>
+
+            <hr class="my-4">
+
+            <h4 class="mb-3">Interview Rounds</h4>
+            <p class="text-muted">Define the stages of your interview process.</p>
+            <div id="rounds-container">
+                </div>
+            <button type="button" id="add-round-btn" class="btn btn-outline-primary mt-2">Add Interview Round</button>
+
+            <hr class="my-4">
+            
+            <button type="submit" class="btn btn-primary btn-lg">Post Interview</button>
+        </form>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const roundsContainer = document.getElementById('rounds-container');
+            const addRoundBtn = document.getElementById('add-round-btn');
+            let roundCounter = 0;
+
+            function addRoundField() {
+                const roundIndex = roundCounter++;
+                const roundFieldGroup = document.createElement('div');
+                roundFieldGroup.className = 'interview-round-group mb-3';
+                roundFieldGroup.dataset.roundIndex = roundIndex;
+
+                roundFieldGroup.innerHTML = `
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="mb-0">Round ${roundIndex + 1}</h5>
+                        <button type="button" class="btn-close remove-round-btn" aria-label="Close"></button>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Round Name</label>
+                            <input type="text" class="form-control" name="rounds[${roundIndex}][name]" placeholder="e.g., Initial Technical Screen">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Round Date (Optional)</label>
+                            <input type="date" class="form-control" name="rounds[${roundIndex}][date]">
+                        </div>
+                    </div>
+                    <hr>
+                    <h6>Default Questions for this Round</h6>
+                    <div class="questions-container ms-2"></div>
+                    <button type="button" class="btn btn-secondary btn-sm mt-2 add-question-btn">+ Add Question</button>
+                `;
+                roundsContainer.appendChild(roundFieldGroup);
+            }
+
+            function addQuestionField(questionsContainer, roundIndex) {
+                const questionFieldGroup = document.createElement('div');
+                questionFieldGroup.className = 'question-field-group mb-2';
+
+                questionFieldGroup.innerHTML = `
+                    <div class="row">
+                        <div class="col-10">
+                            <label class="form-label small">Question Type</label>
+                             <select class="form-select form-select-sm mb-2" name="rounds[${roundIndex}][questions][][type]">
+                                <option>Coding (Algorithm)</option>
+                                <option>Behavioral</option>
+                                <option>System Design</option>
+                                <option>Database</option>
+                                <option>Project Deep Dive</option>
+                            </select>
+                        </div>
+                        <div class="col-2 d-flex justify-content-end align-items-start">
+                             <button type="button" class="btn-close btn-close-sm remove-question-btn" aria-label="Remove Question"></button>
+                        </div>
+                    </div>
+                    <textarea class="form-control form-control-sm" name="rounds[${roundIndex}][questions][][text]" rows="2" placeholder="Enter the question here..."></textarea>
+                `;
+                questionsContainer.appendChild(questionFieldGroup);
+            }
+            
+            addRoundBtn.addEventListener('click', addRoundField);
+            
+            roundsContainer.addEventListener('click', (event) => {
+                if (event.target.classList.contains('remove-round-btn')) {
+                    event.target.closest('.interview-round-group').remove();
+                }
+                if (event.target.classList.contains('add-question-btn')) {
+                    const roundGroup = event.target.closest('.interview-round-group');
+                    const questionsContainer = roundGroup.querySelector('.questions-container');
+                    const roundIndex = roundGroup.dataset.roundIndex;
+                    addQuestionField(questionsContainer, roundIndex);
+                }
+                if (event.target.classList.contains('remove-question-btn')) {
+                    event.target.closest('.question-field-group').remove();
+                }
+            });
+
+            addRoundField();
+        });
+    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+</body>
+</html>

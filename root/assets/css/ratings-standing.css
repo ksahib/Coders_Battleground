@@ -1,0 +1,42 @@
+body {
+            background-color: #f8f9fa;
+        }
+
+        .ranking-section {
+            background-color: #ffffff;
+            border: 1px solid #dee2e6;
+            border-radius: 0.25rem;
+            padding: 1.5rem;
+        }
+        .table th, .table td {
+            vertical-align: middle;
+            font-size: 0.95rem;
+        }
+        .table thead th {
+            border-bottom-width: 1px;
+        }
+        .form-control, .form-select {
+            font-size: 0.9rem;
+        }
+        .rating-tabs .nav-link {
+            color: #495057;
+            border-bottom: 3px solid transparent;
+            padding: 0.5rem 1rem;
+        }
+        .rating-tabs .nav-link.active {
+            color: #0d6efd;
+            border-bottom-color: #0d6efd;
+            background-color: transparent;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+        }
+        
+        .user-red {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        .user-purple {
+            color: #6f42c1;
+            font-weight: bold;
+        }

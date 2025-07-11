@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contest History - Coders Battleground</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="../assets/js/include.js"></script>
+
+    <link rel="stylesheet" href="../assets/css/contest-attended.css">
+    
+</head>
+<body>
+
+    <div id="navbar-placeholder"></div>
+    <script>
+        includeHtml('navbar-placeholder', '../components/navbar.html');
+    </script>
+
+    <div class="content-section container my-4">
+        
+        <h2 class="mb-4">Contest History: <span class="text-primary">Username</span></h2>
+
+        <div id="contest-table-placeholder"></div>
+        
+        <div id="pagination-controls" class="d-flex justify-content-center mt-3"></div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const contestHistoryData = [
+                { id: 952, name: "Codeforces Round #952 (Div. 4)", rank: 543, change: 78, newRating: 1850, date: "2025-06-28" },
+                { id: 950, name: "Codeforces Round #950 (Div. 3)", rank: 1021, change: -15, newRating: 1772, date: "2025-06-20" },
+                { id: 948, name: "Educational Codeforces Round 167", rank: 850, change: 45, newRating: 1787, date: "2025-06-15" },
+                { id: 945, name: "Codeforces Round #945 (Div. 2)", rank: 2500, change: -110, newRating: 1742, date: "2025-06-05" },
+                { id: 942, name: "Codeforces Round #942 (Div. 3)", rank: 301, change: 150, newRating: 1852, date: "2025-05-28" },
+                { id: 940, name: "Codeforces Global Round 25", rank: 4200, change: -50, newRating: 1702, date: "2025-05-18" },
+                { id: 938, name: "Codeforces Round #938 (Div. 2)", rank: 780, change: 60, newRating: 1752, date: "2025-05-10" },
+                { id: 935, name: "Codeforces Round #935 (Div. 3)", rank: 1500, change: 0, newRating: 1692, date: "2025-04-30" },
+                { id: 931, name: "Educational Codeforces Round 165", rank: 990, change: 33, newRating: 1692, date: "2025-04-22" },
+                { id: 928, name: "Codeforces Round #928 (Div. 2)", rank: 650, change: 75, newRating: 1659, date: "2025-04-14" },
+                { id: 925, name: "Codeforces Round #925 (Div. 3)", rank: 2200, change: -40, newRating: 1584, date: "2025-04-02" },
+                { id: 920, name: "Hello 2025", rank: 3100, change: 25, newRating: 1624, date: "2025-03-25" },
+                { id: 918, name: "Good Bye 2024", rank: 1800, change: 100, newRating: 1599, date: "2025-03-15" },
+            ];
+
+            let currentPage = 1;
+            const rowsPerPage = 8;
+
+            const tableContainer = document.getElementById('contest-table-placeholder');
+            const paginationContainer = document.getElementById('pagination-controls');
+
+            function renderPaginationControls() {
+                paginationContainer.innerHTML = "";
+                const pageCount = Math.ceil(contestHistoryData.length / rowsPerPage);
+                if (pageCount <= 1) return;
+
+                const ul = document.createElement('ul');
+                ul.className = 'pagination';
+                
+                let prevLi = document.createElement('li');
+                prevLi.className = `page-item ${currentPage === 1 ? 'disabled' : ''}`;
+                prevLi.innerHTML = `<a class="page-link">Previous</a>`;
+                prevLi.addEventListener('click', () => { if (currentPage > 1) displayPage(currentPage - 1); });
+                ul.appendChild(prevLi);
+
+                for (let i = 1; i <= pageCount; i++) {
+                    let li = document.createElement('li');
+                    li.className = `page-item ${i === currentPage ? 'active' : ''}`;
+                    li.innerHTML = `<a class="page-link">${i}</a>`;
+                    li.addEventListener('click', () => displayPage(i));
+                    ul.appendChild(li);
+                }
+                
+                let nextLi = document.createElement('li');
+                nextLi.className = `page-item ${currentPage === pageCount ? 'disabled' : ''}`;
+                nextLi.innerHTML = `<a class="page-link">Next</a>`;
+                nextLi.addEventListener('click', () => { if (currentPage < pageCount) displayPage(currentPage + 1); });
+                ul.appendChild(nextLi);
+
+                paginationContainer.appendChild(ul);
+            }
+
+            function renderContestTable(dataSlice) {
+                let tableRowsHtml = dataSlice.map(contest => {
+                    let ratingChangeHtml;
+                    if (contest.change > 0) {
+                        ratingChangeHtml = `<span class="rating-positive">+${contest.change}</span>`;
+                    } else if (contest.change < 0) {
+                        ratingChangeHtml = `<span class="rating-negative">${contest.change}</span>`;
+                    } else {
+                        ratingChangeHtml = `<span class="rating-neutral">${contest.change}</span>`;
+                    }
+
+                    return `
+                    <tr>
+                        <td>${contest.date}</td>
+                        <td><a href="#" class="text-decoration-none">${contest.name}</a></td>
+                        <td class="text-center">${contest.rank}</td>
+                        <td class="text-center">${ratingChangeHtml}</td>
+                        <td class="text-center fw-bold">${contest.newRating}</td>
+                    </tr>`;
+                }).join('');
+
+                tableContainer.innerHTML = `
+                    <table class="table table-striped table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">Contest</th>
+                                <th scope="col" class="text-center">Rank</th>
+                                <th scope="col" class="text-center">Rating Change</th>
+                                <th scope="col" class="text-center">New Rating</th>
+                            </tr>
+                        </thead>
+                        <tbody>${tableRowsHtml}</tbody>
+                    </table>`;
+            }
+            
+            function displayPage(page) {
+                currentPage = page;
+                const start = (currentPage - 1) * rowsPerPage;
+                const end = start + rowsPerPage;
+                const paginatedItems = contestHistoryData.slice(start, end);
+
+                renderContestTable(paginatedItems);
+                renderPaginationControls();
+            }
+            
+            displayPage(1);
+        });
+    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+</body>
+</html>

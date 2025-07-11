@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coders Battleground Contest</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+   <link rel="stylesheet" href="../assets/css/weeklycontest.css">
+   <script src="../assets/js/include.js"></script>
+  <style>
+    
+  </style>
+</head>
+<body>
+
+<div id="navbar-placeholder"></div>
+    <script>
+        includeHtml('navbar-placeholder', '../components/navbar.html');
+    </script>
+
+<div class="container mt-5">
+  <h1 class="contest-title text-center">Weekly Contest </h1>
+  <p class="text-center">Sun, Jun 29, 08:30 GMT+06:00 - End</p>
+  <div class="text-center">
+    <button class="btn btn-virtual px-4 py-2">Join Virtual Contest</button>
+  </div>
+
+  <div class="bonus-section">
+    <h4>✨ Bonus Prizes ✨</h4>
+    <ul>
+      <li>Top 3 contestants win a hoodie.</li>
+      <li>Ranks 4 to 10 get a special mug.</li>
+      <li>Ranks 50, 100, 250, and 1000 get cool stickers.</li>
+    </ul>
+    <p class="text-muted">* Winners must be registered and will be contacted via email.</p>
+  </div>
+
+  <div class="tab-buttons">
+  <a href="../pages/live-standings.html"  class="btn btn-outline-light">Ranking</a>
+  <a href="../pages/ProblemsList.html" class="btn btn-outline-light">Problems</a>
+</div>
+
+
+  <div id="ranking" class="tab-content active mt-4">
+    <div class="ranking-box">
+      <h5>Top Rankings</h5>
+      <ul class="list-group">
+        <li class="list-group-item">#1 - user123 (400 pts)</li>
+        <li class="list-group-item">#2 - code_master (390 pts)</li>
+        <li class="list-group-item">#3 - bug_hunter (380 pts)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="problems" class="tab-content mt-4">
+    <div class="problem-box">
+      <h5>Problems</h5>
+      <ul class="list-group problem-list">
+        <li class="list-group-item">1. Break The Pattern</li>
+        <li class="list-group-item">2. Deepest Common Link</li>
+        <li class="list-group-item">3. Minimize the Madness</li>
+        <li class="list-group-item">4. Connect the Code Tree</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="note-section">
+    <h5>Notes</h5>
+    <ol>
+      <li>Write your own code. No copying allowed.</li>
+      <li>Wrong answers will add a 5-minute penalty.</li>
+      <li>Hidden test cases keep the contest fair.</li>
+    </ol>
+  </div>
+</div>
+
+  <script src ="weeklycontest.js"></script>
+  
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

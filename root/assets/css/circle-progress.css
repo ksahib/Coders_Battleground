@@ -1,0 +1,63 @@
+
+
+.circle-progress {
+    border-radius: 12px;
+    background: #2a2a2a;
+    color: white;
+    display: flex;
+    
+    align-items: center;
+    justify-content: space-between;
+    padding: 60px;
+    font-family: sans-serif;
+}
+
+.chart-container {
+    width: 200px;
+    height: 200px;
+    position: relative;
+}
+
+.difficulty-label {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.difficulty-item {
+    background: #333;
+    padding: 6px 10px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    width: 200px;
+}
+
+.center-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.center-label div {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.center-label small{
+    font-size: 12px;
+    display: block;
+    opacity: 0.8;
+}
+
+.easy {
+    color: #00c58e;
+}
+.medium {
+    color: #ffc107;
+}
+.hard {
+    color: #f44336;
+}
