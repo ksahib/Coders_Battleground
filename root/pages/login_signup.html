@@ -42,34 +42,33 @@
 
         <div class="login-section">
             <div class="form-box login">
-                <form action="">
+                <form id="loginForm">
                     <h2>Sign In</h2>
+
+                    <!-- … your inputs … -->
                     <div class="input-box">
                         <span class="icon"><i class="bx bxs-envelope"></i></span>
-                        <input type="email" id="email" required>
+                        <input type="email" id="email" name="email" required>
                         <label>Email</label>
                     </div>
                     <div class="input-box">
                         <span class="icon"><i class="bx bxs-lock-alt"></i></span>
-                        <input type="password" id="password" required>
+                        <input type="password" id="password" name="password" required>
                         <label>Password</label>
                     </div>
-                    <div class="remember-password">
-                        <label><input type="checkbox">Remember Me</label>
-                        <a href="#">Forget Password</a>
-                    </div>
-                    <br>
-                    <button class="btn" id="signInBtn">Sign In</button>
-                    <div class="create-account">
-                        <p>Create A New Account? <a href="#" class="register-link">Sign Up</a></p>
-                    </div>
+
+                    <!-- place to show errors: -->
+                    <div id="loginError" class="error-message" style="color: #c00; margin: .5em 0;"></div>
+
+                    <button type="submit" class="btn" id="signInBtn">Sign In</button>
                 </form>
+
             </div>
 
 
 
             <div class="form-box register">
-                <form action="">
+                <form action="localhost/Server/signup.php" method="POST">
 
                     <h2>Sign Up</h2>
 
@@ -101,6 +100,55 @@
 
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('loginForm');
+            const errorDiv = document.getElementById('loginError');
+
+            form.addEventListener('submit', e => {
+                e.preventDefault();
+                errorDiv.textContent = '';       // clear old errors
+
+                const email = form.email.value;
+                const password = form.password.value;
+                const url = 'http://localhost/Server/login.php';
+
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', url, true);
+                xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+
+                xhr.onreadystatechange = () => {
+                    if (xhr.readyState !== XMLHttpRequest.DONE) return;
+
+                    if (xhr.status === 200) {
+                        let resp;
+                        try {
+                            resp = JSON.parse(xhr.responseText);
+                        } catch {
+                            errorDiv.textContent = 'Unexpected server response.';
+                            return;
+                        }
+
+                        if (resp.success) {
+                            // successful login
+                            window.location.href = 'http://localhost/root/pages/home.html';
+                        } else {
+                            // server said “Invalid credentials” or other error
+                            errorDiv.textContent = resp.error || resp.message || 'Login failed.';
+                        }
+
+                    } else {
+                        // HTTP error
+                        errorDiv.textContent = `Error ${xhr.status}: ${xhr.statusText}`;
+                    }
+                };
+
+                xhr.send(JSON.stringify({ email, password }));
+            });
+        });
+
+
+    </script>
     <script src="../assets/js/login_signup.js"></script>
 </body>
 
