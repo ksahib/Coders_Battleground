@@ -45,7 +45,6 @@
                 <form id="loginForm">
                     <h2>Sign In</h2>
 
-                    <!-- … your inputs … -->
                     <div class="input-box">
                         <span class="icon"><i class="bx bxs-envelope"></i></span>
                         <input type="email" id="email" name="email" required>
@@ -56,11 +55,19 @@
                         <input type="password" id="password" name="password" required>
                         <label>Password</label>
                     </div>
+                    <div class="remember-password">
+                        <label for=""><input type="checkbox">Remember Me</label>
+                        <a href="#">Forget Password</a>
+                    </div>
+                    <br>
 
-                    <!-- place to show errors: -->
                     <div id="loginError" class="error-message" style="color: #c00; margin: .5em 0;"></div>
 
                     <button type="submit" class="btn" id="signInBtn">Sign In</button>
+                    <div class="create-account">
+                        <p>Create A New Account? <a href="#" class="register-link">Sign Up</a></p>
+
+                    </div>
                 </form>
 
             </div>
@@ -107,7 +114,7 @@
 
             form.addEventListener('submit', e => {
                 e.preventDefault();
-                errorDiv.textContent = '';       // clear old errors
+                errorDiv.textContent = '';       // Clear previous errors
 
                 const email = form.email.value;
                 const password = form.password.value;
@@ -133,12 +140,10 @@
                             // successful login
                             window.location.href = 'http://localhost/root/pages/home.html';
                         } else {
-                            // server said “Invalid credentials” or other error
                             errorDiv.textContent = resp.error || resp.message || 'Login failed.';
                         }
 
                     } else {
-                        // HTTP error
                         errorDiv.textContent = `Error ${xhr.status}: ${xhr.statusText}`;
                     }
                 };
