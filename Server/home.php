@@ -33,12 +33,35 @@ try {
         SELECT interview_id, company_name, position_open
         FROM interview
     ";
+    $sql3 = "
+        SELECT 
+            p.problem_id,
+            p.name,
+            GROUP_CONCAT(DISTINCT pt.tag_name) AS tags
+        FROM problems p
+        LEFT JOIN problem_tags pt ON p.problem_id = pt.problem_id
+        GROUP BY p.problem_id, p.name
+    ";
+
     $stmt = $pdo->prepare($sql);
     $stmt_interviews = $pdo->prepare($sql2);
+    $stmt_problems = $pdo->prepare($sql3);
+
     $stmt->execute();
     $stmt_interviews->execute();
+    $stmt_problems->execute();
+
     $contests = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $interviews = $stmt_interviews->fetchAll(PDO::FETCH_ASSOC);
+    $rawProblems = $stmt_problems->fetchAll(PDO::FETCH_ASSOC);
+
+    $problems = array_map(function ($row) {
+        // Converting comma-separated tags string to array
+        $row['tags'] = $row['tags'] !== null
+            ? explode(',', $row['tags'])
+            : [];
+        return $row;
+    }, $rawProblems);
 
     $stmt_user = $pdo->prepare("SELECT name FROM users WHERE email = :email");
     $stmt_user->execute(['email' => $_SESSION['user']]);
@@ -48,7 +71,8 @@ try {
         'success'  => true,
         'user'     => $user['name'] ?? 'Guest',
         'contests' => $contests,
-        'interviews' => $interviews
+        'interviews' => $interviews,
+        'problems' => $problems
 
     ]);
 } catch (PDOException $e) {
