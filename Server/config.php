@@ -1,9 +1,9 @@
 <?php
 
 $host='localhost';
-$dbname='coders_battleground';
-$user='sahib';
-$pass='123';
+$dbname='sahib_coders_battleground';
+$user='root';
+$pass='';
 
 try{
     $pdo=new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4",$user,$pass);
