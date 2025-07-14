@@ -28,7 +28,7 @@ if($_SERVER['REQUEST_METHOD']=== "POST"){
     }
 
     try{
-        $stmt=$pdo->prepare("SELECT name,email,password FROM users WHERE email=?");
+        $stmt=$pdo->prepare("SELECT name,email,password,role FROM users WHERE email=?");
         $stmt->execute([$email]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 //         echo "user: {$user['password']}";
@@ -41,7 +41,7 @@ if($_SERVER['REQUEST_METHOD']=== "POST"){
         if($user && $password === $user['password']) {
             $_SESSION['user'] = $user['email'];
             
-            echo json_encode(["success" => true, "message" => "Login successful"]);
+            echo json_encode(["success" => true, "message" => "Login successful", "role" => $user['role']]);
             http_response_code(200);
             exit;
 

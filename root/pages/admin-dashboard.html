@@ -17,9 +17,6 @@
 
 <body>
     <div id="navbar-placeholder"></div>
-    <script>
-        includeHtml('navbar-placeholder', '../components/admin-navbar.html');
-    </script>
     <div class="container my-4">
         <div class="row">
             <div class="col-md-4 mb-4">
@@ -165,6 +162,35 @@
         </div>
     </div>
     <script>
+
+        function onNavbarLoaded() {
+            const span = document.getElementById('nav-company-name');
+            if (span) span.textContent = '…loading…';
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', 'http://localhost/Server/admin.php', true);
+            xhr.withCredentials = true;
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onload = () => {
+                if (xhr.status === 200) {
+                    const resp = JSON.parse(xhr.responseText);
+                    // replace username
+                    if (span && resp.user) span.textContent = resp.user;
+                }
+                else if (xhr.status === 401) {
+                    window.location.href = 'login_signup.html';
+                }
+            };
+            xhr.send(JSON.stringify({}));
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            includeHtml(
+                'navbar-placeholder',
+                '../components/admin-navbar.html',
+                onNavbarLoaded
+            );
+        });
         const createContestCard = document.getElementById("create-contest-card")
         createContestCard.appendChild(createContentCard(`<i class="material-icons" style="font-size:48px">add</i>`, "Create New <br> Contest", '20rem', '220px', 'Create-Contest.html', 'linear-gradient(135deg, #008080 0%, #00FFFF 100%)'))
     

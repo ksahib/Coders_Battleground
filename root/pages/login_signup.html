@@ -135,7 +135,11 @@
                     const data = await resp.json();
 
                     if (data.success) {
-                        window.location.href = 'home.html';
+                        if(data.role === 'company') {
+                            window.location.href = 'admin-dashboard.html';
+                        } else {
+                            window.location.href = 'home.html';
+                        }
                     } else {
                         errorDiv.textContent = data.error || 'Login failed.';
                     }
