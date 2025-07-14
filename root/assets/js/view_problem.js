@@ -1,7 +1,7 @@
 $(document).ready(function(){
     function loadProblems(){
         $.ajax({
-            url: "http://localhost/CB_BackEnd/view_problem.php",
+            url: "http://localhost/Server/view_problem.php",
             method: "GET",
             dataType: "json",
             success: function (problems){
@@ -52,7 +52,7 @@ loadProblems();
     const newDiff = item.find('.problem-difficulty-input').val();
 
     $.ajax({
-      url: "http://localhost/CB_BackEnd/submit_problem.php",
+      url: "http://localhost/Server/submit_problem.php",
       type: "POST",
       contentType: "application/json",
       data: JSON.stringify({
@@ -84,7 +84,7 @@ loadProblems();
 
     if (confirm('Are you sure you want to delete this problem?')) {
       $.ajax({
-        url: "http://localhost/CB_BackEnd/submit_problem.php",
+        url: "http://localhost/Server/submit_problem.php",
         type: "POST",
         contentType: "application/json",
         data: JSON.stringify({ id:id,
