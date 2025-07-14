@@ -1,98 +1,79 @@
 <?php
+header('Content-Type: application/json');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: POST');
+header('Access-Control-Allow-Headers: Content-Type');
 
 require_once 'config.php';
 
-header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');    
-header('Access-Control-Allow-Methods: POST'); 
-header('Access-Control-Allow-Headers: Content-Type');
+$json_data = file_get_contents('php://input');
+$data = json_decode($json_data, true);
 
-
-
-if($_SERVER['REQUEST_METHOD']=='POST'){
-$data = json_decode(file_get_contents('php://input'), true);
-
-if($data['type']=="INSERT"){
-    $name=isset($data['name'])?$data['name']:null;
-    $description=isset($data['description'])?$data['description']:null;
-    $difficulty=isset($data['difficulty'])?$data['difficulty']:null;
-    $tags = $data['tags'] ?? [];
-
-    if (empty($name) || empty($description) || empty($difficulty)) {
-    echo json_encode(['success' => false, 'message' => 'Required fields missing']);
-    exit;
+if (!isset($data['name']) || !isset($data['description']) || 
+    !isset($data['difficulty']) || !isset($data['type'])) {
+    http_response_code(400);
+    echo json_encode(array("status" => "error", "message" => "Missing required fields"));
+    exit();
 }
 
+if ($data['type'] === 'INSERT') {
+    $name = trim($data['name']);
+    $description = trim($data['description']);
+    $difficulty = trim($data['difficulty']);
+    $tags = isset($data['tags']) ? $data['tags'] : array();
+    
+    $allowed_difficulties = array('Easy', 'Medium', 'Hard');
+    if (!in_array($difficulty, $allowed_difficulties)) {
+        http_response_code(400);
+        echo json_encode(array("status" => "error", "message" => "Invalid difficulty level"));
+        exit();
+    }
+    
+    $pdo->beginTransaction();
+    
     try {
-    $stmt = $pdo->prepare("INSERT INTO problems (name, description, difficulty) VALUES (:name, :description,:difficulty)");
-
-    $stmt->execute([
-        ':name' => $name,
-        ':description' => $description,
-        ':difficulty' => $difficulty,
-    ]);
-
-    $problemid=$pdo->lastInsertId();
-
-  
-        if(!empty($tags)){
-            $tagstmt=$pdo->prepare("INSERT INTO problem_tags(tag_name,problem_id) VALUES(:tag,:problemid)");
-
-            foreach($tags as $tag){
-                $tagstmt->execute([
-                    ':tag'=>$tag,
-                    ':problemid'=>$problemid
+        $stmt = $pdo->prepare("INSERT INTO problems (name, description, difficulty) VALUES (:name, :description, :difficulty)");
+        
+        $stmt->execute([
+            ':name' => $name,
+            ':description' => $description,
+            ':difficulty' => $difficulty
+        ]);
+        
+        $problem_id = $pdo->lastInsertId();
+        
+        if (!empty($tags)) {
+            foreach ($tags as $tag) {
+                $tag = trim($tag);
+                if (empty($tag)) continue;
+                
+                $tag_stmt = $pdo->prepare("INSERT INTO problem_tags (tag_name, problem_id) VALUES (:tag_name, :problem_id)");
+                $tag_stmt->execute([
+                    ':tag_name' => $tag,
+                    ':problem_id' => $problem_id
                 ]);
             }
+        }
         
+        $pdo->commit();
+        
+        http_response_code(201);
+        echo json_encode(array(
+            "status" => "success",
+            "message" => "Problem submitted successfully!",
+            "problem_id" => $problem_id
+        ));
+        
+    } catch (Exception $e) {
+        $pdo->rollBack();
+        http_response_code(500);
+        echo json_encode(array(
+            "status" => "error",
+            "message" => "Failed to submit problem: " . $e->getMessage()
+        ));
     }
-
-    echo json_encode(['success' => true, 'message' => 'Problem submitted successfully']);
-} catch (PDOException $e) {
-    echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
+} else {
+    http_response_code(400);
+    echo json_encode(array("status" => "error", "message" => "Invalid operation type"));
 }
-    
-    
-}
-
-if($data['type']=="UPDATE"){
-    $id=isset($data['id'])?$data['id']:null;
-    $name=isset($data['name'])?$data['name']:null;
-    $description=isset($data['description'])?$data['description']:null;
-    $difficulty=isset($data['difficulty'])?$data['difficulty']:null;
-    if (empty($id) || empty($name) || empty($description) || empty($difficulty)) {
-    echo json_encode(['success' => false, 'message' => 'Required fields missing']);
-    exit;
-    }
-    try{
-        $stmt=$pdo->prepare("UPDATE problems SET name=:name,description=:description,difficulty=:difficulty
-        WHERE problem_id=:id");
-        $stmt->execute([
-            ':name'=>$name,
-            ':description'=>$description,
-            ':difficulty'=>$difficulty,
-            ':id'=>$id
-        ]);
-         echo json_encode(['success' => true, 'message' => 'Problem Updated successfully']);
-    } catch (PDOException $e) {
-    echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
-}
-
-}
-if($data['type']=="DELETE"){
-    $id=isset($data['id'])?$data['id']:null;
-     try{
-        $stmt=$pdo->prepare("DELETE FROM problems
-        WHERE problem_id=:id");
-        $stmt->execute([
-            
-            ':id'=>$id
-        ]);
-         echo json_encode(['success' => true, 'message' => 'Problem Deleted successfully']);
-    }catch (PDOException $e) {
-    echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
-}
-}
-
-
-}
+?>
