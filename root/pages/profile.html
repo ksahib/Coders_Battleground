@@ -122,13 +122,11 @@
 
                         const { points, solved, totals } = resp.chart;
 
-                        // compute the total points (for center percent) and total possible points
+                        //total points (for center percent) and total possible points
                         const totalEarnedPoints = points.Easy + points.Medium + points.Hard;
                         const totalProblems = totals.Easy + totals.Medium + totals.Hard;
 
-                        // now render the chart
                         includeHtml('chart', '../components/circle-progress.html', () => {
-                            // 2️⃣ Once it's in the DOM, render our doughnut
                             getChart("circleChart", {
                                 easy: resp.chart.solved.Easy,
                                 medium: resp.chart.solved.Medium,
@@ -136,8 +134,8 @@
                                 total: totalProblems
                             });
 
-                            // 3️⃣ Now compute max possible points from points_dists
-                            const pd = resp.point_pd; // { easy:10, medium:20, hard:30 }
+                            //max possible points from points_dists
+                            const pd = resp.point_pd; // { easy:5, medium:15, hard:25 }
                             const maxPoints = totals.Easy * pd.Easy
                                 + totals.Medium * pd.Medium
                                 + totals.Hard * pd.Hard;

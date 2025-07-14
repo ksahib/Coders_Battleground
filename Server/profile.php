@@ -72,7 +72,7 @@ try {
     $stmt3->execute(['user_id' => $_SESSION['user']]);
     $activities = $stmt3->fetchAll(PDO::FETCH_ASSOC);
 
-    // 1️⃣ Points per difficulty (total points the user earned)
+    //Points per difficulty (total points the user earned)
     $pointsSql = "
         SELECT 
             p.difficulty,
@@ -92,7 +92,7 @@ try {
     $pointsStmt->execute(['user_id' => $_SESSION['user']]);
     $points = $pointsStmt->fetchAll(PDO::FETCH_KEY_PAIR);
 
-    // 2️⃣ Number of problems solved per difficulty
+    //Number of problems solved per difficulty
     $solvedSql = "
         SELECT 
             p.difficulty,
@@ -110,7 +110,7 @@ try {
     $solvedStmt->execute(['user_id' => $_SESSION['user']]);
     $solved = $solvedStmt->fetchAll(PDO::FETCH_KEY_PAIR);
 
-    // 3️⃣ Total problems available per difficulty
+    //Total problems available per difficulty
     $totalSql = "
         SELECT 
             difficulty,
@@ -123,7 +123,7 @@ try {
     $totalStmt = $pdo->query($totalSql);
     $totals = $totalStmt->fetchAll(PDO::FETCH_KEY_PAIR);
 
-    // Make sure all three difficulties exist in each array
+    //Making sure all three difficulties exist in each array
     foreach (['Easy','Medium','Hard'] as $d) {
         if (!isset($points[$d]))  $points[$d]  = 0;
         if (!isset($solved[$d]))  $solved[$d]  = 0;
