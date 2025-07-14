@@ -112,49 +112,43 @@
             const form = document.getElementById('loginForm');
             const errorDiv = document.getElementById('loginError');
 
-            form.addEventListener('submit', e => {
+            form.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                errorDiv.textContent = '';       // Clear previous errors
+                errorDiv.textContent = '';
 
-                const email = form.email.value;
-                const password = form.password.value;
-                const url = 'http://localhost/Server/login.php';
+                const email = form.email.value.trim();
+                const password = form.password.value.trim();
 
-                const xhr = new XMLHttpRequest();
-                xhr.open('POST', url, true);
-                xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+                // validation…
+                if (!email || !password) {
+                    errorDiv.textContent = 'Please fill in both fields.';
+                    return;
+                }
 
-                xhr.onreadystatechange = () => {
-                    if (xhr.readyState !== XMLHttpRequest.DONE) return;
+                try {
+                    const resp = await fetch('http://localhost/Server/login.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        credentials: 'include',
+                        body: JSON.stringify({ email, password }),
+                    });
+                    const data = await resp.json();
 
-                    if (xhr.status === 200) {
-                        let resp;
-                        try {
-                            resp = JSON.parse(xhr.responseText);
-                        } catch {
-                            errorDiv.textContent = 'Unexpected server response.';
-                            return;
-                        }
-
-                        if (resp.success) {
-                            // successful login
-                            window.location.href = 'http://localhost/root/pages/home.html';
-                        } else {
-                            errorDiv.textContent = resp.error || resp.message || 'Login failed.';
-                        }
-
+                    if (data.success) {
+                        window.location.href = 'home.html';
                     } else {
-                        errorDiv.textContent = `Error ${xhr.status}: ${xhr.statusText}`;
+                        errorDiv.textContent = data.error || 'Login failed.';
                     }
-                };
-
-                xhr.send(JSON.stringify({ email, password }));
+                } catch (err) {
+                    console.error(err);
+                    errorDiv.textContent = 'Server error.';
+                }
             });
         });
 
 
     </script>
-    <script src="../assets/js/login_signup.js"></script>
+     <script src="../assets/js/login_signup.js"></script>
 </body>
 
 </html>

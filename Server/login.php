@@ -1,4 +1,6 @@
 <?php
+require_once "config.php";
+opcache_reset();
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Content-Type");
 header("Content-Type: application/json");
@@ -6,7 +8,6 @@ header("Content-Type: application/json");
 // ini_set('display_startup_errors', 1);
 // error_reporting(E_ALL);
 
-require_once "config.php";
 
 date_default_timezone_set('Asia/Dhaka');
 
@@ -38,7 +39,6 @@ if($_SERVER['REQUEST_METHOD']=== "POST"){
 // }
 
         if($user && $password === $user['password']) {
-            session_start();
             $_SESSION['user'] = $user['email'];
             
             echo json_encode(["success" => true, "message" => "Login successful"]);
