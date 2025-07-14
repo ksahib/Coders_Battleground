@@ -1,101 +1,183 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
     <meta charset="UTF-8" />
-     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>project</title>
-     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coders Battleground</title>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/login_signup.css">
-
 </head>
-<body>
-    <header class ="header"> 
-        <nav class="navbar">
-            <a href="">Home</a>
-            <a href="">About</a>
-            <a href="">Contact Us</a>
-            <a href="">Help</a>
-        </nav>
 
-       
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Contact Us</a>
+            <a href="#">Help</a>
+        </nav>
     </header>
 
-    <div class="background">
-    </div>
+    <div class="background"></div>
     <div class="container">
         <div class="item">
-            <h2 class="logo"> CODERS BATTLEGROUND </h2><br>
+            <h2 class="logo">CODERS BATTLEGROUND</h2>
             <div class="text-item">
-               <br> <h2>Welcome!<br>
-                <span> To Our Website
-                </span></h2>
-                <p class="one"> Step into the ultimate arena where logic meets creativity, speed challenges precision. Only the sharpest minds rise to the top. </p>
-                <p class="two">Code.Compete.Conquer.</p>
+                <h2>Welcome!<br><span>To Our Website</span></h2>
+                <p class="one">Step into the ultimate arena where logic meets creativity, speed challenges precision. Only the sharpest minds rise to the top.</p>
+                <p class="two">Code. Compete. Conquer.</p>
                 <p class="three">Are you ready to become your best?</p>
             </div>
         </div>
 
         <div class="login-section">
+            <!-- Sign In Form -->
             <div class="form-box login">
-                <form action="">
+                <form id="loginForm">
                     <h2>Sign In</h2>
-                <div class="input-box">
-                    <span class="icon"><i class="bx bxs-envelope"></i></span>
-                    <input type="email" required>
-                    <label for="">Email</label>
-                </div>
-                 <div class="input-box">
-                    <span class="icon"><i class= "bx bxs-lock-alt" ></i></span>
-                    <input type="password" required>
-                    <label for="">Password</label>
-                </div>
-                <div class="remember-password">
-                    <label for="" ><input type="checkbox">Remember Me</label>
-                    <a href="#">Forget Password</a>
-                </div>
-                <br>
-                <button class="btn">Log In</button>
-                <div class="create-account">
-                    <p>Create A New Account? <a href="#" class="register-link">Sign Up</a></p>
-
-                </div>
-              </form>
-            </div>
-
-
-
-             <div class="form-box register">
-                <form action="">
-
-                    <h2>Sign Up</h2>
-
                     <div class="input-box">
-                        <span class="icon"><i class='bx bxs-user'></i></span>
-                        <input type="text" required>
-                        <label >Username</label>
+                        <span class="icon"><i class="bx bxs-envelope"></i></span>
+                        <input type="email" id="loginEmail" name="email" required>
+                        <label>Email</label>
                     </div>
                     <div class="input-box">
-                        <span class="icon"><i class='bx bxs-envelope'></i></span>
-                        <input type="email" required>
-                        <label >Email</label>
-                    </div>
-                    <div class="input-box">
-                        <span class="icon"><i class='bx bxs-lock-alt' ></i></span>
-                        <input type="password" required>
+                        <span class="icon"><i class="bx bxs-lock-alt"></i></span>
+                        <input type="password" id="loginPassword" name="password" required>
                         <label>Password</label>
                     </div>
                     <div class="remember-password">
-                        <label for=""><input type="checkbox">I agree with this statment</label>
+                        <label><input type="checkbox" name="remember"> Remember Me</label>
+                        <a href="#">Forget Password</a>
                     </div>
-                    <button class="btn">Login In</button>
+                    <div id="loginError" class="error-message"></div>
+                    <button type="submit" class="btn" id="signInBtn">Sign In</button>
+                    <div class="create-account">
+                        <p>Create A New Account? <a href="#" class="register-link">Sign Up</a></p>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Sign Up Form -->
+            <div class="form-box register">
+                <form id="signupForm">
+                    <h2>Sign Up</h2>
+                    <div class="input-box">
+                        <span class="icon"><i class='bx bxs-user'></i></span>
+                        <input type="text" id="signupUsername" name="username" required>
+                        <label>Username</label>
+                    </div>
+                    <div class="input-box">
+                        <span class="icon"><i class="bx bxs-envelope"></i></span>
+                        <input type="email" id="signupEmail" name="email" required>
+                        <label>Email</label>
+                    </div>
+                    <div class="input-box">
+                        <span class="icon"><i class="bx bxs-lock-alt"></i></span>
+                        <input type="password" id="signupPassword" name="password" required>
+                        <label>Password</label>
+                    </div>
+                    <div class="remember-password">
+                        <label><input type="checkbox" id="agreeTerms" name="agree" required> I agree with the terms</label>
+                    </div>
+
+                    <div class="chk">
+                        <label><input type="checkbox" id="company" required> Register me as a company</label>
+                    </div>
+                    <div id="signupError" class="error-message"></div>
+                    <button type="submit" class="btn" id="signUpBtn">Sign Up</button>
                     <div class="create-account">
                         <p>Already Have An Account? <a href="#" class="login-link">Sign In</a></p>
                     </div>
                 </form>
             </div>
-
         </div>
-    </div> 
-    <script src ="../assets/js/login_signup.js"></script>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // LOGIN via Fetch
+            const loginForm = document.getElementById('loginForm');
+            const loginError = document.getElementById('loginError');
+            loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                loginError.textContent = '';
+                const email = loginForm.email.value.trim();
+                const password = loginForm.password.value.trim();
+                if (!email || !password) {
+                    loginError.textContent = 'Please fill in both fields.';
+                    return;
+                }
+                try {
+                    const resp = await fetch('http://localhost/Server/login.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        credentials: 'include',
+                        body: JSON.stringify({ email, password }),
+                    });
+                    const data = await resp.json();
+                    if (data.success) {
+                        window.location.href = data.role === 'company' ? 'admin-dashboard.html' : 'home.html';
+                    } else {
+                        loginError.textContent = data.error || 'Login failed.';
+                    }
+                } catch (err) {
+                    console.error(err);
+                    loginError.textContent = 'Server error.';
+                }
+            });
+
+            // SIGNUP via XHR
+            const signupForm = document.getElementById('signupForm');
+            const signupError = document.getElementById('signupError');
+            signupForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                signupError.textContent = '';
+                const username = signupForm.username.value.trim();
+                const email = signupForm.email.value.trim();
+                const password = signupForm.password.value.trim();
+                const agree = signupForm.agree.checked;
+
+                if (!username || !email || !password || !agree) {
+                    signupError.textContent = 'Please complete all fields and agree to the terms.';
+                    return;
+                }
+
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', 'http://localhost/coders_battleground/Server/signup.php', true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.withCredentials = true;
+                xhr.onreadystatechange = () => {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        try {
+                            const res = JSON.parse(xhr.responseText);
+                            if (res.success) {
+                                window.location.href = 'home.html';
+                            } else {
+                                signupError.textContent = res.error || 'Signup failed.';
+                            }
+                        } catch (err) {
+                            signupError.textContent = 'Invalid server response.';
+                        }
+                    }
+                };
+                xhr.onerror = () => signupError.textContent = 'Server error.';
+                xhr.send(JSON.stringify({ username, email, password }));
+            });
+
+            // Toggle between forms
+            document.querySelectorAll('.register-link').forEach(el => el.addEventListener('click', () => {
+                document.querySelector('.login').classList.toggle('active');
+                document.querySelector('.register').classList.toggle('active');
+            }));
+            document.querySelectorAll('.login-link').forEach(el => el.addEventListener('click', () => {
+                document.querySelector('.login').classList.toggle('active');
+                document.querySelector('.register').classList.toggle('active');
+            }));
+        });
+    </script>
+    <script src="../assets/js/login_signup.js"></script>
 </body>
+
 </html>
+v
