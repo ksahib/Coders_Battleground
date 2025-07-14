@@ -23,7 +23,7 @@ function renderProblems(problems) {
 
 function fetchProblems() {
   $.ajax({
-    url: "http://localhost/CB_BackEnd/view_problem.php",
+    url: "http://localhost/Server/view_problem.php",
     method: "GET",
     dataType: "json",
     success: function (data) {
@@ -98,7 +98,7 @@ $(document).ready(function () {
   const $container=$("#tag_holder_row")
     $(document).ready(function(){
         $.ajax({
-          url: "http://localhost/CB_BackEnd/get_tags.php",
+          url: "http://localhost/Server/get_tags.php",
           method: "GET",
           dataType: "json",
           success: function(tags){

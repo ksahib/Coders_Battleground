@@ -12,7 +12,7 @@ $(document).ready(function(){
         }
 
         $.ajax({
-            url: "http://localhost/CB_BackEnd/submit_problem.php",
+            url: "http://localhost/Server/submit_problem.php",
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(problem),

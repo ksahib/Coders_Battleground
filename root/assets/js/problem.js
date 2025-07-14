@@ -10,7 +10,7 @@ $(document).ready(function () {
   }
 
   $.ajax({
-    url: "http://localhost/CB_BackEnd/problem_desc.php",
+    url: "http://localhost/Server/problem_desc.php",
     method: "GET",
     data: { name: problemName },
     dataType: "json",

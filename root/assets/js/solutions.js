@@ -3,7 +3,7 @@ $(document).ready(function () {
   const problemName = urlParams.get("name");
 
   $.ajax({
-    url: "http://localhost/CB_BackEnd/get_solutions.php",
+    url: "http://localhost/Server/get_solutions.php",
     method: "GET",
     data: { name: problemName },
     dataType: "json",
