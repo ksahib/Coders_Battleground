@@ -1,34 +1,44 @@
+let problemData = {};
 
 $(document).ready(function () {
-  const problemData = {
-    title: "Two Sum",
-    difficulty: "Easy",
-    acceptance: "45%",
-    description: `
-      <p>Given an array of integers <code>nums</code> and an integer <code>target</code>, return indices of the two numbers such that they add up to <code>target</code>.</p>
-      <p>You may assume that each input would have exactly one solution, and you may not use the same element twice.</p>
-      <p>You can return the answer in any order.</p>
+  const urlParams = new URLSearchParams(window.location.search);
+  const problemName = urlParams.get("name");
 
-      <h4>Example:</h4>
-      <pre><code>Input: nums = [2,7,11,15], target = 9  
-Output: [0,1]</code></pre>
+  if (!problemName) {
+    $('#problem-title').text("No problem name provided in URL.");
+    return;
+  }
 
-      <h4>Constraints:</h4>
-      <ul>
-        <li><code>2 ≤ nums.length ≤ 10⁴</code></li>
-        <li><code>-10⁹ ≤ nums[i] ≤ 10⁹</code></li>
-        <li><code>-10⁹ ≤ target ≤ 10⁹</code></li>
-        <li>Only one valid answer exists.</li>
-      </ul>
-    `
-  };
+  $.ajax({
+    url: "http://localhost/CB_BackEnd/problem_desc.php",
+    method: "GET",
+    data: { name: problemName },
+    dataType: "json",
+    success: function (problem) {
+      problemData = {
+        title: problem.name,
+        difficulty: problem.difficulty,
+       
+        description: `
+          <p>${problem.description}</p>
 
-  
-  $('#problem-title').text(problemData.title);
-  $('#problem-difficulty')
-    .text(problemData.difficulty)
-    .addClass(problemData.difficulty.toLowerCase()); 
+          <h4>Example:</h4>
+          <pre><code>Input: ${problem.input}<br>Output: ${problem.output}</code></pre>
+        `
+      };
 
-  $('#problem-acceptance').text(`Acceptance: ${problemData.acceptance}`);
-  $('#problem-description').html(problemData.description);
+      $('#problem-title').text(problemData.title);
+      $('#problem-difficulty')
+        .text(problemData.difficulty)
+        .addClass(problemData.difficulty); 
+
+      
+      $('#problem-description').html(problemData.description);
+      $('.try-button').attr('href', `IDE.html?name=${encodeURIComponent(problem.name)}`);
+      $('#solution').attr('href', `solutions.html?name=${encodeURIComponent(problem.name)}`);
+    },
+    error: function () {
+      $('#problem-title').text("Failed to load problem details.");
+    }
+  });
 });
