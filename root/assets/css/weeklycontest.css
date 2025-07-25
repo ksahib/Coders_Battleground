@@ -1,0 +1,47 @@
+body {
+      background-color: #1a1a1a;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+    .contest-title {
+      color: #f97316;
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+    .btn-virtual {
+      background-color: #9333ea;
+      color: white;
+      border: none;
+    }
+    .btn-virtual:hover {
+      background-color: #7e22ce;
+    }
+    .bonus-section, .note-section {
+      background-color: #2c2c2c;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 30px;
+    }
+    .ranking-box, .problem-box {
+      background-color: #111;
+      border-radius: 10px;
+      padding: 20px;
+    }
+    .problem-list .list-group-item {
+      background-color: #1f1f1f;
+      color: white;
+      border: none;
+    }
+    .tab-buttons {
+      margin-top: 30px;
+    }
+    .tab-buttons button {
+      margin-right: 10px;
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }

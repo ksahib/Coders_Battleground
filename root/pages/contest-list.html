@@ -62,15 +62,28 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             const contests = [
-                "Contest A", "Contest B", "Contest C","Contest D", "Contest E", "Contest F","Contest G", "Contest H", "Contest I","Contest J", "Contest K", "Contest L",
+                { label: "Contest A", url: "../pages/weeklycontest.html" },
+                { label: "Contest B", url: "../pages/weeklycontest.html" },
+                { label: "Contest C", url: "../pages/weeklycontest.html" },
+                { label: "Contest D", url: "../pages/weeklycontest.html" },
+                { label: "Contest E", url: "../pages/weeklycontest.html" },
+                { label: "Contest F", url: "../pages/weeklycontest.html" },
+                { label: "Contest G", url: "../pages/weeklycontest.html" },
+                { label: "Contest H", url: "../pages/weeklycontest.html" },
+                { label: "Contest I", url: "../pages/weeklycontest.html" },
+                { label: "Contest J", url: "../pages/weeklycontest.html" },
+                { label: "Contest K", url: "../pages/weeklycontest.html" },
+                { label: "Contest L", url: "../pages/weeklycontest.html" },
             ];
-            const contestB = [];
+            const myContests = [
+                
+            ];
 
             new ListRenderer({
                 containerId: 'list-group-ul',
                 dataSets: {
                     contests: contests,
-                    mycontests: contestB
+                    mycontests: myContests
                 },
                 defaultKey: 'contests',
                 buttonMap: {
@@ -81,6 +94,7 @@
                 emptyClass: 'list-empty'
             });
         });
+
 
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

@@ -20,6 +20,7 @@
 
 <body>
   <div id="NavBar_Holder"></div>
+  <!-- To load navbar from components -->
   <script>$("#NavBar_Holder").load("../components/navbar.html")</script>
   <div class="featured-section container my-4">
     <h2 class="mb-3">Featured</h2>
@@ -36,7 +37,8 @@
     <div class="search-wrapper">
     <div class="search-box dark">
       <i class="fas fa-search search-icon"></i>
-      <input type="text" class="form-control search-input" placeholder="Search for questions to practice...">
+       <input type="text" class="form-control search-input" id="search-box" placeholder="Search...">
+       <ul id="suggestions" class="list-group position-absolute w-100" style="z-index: 1050;"></ul>
       <button class="btn btn-primary search-button">Search</button>
     </div>
     <div class="dropdown">
@@ -90,7 +92,7 @@
           </tr>
         </thead>
         <tbody id="problem-list">
-
+        <!-- List will be dynamically viewed here -->
         </tbody>
       </table>
     </div>

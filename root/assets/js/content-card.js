@@ -1,3 +1,4 @@
+//script for creating custom bootstrap cards dynamically based on parameters
 function createContentCard(
   type,
   title,

@@ -9,9 +9,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="../assets/js/include.js"></script>
-    
+
     <link rel="stylesheet" href="../assets/css/create-contest.css">
-    
+
 </head>
 
 <body>
@@ -20,12 +20,11 @@
         includeHtml('navbar-placeholder', '../components/admin-navbar.html');
     </script>
 
-
     <div class="content-section container my-4">
 
         <h2 class="mb-4">Create New Contest</h2>
 
-        <form>
+        <form action="http://localhost/Server/create_contests.php" method="POST">
             <div class="mb-3">
                 <label for="contestName" class="form-label">Contest Name</label>
                 <input type="text" class="form-control" id="contestName"
@@ -39,10 +38,19 @@
 
             <hr class="my-4">
 
-            <h4 class="mb-3">Problems</h4>
+            <h4 class="mb-3">Existing Problems</h4>
+            <p class="text-muted">Add problems using existing Problem IDs from the platform.</p>
             <div id="problems-container">
             </div>
-            <button type="button" id="add-problem-btn" class="btn btn-outline-success mt-2">Add Problem</button>
+            <button type="button" id="add-problem-btn" class="btn btn-outline-success mt-2">Add Existing Problem</button>
+
+            <hr class="my-4">
+
+            <h4 class="mb-3">Company Problems</h4>
+            <p class="text-muted">Add problems from your company's problem bank.</p>
+            <div id="company-problems-container">
+            </div>
+            <button type="button" id="add-company-problem-btn" class="btn btn-outline-primary mt-2">Add Company Problem</button>
 
             <hr class="my-4">
 
@@ -57,26 +65,6 @@
                     <input type="datetime-local" class="form-control" id="endTime" required>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="contestType" class="form-label">Contest Type</label>
-                    <select id="contestType" class="form-select">
-                        <option value="public" selected>Public</option>
-                        <option value="private">Private (Password Protected)</option>
-                        <option value="invite-only">Invite-Only</option>
-                    </select>
-                </div>
-                <div class="col-md-6 mb-3" id="password-field" style="display: none;">
-                    <label for="contestPassword" class="form-label">Contest Password</label>
-                    <input type="password" class="form-control" id="contestPassword">
-                </div>
-            </div>
-            <div class="mb-3" id="allowed-users-field" style="display: none;">
-                <label for="allowedUsers" class="form-label">Allowed Users</label>
-                <textarea class="form-control" id="allowedUsers" rows="3"
-                    placeholder="Enter usernames, one per line."></textarea>
-                <div class="form-text">Only these users will be able to register for the contest.</div>
-            </div>
 
             <hr class="my-4">
 
@@ -84,69 +72,15 @@
         </form>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // --- Logic for Contest Type Settings ---
-            const contestTypeSelect = document.getElementById('contestType');
-            const passwordField = document.getElementById('password-field');
-            const allowedUsersField = document.getElementById('allowed-users-field');
-
-            function toggleSettingsFields() {
-                const selectedType = contestTypeSelect.value;
-                passwordField.style.display = (selectedType === 'private') ? 'block' : 'none';
-                allowedUsersField.style.display = (selectedType === 'invite-only') ? 'block' : 'none';
-            }
-            contestTypeSelect.addEventListener('change', toggleSettingsFields);
-            toggleSettingsFields();
-
-            // --- Logic for Dynamic Problem Fields ---
-            const problemsContainer = document.getElementById('problems-container');
-            const addProblemBtn = document.getElementById('add-problem-btn');
-
-            let problemCount = 0;
-
-            function addProblemField() {
-                problemCount++;
-                const problemFieldGroup = document.createElement('div');
-                problemFieldGroup.className = 'problem-field-group mb-3';
-
-                // creating the HTML for the new fields
-                problemFieldGroup.innerHTML = `
-                    <div class="row align-items-end">
-                        <div class="col-md-4">
-                            <label class="form-label">Problem Title</label>
-                            <input type="text" class="form-control" name="problem_titles[]" placeholder="Problem ${String.fromCharCode(64 + problemCount)} Title" required>
-                        </div>
-                        <div class="col-md-3">
-                            <label class="form-label">Problem ID</label>
-                            <input type="text" class="form-control" name="problem_ids[]" placeholder="e.g., TWOPOINTERS" required>
-                        </div>
-                        <div class="col-md-3">
-                            <label class="form-label">Score</label>
-                            <input type="number" class="form-control" name="problem_scores[]" placeholder="100" required>
-                        </div>
-                        <div class="col-md-2">
-                            <button type="button" class="btn btn-danger w-100 remove-problem-btn">Remove</button>
-                        </div>
-                    </div>
-                `;
-
-                problemsContainer.appendChild(problemFieldGroup);
-
-                problemFieldGroup.querySelector('.remove-problem-btn').addEventListener('click', () => {
-                    problemFieldGroup.remove();
-                });
-            }
-
-            addProblemBtn.addEventListener('click', addProblemField);
-
-            addProblemField();
-        });
-    </script>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
+    
+    <!-- Load jQuery if not already loaded -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- Load create_contest.js -->
+    <script src="../assets/js/create_contest.js"></script>
 
 </body>
 
