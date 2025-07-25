@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="../assets/css/content-card.css">
     <link rel="stylesheet" href="../assets/css/featured.css">
     <link rel="stylesheet" href="../assets/css/global-style.css">
     <script src="../assets/js/include.js"></script>
 
 </head>
-
 <body>
     <div id="navbar-placeholder"></div>
+    <script>
+        includeHtml('navbar-placeholder', '../components/navbar.html');
+    </script>
 
     <div class="featured-section container my-4">
         <h2 class="mb-3">Featured</h2>
         <div id="cards-row-feature" class="featured-scroll d-flex flex-row gap-3">
-
+           
         </div>
     </div>
     <div class="interview-section container my-4">
@@ -34,99 +34,43 @@
 
     <script src="../assets/js/content-card.js"></script>
     <script>
-        function generateGradient() {
-            const gradients = [
-                ['#1E90FF', '#00FF85'],
-                ['#7F00FF', '#E100FF'],
-                ['#11998e', '#38ef7d'],
-                ['#ff9966', '#ff5e62'],
-                ['#ff6a88', '#6dd5ed'],
-                ['#00c6fb', '#005bea'],
-                ['#f7971e', '#ffd200'],
-                ['#29323c', '#485563'],
-                ['#8f00ff', '#00eaff'],
-                ['#232526', '#1dd1a1']
-            ];
-
-            const [start, end] = gradients[Math.floor(Math.random() * gradients.length)];
-            return `linear-gradient(135deg, ${start} 0%, ${end} 100%)`;
-        }
-
-        function onNavbarLoaded() {
-            const span = document.getElementById('nav-username');
-            if (span) span.textContent = '…loading…';
-
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', 'http://localhost/Server/home.php', true);
-            xhr.withCredentials = true;
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.onload = () => {
-                if (xhr.status === 200) {
-                    const resp = JSON.parse(xhr.responseText);
-                    // replace username
-                    if (span && resp.user) span.textContent = resp.user;
-
-                    //render featured content
-                    const container = document.getElementById('cards-row-feature');
-                    resp.problems.forEach(p => {
-                        const gradient = generateGradient();
-                        container.appendChild(
-                            createContentCard(
-                                `${p.tags[0] || 'Undefined'}`,
-                                `${p.name}`,
-                                '18rem', '220px', '#', gradient
-                            )
-                        );
-                    });
-
-
-                    // render interviews
-                    const container2 = document.getElementById('cards-row-interview');
-                    resp.interviews.forEach(i => {
-                        const gradient = generateGradient();
-                        container2.appendChild(
-                            createContentCard(
-                                'Interview',
-                                `${i.company_name}<br>${i.position_open}`,
-                                '18rem', '220px', '#', gradient
-                            )
-                        );
-                    });
-
-                    // render contests
-                    const container3 = document.getElementById('cards-row-contests');
-                    resp.contests.forEach(c => {
-                        const gradient = generateGradient();
-                        container3.appendChild(
-                            createContentCard(
-                                'Contest',
-                                `${c.company_name}<br>${c.contest_name}`,
-                                '18rem', '220px', '#', gradient
-                            )
-                        );
-                    });
-                }
-                else if (xhr.status === 401) {
-                    window.location.href = 'login_signup.html';
-                }
-            };
-            xhr.send(JSON.stringify({}));
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            includeHtml(
-                'navbar-placeholder',
-                '../components/navbar.html',
-                onNavbarLoaded
-            );
-        });
-
+        const container = document.getElementById('cards-row-feature');
+        container.appendChild(createContentCard('Interview', 'Google <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #1E90FF 0%, #00FF85 100%)'));
+        container.appendChild(createContentCard('Interview', 'Amazon <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #7F00FF 0%, #E100FF 100%)'));
+        container.appendChild(createContentCard('Interview', 'Microsoft <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)'));
+        container.appendChild(createContentCard('Interview', 'Apple <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #ff9966 0%, #ff5e62 100%)'));
+        container.appendChild(createContentCard('Interview', 'Netflix <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #ff6a88 0%, #ff99ac 50%, #6dd5ed 100%)'));
+        container.appendChild(createContentCard('Interview', 'Conda <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #00c6fb 0%, #005bea 100%)'));
+        container.appendChild(createContentCard('Interview', 'Nvidia <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #f7971e 0%, #ffd200 100%)'));
+        container.appendChild(createContentCard('Interview', 'Linux <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #29323c 0%, #485563 100%)'));
         
-        
-
-        const container3 = document.getElementById('cards-row-contests');
-
     </script>
+    <script>
+        const container2 = document.getElementById('cards-row-interview');
+        container2.appendChild(createContentCard('Interview', 'Google <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #1E90FF 0%, #00FF85 100%)'));
+        container2.appendChild(createContentCard('Interview', 'Amazon <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #7F00FF 0%, #E100FF 100%)'));
+        container2.appendChild(createContentCard('Interview', 'Microsoft <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)'));
+        container2.appendChild(createContentCard('Interview', 'Apple <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #ff9966 0%, #ff5e62 100%)'));
+        container2.appendChild(createContentCard('Interview', 'Netflix <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #ff6a88 0%, #ff99ac 50%, #6dd5ed 100%)'));
+        container2.appendChild(createContentCard('Interview', 'Conda <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #00c6fb 0%, #005bea 100%)'));
+        container2.appendChild(createContentCard('Interview', 'Nvidia <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #f7971e 0%, #ffd200 100%)'));
+        container2.appendChild(createContentCard('Interview', 'Linux <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #29323c 0%, #485563 100%)'));
+        
+    </script>
+    <script>
+        const container3 = document.getElementById('cards-row-contests');
+        container3.appendChild(createContentCard('Contests', 'Google', '18rem', '220px', '#', 'linear-gradient(135deg, #8f00ff 0%, #00eaff 100%)'));
+        container3.appendChild(createContentCard('Contests', 'Amazon', '18rem', '220px', '#', 'linear-gradient(135deg, #f8ffae 0%, #43cea2 100%)'));
+        container3.appendChild(createContentCard('Contests', 'Microsoft', '18rem', '220px', '#', 'linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #f6d365 100%)'));
+        container3.appendChild(createContentCard('Contests', 'Apple', '18rem', '220px', '#', 'linear-gradient(135deg, #4776e6 0%, #8e54e9 100%)'));
+        container3.appendChild(createContentCard('Contests', 'Netflix', '18rem', '220px', '#', 'linear-gradient(135deg, #ff6a88 0%, #ff99ac 50%, #6dd5ed 100%)'));
+        container3.appendChild(createContentCard('Contests', 'Conda', '18rem', '220px', '#', 'linear-gradient(135deg, #00c6fb 0%, #005bea 100%)'));
+        container3.appendChild(createContentCard('Contests', 'Nvidia', '18rem', '220px', '#', 'linear-gradient(135deg, #232526 0%, #1dd1a1 100%)'));
+        container3.appendChild(createContentCard('Contests', 'Linux', '18rem', '220px', '#', 'linear-gradient(135deg, #29323c 0%, #485563 100%)'));
+        
+    </script>
+    
+    
 
 
 
@@ -135,12 +79,7 @@
 
 
 
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
 </body>
-
 </html>

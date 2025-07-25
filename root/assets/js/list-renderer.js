@@ -55,18 +55,10 @@ class ListRenderer {
         items.forEach(item => {
             const li = document.createElement('li');
             li.className = 'list-group-item';
-
-            const a = document.createElement('a');
-            a.textContent = item.label;
-            a.href = item.url;
-            a.className = 'stretched-link';
-            a.target = '_self';
-
-            li.appendChild(a);
+            li.textContent = item;
             this.container.appendChild(li);
         });
     }
-
 
     setActiveButton(activeId) {
         if (!this.activeClass) return;

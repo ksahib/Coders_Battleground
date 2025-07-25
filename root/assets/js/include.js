@@ -1,4 +1,3 @@
-//injects html components
 function includeHtml(placeholderID, filepath, callback) {
     fetch(filepath)
         .then(response => {
@@ -9,7 +8,7 @@ function includeHtml(placeholderID, filepath, callback) {
             const placeholder = document.getElementById(placeholderID);
             if (placeholder) {
                 placeholder.innerHTML = data;
-                if (callback) callback(); //in case the function needs to run after the html is successfully included
+                if (callback) callback();
             } else {
                 console.error(`Element with id '${placeholderID}' not found.`);
             }

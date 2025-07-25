@@ -17,6 +17,9 @@
 
 <body>
     <div id="navbar-placeholder"></div>
+    <script>
+        includeHtml('navbar-placeholder', '../components/admin-navbar.html');
+    </script>
     <div class="container my-4">
         <div class="row">
             <div class="col-md-4 mb-4">
@@ -35,66 +38,57 @@
             <div class="col-md-6 mb-3">
                 <div class="card">
                     <div class="card-body d-flex flex-column">
-                        <h3 style="padding-bottom: 10%;"><strong>Ongoing Contests</strong></h3>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="live-status">
-                                    <div class="live-container">Ongoing</div>
+                        <h3 style="padding-bottom: 10%;"><strong>Ongoing Contests</strong></h5>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="live-status">
+                                        <div class="live-container">Ongoing</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <h4><strong>Contest Title</strong></h4>
+                                    <p>200 Participants</p>
+                                </div>
+                                <div class="col-md-3">
+                                    <h4><strong>Time Remaining</strong></h4>
+                                    <p><strong>2h 15m</strong></p>
                                 </div>
                             </div>
 
-                            <div class="col-md-5">
-                                <!-- dynamic title here -->
-                                <h4 id="ongoing-title"><strong>Contest Title</strong></h4>
-                                <!-- dynamic participants here -->
-                                <p id="ongoing-participants">200 Participants</p>
-                            </div>
-
-                            <div class="col-md-3">
-                                <h4><strong>Time Remaining</strong></h4>
-                                <!-- dynamic duration here -->
-                                <p id="ongoing-duration"><strong>2h 15m</strong></p>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-6 mb-3" style="padding-left: 18%;">
                 <div class="card">
                     <div class="card-body d-flex flex-column">
-                        <h3 style="padding-bottom: 10%;"><strong>Upcoming Interview</strong></h3>
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <h4><strong>Role</strong></h4>
+                        <h3 style="padding-bottom: 10%;"><strong>Upcoming Interview</strong></h1>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h4><strong>Company</strong></h4>
+                                </div>
+                                <div class="col-md-6">
+                                    <h4><strong>Date</strong></h4>
+                                </div>
                             </div>
-                            <div class="col-md-6">
-                                <h4><strong>Date</strong></h4>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p>Google</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>June 25</p>
+                                </div>
                             </div>
-                        </div>
-                        <hr>
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <!-- dynamic role -->
-                                <p id="upcoming-role">—</p>
-                            </div>
-                            <div class="col-md-6">
-                                <!-- dynamic date -->
-                                <p id="upcoming-date">—</p>
-                            </div>
-                        </div>
                     </div>
                 </div>
+
             </div>
-
-
         </div>
     </div>
     <div class="container my-4">
         <div class="row">
             <div class="col-md-8">
-                <!-- <div class="card h-50%" style="padding-bottom: 5%;">
+                <div class="card h-50%" style="padding-bottom: 5%;">
                     <div class="card-body d-flex flex-column">
                         <h3 style="padding-bottom: 5%;"><strong>Manage Contests</strong></h1>
                             <div class="row">
@@ -127,7 +121,7 @@
                                 </div>
                             </div>
                     </div>
-                </div> -->
+                </div>
                 <div class="card h-50%">
                     <div class="card-body d-flex flex-column">
                         <h3 style="padding-bottom: 5%;"><strong>Interviews Archive</strong></h1>
@@ -171,104 +165,30 @@
         </div>
     </div>
     <script>
+        const createContestCard = document.getElementById("create-contest-card")
+        createContestCard.appendChild(createContentCard(`<i class="material-icons" style="font-size:48px">add</i>`, "Create New <br> Contest", '20rem', '220px', 'Create-Contest.html', 'linear-gradient(135deg, #008080 0%, #00FFFF 100%)'))
+    
+    
+        const publishContestCard = document.getElementById("publish-contest-card")
+        publishContestCard.appendChild(createContentCard(`<i class="material-icons" style="font-size:48px">rocket</i>`, "Publish <br> Contest", '20rem', '220px', '#', 'linear-gradient(135deg, #007FFF 0%, #007BA7 100%)'))
+    
+    
+        const hostInterview = document.getElementById("host-interview-card")
+        hostInterview.appendChild(createContentCard(`<i class="material-icons" style="font-size:48px">mic</i>`, "Host <br> Interview", '20rem', '220px', 'Create-Interview.html', 'linear-gradient(135deg, #550691 0%, #880ED4 100%)'))
+    
+    
+        const totalContests = document.getElementById("total-contests")
+        totalContests.appendChild(createContentCard("Total Contests", "12", '20rem', '150px', '#', 'linear-gradient(135deg, #008080 0%, #00FFFF 100%)'))
 
-        function onNavbarLoaded() {
-            const span = document.getElementById('nav-company-name');
-            if (span) span.textContent = '…loading…';
+        const totalInterviews = document.getElementById("total-interviews")
+        totalInterviews.appendChild(createContentCard("Total Interviews", "10", '20rem', '150px', '#', 'linear-gradient(135deg, #008080 0%, #00FFFF 100%)'))
 
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', 'http://localhost/Server/admin.php', true);
-            xhr.withCredentials = true;
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.onload = () => {
-                if (xhr.status === 200) {
-                    const resp = JSON.parse(xhr.responseText);
-                    // replace username
-                    if (span && resp.user) span.textContent = resp.user;
-
-
-                    // 1) Make sure we have at least one contest
-                    if (Array.isArray(resp.time) && resp.time.length > 0) {
-                        const contest = resp.time[0]; // the closest/upcoming contest
-
-                        // 2) Populate title
-                        document.getElementById('ongoing-title').textContent =
-                            contest.name || '—';
-
-                        // 3) Populate participants (if your JSON has a field, e.g. contest.participants)
-                        document.getElementById('ongoing-participants').textContent =
-                            (contest.participants ?? 0) + ' Participants';
-
-                        // 4) Populate duration
-                        document.getElementById('ongoing-duration').textContent =
-                            contest.duration || '—';
-                    }
-
-                    // 1) Ensure there's an upcoming interview
-                    if (resp.upcoming) {
-                        // 2) Populate the Role
-                        document.getElementById('upcoming-role').textContent =
-                            resp.upcoming.position_open || resp.upcoming.company_name || '—';
-
-                        // 3) Populate the Date (you can format it if needed)
-                        //    If start is "2025-07-16", you might want to convert to "July 16, 2025":
-                        const raw = resp.upcoming.start;
-                        let formatted = raw;
-                        if (raw) {
-                            const dt = new Date(raw);
-                            formatted = dt.toLocaleDateString('en-US', {
-                                month: 'short',
-                                day: 'numeric',
-                                year: 'numeric'
-                            });
-                        }
-                        document.getElementById('upcoming-date').textContent = formatted;
-                    }
-
-
-
-                    const createContestCard = document.getElementById("create-contest-card")
-                    createContestCard.appendChild(createContentCard(`<i class="material-icons" style="font-size:48px">add</i>`, "Create New <br> Contest", '20rem', '220px', 'Create-Contest.html', 'linear-gradient(135deg, #008080 0%, #00FFFF 100%)'))
-
-
-                    const publishContestCard = document.getElementById("publish-contest-card")
-                    publishContestCard.appendChild(createContentCard(`<i class="material-icons" style="font-size:48px">rocket</i>`, "Create <br> Problems", '20rem', '220px', 'create_problem.html', 'linear-gradient(135deg, #007FFF 0%, #007BA7 100%)'))
-
-
-                    const hostInterview = document.getElementById("host-interview-card")
-                    hostInterview.appendChild(createContentCard(`<i class="material-icons" style="font-size:48px">mic</i>`, "Host <br> Interview", '20rem', '220px', 'Create-Interview.html', 'linear-gradient(135deg, #550691 0%, #880ED4 100%)'))
-
-
-                    const totalContests = document.getElementById("total-contests")
-                    totalContests.appendChild(createContentCard("Total Contests", `${resp.total}`, '20rem', '150px', '#', 'linear-gradient(135deg, #008080 0%, #00FFFF 100%)'))
-
-                    const totalInterviews = document.getElementById("total-interviews")
-                    totalInterviews.appendChild(createContentCard("Total Interviews", `${resp.total_interviews}`, '20rem', '150px', '#', 'linear-gradient(135deg, #008080 0%, #00FFFF 100%)'))
-
-                    const userParticipated = document.getElementById("user-participated")
-                    userParticipated.appendChild(createContentCard("Users Participated", `${resp.total_participation}`, '20rem', '150px', '#', 'linear-gradient(135deg, #f44336 0%, #ff6156 100%)'))
-
-                }
-                else if (xhr.status === 401) {
-                    window.location.href = 'login_signup.html';
-                }
-            };
-            xhr.send(JSON.stringify({}));
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            includeHtml(
-                'navbar-placeholder',
-                '../components/admin-navbar.html',
-                onNavbarLoaded
-            );
-        });
+        const userParticipated = document.getElementById("user-participated")
+        userParticipated.appendChild(createContentCard("Users Participated", "436", '20rem', '150px', '#', 'linear-gradient(135deg, #f44336 0%, #ff6156 100%)'))
 
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
 </body>
 
