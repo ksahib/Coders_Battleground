@@ -27,12 +27,6 @@
         <label>Description:</label>
         <textarea id="problem-description" rows="6" required></textarea>
 
-        <label>Input Format:</label>
-        <textarea id="problem-input" rows="4" placeholder="Describe the input format and constraints" required></textarea>
-
-        <label>Output Format:</label>
-        <textarea id="problem-output" rows="4" placeholder="Describe the expected output format" required></textarea>
-
         <label>Tags (comma-separated):</label>
         <input type="text" id="problem-tags" placeholder="e.g., array, dynamic programming">
 
@@ -43,6 +37,9 @@
             <option value="Medium">Medium</option>
             <option value="Hard">Hard</option>
         </select>
+
+        <label>Acceptance Rate (optional):</label>
+        <input type="number" id="problem-acceptance" placeholder="e.g., 85">
 
         <button type="submit" class="submit-button">
             <i class="fas fa-upload"></i> Submit Problem
