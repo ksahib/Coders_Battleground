@@ -1,128 +1,222 @@
-$(document).ready(function () {
-    // Problem management
-    let problemCount = 0;
+// Wait for DOM to be fully loaded
+window.addEventListener('load', function() {
+    console.log('Page fully loaded - initializing create_contest.js');
+    
+    // Get all elements
+    const problemsContainer = document.getElementById('problems-container');
+    const addProblemBtn = document.getElementById('add-problem-btn');
+    const companyProblemsContainer = document.getElementById('company-problems-container');
+    const addCompanyProblemBtn = document.getElementById('add-company-problem-btn');
+    const form = document.querySelector('form');
 
+    // Debug: Check if elements are found
+    console.log('Elements found:', {
+        problemsContainer: !!problemsContainer,
+        addProblemBtn: !!addProblemBtn,
+        companyProblemsContainer: !!companyProblemsContainer,
+        addCompanyProblemBtn: !!addCompanyProblemBtn,
+        form: !!form
+    });
+
+    let problemCount = 0;
+    let companyProblemCount = 0;
+
+    // Existing Problems Function
     function addProblemField() {
+        console.log('Adding problem field...');
         problemCount++;
-        const problemHTML = `
-            <div class="problem-field-group mb-3" data-problem-number="${problemCount}">
-                <div class="row align-items-end">
-                    <div class="col-md-4">
-                        <label class="form-label">Problem Title</label>
-                        <input type="text" class="form-control problem-title" placeholder="Problem ${String.fromCharCode(64 + problemCount)} Title" required>
-                    </div>
-                    <div class="col-md-3">
-                        <label class="form-label">Problem ID</label>
-                        <input type="number" class="form-control problem-id" placeholder="e.g., 1" required>
-                    </div>
-                    <div class="col-md-3">
-                        <label class="form-label">Score</label>
-                        <input type="number" class="form-control problem-score" placeholder="100" value="100" required>
-                    </div>
-                    <div class="col-md-2">
-                        <button type="button" class="btn btn-danger w-100 remove-problem-btn">Remove</button>
-                    </div>
+        const problemFieldGroup = document.createElement('div');
+        problemFieldGroup.className = 'problem-field-group mb-3';
+
+        problemFieldGroup.innerHTML = `
+            <div class="row align-items-end">
+                <div class="col-md-4">
+                    <label class="form-label">Problem Title</label>
+                    <input type="text" class="form-control" name="problem_titles[]" placeholder="Problem ${String.fromCharCode(64 + problemCount)} Title" required>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Problem ID</label>
+                    <input type="text" class="form-control" name="problem_ids[]" placeholder="e.g., 1" required>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Score</label>
+                    <input type="number" class="form-control" name="problem_scores[]" placeholder="100" value="100" required>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-danger w-100 remove-problem-btn">Remove</button>
                 </div>
             </div>
         `;
 
-        $('#problems-container').append(problemHTML);
+        problemsContainer.appendChild(problemFieldGroup);
+
+        // Add remove functionality
+        const removeBtn = problemFieldGroup.querySelector('.remove-problem-btn');
+        removeBtn.addEventListener('click', function() {
+            problemFieldGroup.remove();
+            problemCount--;
+            console.log('Problem removed, count:', problemCount);
+        });
     }
 
-    // Add initial problem field
-    addProblemField();
+    // Company Problems Function
+    function addCompanyProblemField() {
+        console.log('Adding company problem field...');
+        companyProblemCount++;
+        const problemFieldGroup = document.createElement('div');
+        problemFieldGroup.className = 'company-problem-field-group mb-3';
 
-    // Add problem button click
-    $('#add-problem-btn').on('click', function() {
+        problemFieldGroup.innerHTML = `
+            <div class="row align-items-end">
+                <div class="col-md-4">
+                    <label class="form-label">Problem Title</label>
+                    <input type="text" class="form-control" name="company_problem_titles[]" placeholder="Company Problem ${companyProblemCount} Title" required>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Problem Name</label>
+                    <select class="form-select" name="company_problem_names[]" required>
+                        <option value="">Select Problem</option>
+                        <option value="ALGO_CHALLENGE_1">Algorithm Challenge 1</option>
+                        <option value="DATA_STRUCT_1">Data Structure 1</option>
+                        <option value="DYNAMIC_PROG_1">Dynamic Programming 1</option>
+                        <option value="GRAPH_PROB_1">Graph Problem 1</option>
+                        <option value="STRING_MANIP_1">String Manipulation 1</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Score</label>
+                    <input type="number" class="form-control" name="company_problem_scores[]" placeholder="100" value="100" required>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-danger w-100 remove-company-problem-btn">Remove</button>
+                </div>
+            </div>
+        `;
+
+        companyProblemsContainer.appendChild(problemFieldGroup);
+
+        // Add remove functionality
+        const removeBtn = problemFieldGroup.querySelector('.remove-company-problem-btn');
+        removeBtn.addEventListener('click', function() {
+            problemFieldGroup.remove();
+            companyProblemCount--;
+            console.log('Company problem removed, count:', companyProblemCount);
+        });
+    }
+
+    // Attach event listeners to buttons
+    if (addProblemBtn) {
+        addProblemBtn.onclick = function(e) {
+            e.preventDefault();
+            addProblemField();
+        };
+        console.log('Add Problem button ready');
+    }
+    
+    if (addCompanyProblemBtn) {
+        addCompanyProblemBtn.onclick = function(e) {
+            e.preventDefault();
+            addCompanyProblemField();
+        };
+        console.log('Add Company Problem button ready');
+    }
+
+    // Add one problem field by default
+    if (problemsContainer) {
         addProblemField();
-    });
-
-    // Remove problem button click (using delegation)
-    $(document).on('click', '.remove-problem-btn', function() {
-        $(this).closest('.problem-field-group').remove();
-    });
+    }
 
     // Form submission
-    $('#contest-form').on('submit', function (e) {
-        e.preventDefault();
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            console.log('Form submitted');
 
-        // Collect problems
-        const problems = [];
-        $('.problem-field-group').each(function() {
-            const title = $(this).find('.problem-title').val().trim();
-            const problem_id = $(this).find('.problem-id').val().trim();
-            const score = parseInt($(this).find('.problem-score').val()) || 100;
-            
-            if (title && problem_id) {
-                problems.push({
-                    title: title,
-                    problem_id: problem_id,
-                    score: score
-                });
-            }
-        });
+            // Gather form data
+            const contestName = document.getElementById('contestName').value.trim();
+            const contestDescription = document.getElementById('contestDescription').value.trim();
+            const startTime = document.getElementById('startTime').value;
+            const endTime = document.getElementById('endTime').value;
 
-        // Validate at least one problem
-        if (problems.length === 0) {
-            $('#submit-status').html('<div class="alert alert-danger">Please add at least one problem to the contest</div>');
-            return;
-        }
+            // Gather existing problems
+            const problems = Array.from(document.querySelectorAll('.problem-field-group')).map(group => {
+                return {
+                    title: group.querySelector('[name="problem_titles[]"]').value.trim(),
+                    id: group.querySelector('[name="problem_ids[]"]').value.trim(),
+                    score: parseInt(group.querySelector('[name="problem_scores[]"]').value, 10)
+                };
+            });
 
-        // Prepare contest data
-        const contestData = {
-            name: $('#contestName').val().trim(),
-            contest_info: $('#contestDescription').val().trim(),
-            start_time: $('#startTime').val(),
-            end_time: $('#endTime').val(),
-            problems: problems,
-            type: "INSERT"
-        };
+            // Gather company problems
+            const companyProblems = Array.from(document.querySelectorAll('.company-problem-field-group')).map(group => {
+                return {
+                    title: group.querySelector('[name="company_problem_titles[]"]').value.trim(),
+                    name: group.querySelector('[name="company_problem_names[]"]').value.trim(),
+                    score: parseInt(group.querySelector('[name="company_problem_scores[]"]').value, 10)
+                };
+            });
 
-        console.log('Sending contest data:', contestData);
+            // Build payload
+            const payload = {
+                contestName,
+                contestDescription,
+                startTime,
+                endTime,
+                problems,
+                companyProblems
+            };
 
-        // Send AJAX request
-        $.ajax({
-            url: "http://localhost/Coders_Battleground/server/create_contest.php",
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(contestData),
-            success: function (response) {
-                console.log('Response received:', response);
-                try {
-                    const result = typeof response === 'string' ? JSON.parse(response) : response;
+            console.log('Sending payload:', payload);
+
+            // Send via AJAX
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', 'http://localhost/server/create_contest.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    console.log('Response status:', xhr.status, 'Response:', xhr.responseText);
                     
-                    if (result.status === 'success') {
-                        $('#submit-status').html('<div class="alert alert-success">' + result.message + '</div>');
-                        
-                        // Reset form
-                        $('#contest-form')[0].reset();
-                        $('#problems-container').empty();
-                        problemCount = 0;
-                        addProblemField();
+                    if (xhr.status >= 200 && xhr.status < 300) {
+                        try {
+                            const data = JSON.parse(xhr.responseText);
+                            
+                            if (data.status === 'success') {
+                                alert('Contest created successfully!');
+                                // Reset form
+                                form.reset();
+                                problemsContainer.innerHTML = '';
+                                companyProblemsContainer.innerHTML = '';
+                                problemCount = 0;
+                                companyProblemCount = 0;
+                                addProblemField();
+                            } else {
+                                alert('Error: ' + (data.message || 'Unknown error'));
+                            }
+                        } catch (e) {
+                            console.error('Parse error:', e);
+                            alert('Server response error. Check console.');
+                        }
                     } else {
-                        $('#submit-status').html('<div class="alert alert-danger">' + result.message + '</div>');
+                        alert('Server error: ' + xhr.status);
                     }
-                } catch (err) {
-                    console.error('Parse error:', err);
-                    $('#submit-status').html('<div class="alert alert-warning">Unexpected response from server</div>');
                 }
-            },
-            error: function (xhr, status, error) {
-                console.error('AJAX error:', status, error);
-                console.error('Response:', xhr.responseText);
-                
-                let errorMessage = 'Error: ' + xhr.status;
-                try {
-                    const errorResponse = JSON.parse(xhr.responseText);
-                    if (errorResponse.message) {
-                        errorMessage = errorResponse.message;
-                    }
-                } catch (e) {
-                    errorMessage += ' - ' + error;
-                }
-                
-                $('#submit-status').html('<div class="alert alert-danger">' + errorMessage + '</div>');
-            }
+            };
+
+            xhr.onerror = function() {
+                alert('Network error. Make sure the server is running.');
+            };
+
+            xhr.send(JSON.stringify(payload));
         });
-    });
+    }
+});
+
+// Also try with DOMContentLoaded as a fallback
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOMContentLoaded fired');
+    // If window.load hasn't fired yet, this will ensure our code runs
+    if (document.readyState === 'complete') {
+        window.dispatchEvent(new Event('load'));
+    }
 });

@@ -36,7 +36,7 @@
       $('#tag-title').text(`Problems tagged: ${tag}`);
 
       $.ajax({
-        url: "http://localhost/CB_BackEnd/get_problems_by_tag.php",
+        url: "http://localhost/Server/get_problems_by_tag.php",
         type: "GET",
         data: { tag: tag },
         dataType: "json",
