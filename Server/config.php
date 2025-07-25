@@ -1,7 +1,7 @@
 <?php
 
 $host='localhost';
-$dbname='sahib_coders_battleground';
+$dbname='final_coders_battleground';
 $user='root';
 $pass='';
 
