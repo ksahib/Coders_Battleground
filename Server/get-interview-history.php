@@ -1,109 +1,71 @@
 <?php
+// get-interview-history.php
+require_once 'config.php';
+session_start();
+
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET');
 header('Access-Control-Allow-Headers: Content-Type');
 
-require_once 'config.php';
+if (empty($_SESSION['user'])) {
+    http_response_code(401);
+    exit(json_encode(['status'=>'error','message'=>'Not authenticated']));
+}
 
-// Start session to get user email
-//session_start();
+$user_email = $_SESSION['user'];
 
 try {
-    // Check if user is logged in
-    if (!isset($_SESSION['user'])) {
-        $_SESSION['user'] = 'AdminUser@gmail.com'; // For testing purposes, remove this in production
-    }
-    
-    $email = $_SESSION['user'];
-    
-    // First, get the user's name
-    $userQuery = "SELECT name FROM users WHERE email = :email";
-    $userStmt = $pdo->prepare($userQuery);
-    $userStmt->execute([':email' => $email]);
-    $user = $userStmt->fetch(PDO::FETCH_ASSOC);
-    
-    if (!$user) {
-        throw new Exception('User not found');
-    }
-    
-    // Query to get interview history for the user
-    $query = "
-        SELECT 
-            ia.interview_id,
-            i.company_name as company,
-            i.position_open as role,
-            i.start as interview_date,
-            ia.job_status as status,
-            CONCAT(l.area, ', ', l.city, ', ', l.country) as location,
-            COUNT(ir.round_id) as total_rounds,
-            (
-                SELECT ir2.round_name 
-                FROM interview_round ir2 
-                WHERE ir2.interview_id = i.interview_id 
-                ORDER BY ir2.start DESC 
-                LIMIT 1
-            ) as current_round
-        FROM interview_apply ia
-        INNER JOIN interview i ON ia.interview_id = i.interview_id
-        INNER JOIN locations l ON i.location_id = l.location_id
-        LEFT JOIN interview_round ir ON i.interview_id = ir.interview_id
-        WHERE ia.email = :email
-        GROUP BY ia.interview_id, i.company_name, i.position_open, i.start, ia.job_status, l.area, l.city, l.country
-        ORDER BY i.start DESC
+    // 1) Fetch applications + schedule
+    $sql = "
+      SELECT
+        ia.interview_id,
+        i.company_name    AS company,
+        i.position_open   AS role,
+        CONCAT(l.area, ', ', l.city, ', ', l.country) AS location,
+        ia.job_status     AS status,
+        DATE_FORMAT(i.start, '%Y-%m-%d')             AS date,
+        sch.start         AS sched_start,
+        sch.`end`         AS sched_end
+      FROM interview_apply ia
+      JOIN interview i
+        ON ia.interview_id = i.interview_id
+      JOIN locations l
+        ON i.location_id = l.location_id
+      LEFT JOIN interview_schedule sch
+        ON sch.interview_id = ia.interview_id
+       AND sch.user_email   = ia.email
+      WHERE ia.email = :email
+      ORDER BY i.start DESC
     ";
-    
-    $stmt = $pdo->prepare($query);
-    $stmt->execute([':email' => $email]);
-    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
-    // Process the results
-    $interviewHistory = [];
-    
-    foreach ($results as $row) {
-        // Determine the round name
-        $roundName = 'Application';
-        if ($row['current_round']) {
-            $roundName = $row['current_round'];
-        }
-        
-        // Format status for display
-        $status = ucfirst(strtolower($row['status']));
-        
-        // If status is "Applied" and there are rounds, status might be "In Progress"
-        if ($status === 'Applied' && $row['total_rounds'] > 0) {
-            $status = 'In Progress';
-        }
-        
-        $interviewHistory[] = [
-            'date' => $row['interview_date'],
-            'company' => $row['company'],
-            'role' => $row['role'],
-            'round' => $roundName,
-            'status' => $status,
-            'location' => $row['location']
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([':email' => $user_email]);
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // 2) Build response
+    $data = [];
+    foreach ($rows as $r) {
+        $item = [
+            'interview_id' => (int)$r['interview_id'],
+            'company'      => $r['company'],
+            'role'         => $r['role'],
+            'location'     => $r['location'],
+            'status'       => $r['status'],
+            'date'         => $r['date'],
+            'schedule'     => null
         ];
+        if ($r['sched_start']) {
+            $item['schedule'] = [
+                'start' => $r['sched_start'],
+                'end'   => $r['sched_end']
+            ];
+        }
+        $data[] = $item;
     }
-    
-    // Return success response
-    echo json_encode([
-        'success' => true,
-        'data' => $interviewHistory,
-        'username' => $user['name'],
-        'total_records' => count($interviewHistory)
-    ]);
-    
+
+    echo json_encode(['status'=>'success','data'=>$data]);
+
 } catch (PDOException $e) {
     http_response_code(500);
-    echo json_encode([
-        'success' => false,
-        'message' => 'Database error: ' . $e->getMessage()
-    ]);
-} catch (Exception $e) {
-    http_response_code(400);
-    echo json_encode([
-        'success' => false,
-        'message' => $e->getMessage()
-    ]);
+    echo json_encode(['status'=>'error','message'=>'Database error: '.$e->getMessage()]);
 }
-?>

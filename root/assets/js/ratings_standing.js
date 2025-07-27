@@ -105,7 +105,7 @@ $(document).ready(function () {
         tableContainer.html('<div class="text-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>');
         
         $.ajax({
-            url: 'http://localhost/server/get_rankings.php',
+            url: 'http://localhost/Server/get_rankings.php',
             type: 'GET',
             dataType: 'json',
             success: function(response) {

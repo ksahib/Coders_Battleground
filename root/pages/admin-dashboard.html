@@ -44,7 +44,7 @@
                             </div>
 
                             <div class="col-md-5">
-                                <!-- dynamic title here -->
+                                <!-- dynamic title-->
                                 <h4 id="ongoing-title"><strong>Contest Title</strong></h4>
                                 <!-- dynamic participants here -->
                                 <p id="ongoing-participants">200 Participants</p>
@@ -52,7 +52,7 @@
 
                             <div class="col-md-3">
                                 <h4><strong>Time Remaining</strong></h4>
-                                <!-- dynamic duration here -->
+                                <!-- dynamic duration -->
                                 <p id="ongoing-duration"><strong>2h 15m</strong></p>
                             </div>
                         </div>
@@ -204,8 +204,8 @@
                             contest.duration || '—';
                     }
 
-                    // 1) Ensure there's an upcoming interview
-                    if (resp.upcoming) {
+                    // nsure there's an upcoming interview
+                    if (resp.upcoming && resp.upcoming.interview_id) {
                         // 2) Populate the Role
                         document.getElementById('upcoming-role').textContent =
                             resp.upcoming.position_open || resp.upcoming.company_name || '—';
@@ -223,6 +223,19 @@
                             });
                         }
                         document.getElementById('upcoming-date').textContent = formatted;
+
+                        const dateCol = document.getElementById('upcoming-date').parentNode;
+
+                        dateCol.classList.add('d-flex', 'align-items-center', 'justify-content-between');
+
+                        const joinBtn = document.createElement('button');
+                        joinBtn.textContent = 'Join';
+                        joinBtn.className = 'btn btn-sm btn-primary ms-3';
+                        joinBtn.onclick = () => {
+                            window.location.href = `interview.html?interview_id=${resp.upcoming.interview_id}`;
+                        };
+
+                        dateCol.appendChild(joinBtn);
                     }
 
 
