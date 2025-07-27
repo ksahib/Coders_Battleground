@@ -5,7 +5,7 @@ body, html {
   font-family: 'Segoe UI', sans-serif;
   background-color: #0d1117;
   color: #eaeaea;
-  height: 100vh;
+  height: 100%;
   overflow: hidden;
 }
 
@@ -17,7 +17,7 @@ body, html {
 }
 
 .left-panel {
-  width: 300px;
+  width: 35%;
   background-color: #161b22;
   padding: 20px;
   display: flex;
@@ -33,6 +33,7 @@ body, html {
   flex-direction: column;
   height: 100vh;
   overflow: hidden;
+  width: 65%;
 }
 
 #editor-container {

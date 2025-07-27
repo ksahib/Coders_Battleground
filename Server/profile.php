@@ -26,12 +26,12 @@ try {
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     $sql2 = "SELECT 
-            DATE(submission_date) AS submission_day,
+            DATE(submission_time) AS submission_day,
             COUNT(*) AS submissions_count
         FROM 
             solutions
         GROUP BY 
-            DATE(submission_date)
+            DATE(submission_time)
         ORDER BY 
             submission_day;
     ";
@@ -49,7 +49,7 @@ try {
         cq.contest_id,
         c.name AS contest_name,
         p.name AS problem_title,
-        MIN(s.submission_date) AS submission_date
+        MIN(s.submission_time) AS submission_time
     FROM 
         solutions s
     JOIN 
@@ -63,7 +63,7 @@ try {
     GROUP BY 
         cq.contest_id, cq.problem_id
     ORDER BY 
-        submission_date DESC
+        submission_time DESC
     LIMIT 10;
 
     ";

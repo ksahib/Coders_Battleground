@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Jitsi Test</title>
+  <script src="https://meet.jit.si/external_api.js"></script>
+</head>
+<body>
+  <h1>Jitsi Embed Test</h1>
+  <div id="meet" style="width: 800px; height: 500px;"></div>
+  <script>
+    const api = new JitsiMeetExternalAPI("meet.jit.si", {
+      roomName: "KaziTestRoom" + Math.floor(Math.random() * 10000),
+      parentNode: document.getElementById("meet"),
+      configOverwrite: {
+        startWithAudioMuted: false,
+        startWithVideoMuted: false
+      }
+    });
+
+    api.addEventListener("videoConferenceJoined", () =>
+      console.log("✅ Joined video conference")
+    );
+
+    api.addEventListener("readyToClose", () =>
+      console.log("Jitsi meeting closed")
+    );
+  </script>
+</body>
+</html>

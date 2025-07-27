@@ -38,7 +38,7 @@ if($_SERVER['REQUEST_METHOD']=== "POST"){
 //     echo json_encode("No user found in DB for {$email}");
 // }
 
-        if($user && $password === $user['password']) {
+        if($user && password_verify($password, $user['password'])) {
             $_SESSION['user'] = $user['email'];
             
             echo json_encode(["success" => true, "message" => "Login successful", "role" => $user['role']]);

@@ -1,8 +1,8 @@
 <?php
 require_once "config.php";
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
 
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Content-Type");
@@ -36,7 +36,7 @@ try {
 
     $participation_sql = "SELECT COUNT(email) AS count FROM participants WHERE contest_id = :contest_id";
     $participation_stmt = $pdo->prepare($participation_sql);
-    $participation_stmt->execute(['contest_id' => $time[0]['id']]);
+    $participation_stmt->execute(['contest_id' => !empty($time) ? $time[0]['id'] : null]);
     $participation_count = $participation_stmt->fetchColumn();
 
     $total_contest_sql = "SELECT COUNT(*) AS total FROM contest WHERE company_name = :company_name";

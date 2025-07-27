@@ -1,67 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Interview Session - Coders Battleground</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
- 
+
   <link rel="stylesheet" href="../assets/css/interview.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/loader.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://meet.jit.si/external_api.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/loader.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gun/gun.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/loader.min.js"></script>
+
+
+
+  <style>
+    #jitsi-container {
+      min-height: 200px;
+      border: 1px solid #ccc;
+    }
+  </style>
 </head>
+
 <body>
+  <div class="interview-container">
+    <div class="left-panel">
+      <div class="interviewer-header">
+        <h2>Live Interview</h2>
+        <div class="status">
+          <span class="dot online"></span> In Progress
+        </div>
+      </div>
 
-<div class="interview-container">
-  
-  <div class="left-panel">
-    <div class="interviewer-header">
-      <h2>Live Interview</h2>
-      <div class="status">
-        <span class="dot online"></span> In Progress
+      <div class="video-wrapper">
+        <div class="video-box" id="video-conference-box">
+          <label>Video Conference</label>
+          <div id="jitsi-container" class="jitsi-container"></div>
+        </div>
+      </div>
+
+      <div class="candidate-info">
+        <p><strong>Candidate:</strong> John Doe</p>
+        <p><strong>Role:</strong> Software Engineer</p>
+        <p><strong>Company:</strong> Google</p>
+      </div>
+
+      <div class="timer-box">
+        <i class="fas fa-clock"></i> <span id="timer">00:00</span>
+      </div>
+
+      <div class="notes-section">
+        <h4>Notes</h4>
+        <textarea placeholder="Type notes here..."></textarea>
       </div>
     </div>
 
-    
-    <div class="video-wrapper">
-      <div class="video-box">
-        <label>Candidate</label>
-        <div class="video-placeholder">👤</div>
-      </div>
-      <div class="video-box">
-        <label>Interviewer</label>
-        <div class="video-placeholder">🎤</div>
-      </div>
-    </div>
-
-   
-    <div class="candidate-info">
-      <p><strong>Candidate:</strong> John Doe</p>
-      <p><strong>Role:</strong> Software Engineer</p>
-      <p><strong>Company:</strong> Google</p>
-    </div>
-
-    
-    <div class="timer-box">
-      <i class="fas fa-clock"></i> <span id="timer">00:00</span>
-    </div>
-
-    
-    <div class="notes-section">
-      <h4>Notes</h4>
-      <textarea placeholder="Type notes here..."></textarea>
+    <div class="right-panel">
+      <div id="editor-container" style="height: 100vh;"></div>
     </div>
   </div>
 
-  
-  <div class="right-panel">
-    <div id="editor-container"></div>
-  </div>
-</div>
+  <script>
+    window.addEventListener('load', () => {
+      // Start the timer
+      let seconds = 0;
+      const timerInterval = setInterval(() => {
+        seconds++;
+        const mins = String(Math.floor(seconds / 60)).padStart(2, '0');
+        const secs = String(seconds % 60).padStart(2, '0');
+        document.getElementById('timer').textContent = `${mins}:${secs}`;
+      }, 1000);
+
+      // Get room ID from URL
+      const params = new URLSearchParams(window.location.search);
+      const roomId = params.get('interview_id');
+
+      // Set up Jitsi container
+      const containerElement = document.getElementById('jitsi-container');
+      containerElement.style.height = '300px';
+      containerElement.style.width = '100%';
+
+      // Initialize Jitsi Meet
+      const jitsiApiInstance = new JitsiMeetExternalAPI('meet.jit.si', {
+        roomName: roomId,
+        parentNode: containerElement,
+        width: '100%',
+        height: 300,
+        configOverwrite: {
+          startWithAudioMuted: false,
+          startWithVideoMuted: false,
+        },
+        interfaceConfigOverwrite: {
+          SHOW_JITSI_WATERMARK: false,
+        },
+      });
+
+      // Load and initialize Monaco Editor
+      require.config({ paths: { vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs' } });
+      require(['vs/editor/editor.main'], () => {
+        const editor = monaco.editor.create(
+          document.getElementById('editor-container'),
+          { value: '// write…', language: 'javascript', theme: 'vs-dark', automaticLayout: true }
+        );
+
+        //Setting up Gun using public relays at gunjs.herokuapp.com by default
+        const gun = Gun({
+          peers: [
+            'https://gun-manhattan.herokuapp.com/gun',
+            'https://gun-eu.herokuapp.com/gun'
+          ]
+        });
+        const room = gun.get('code-room:' + roomId);
+
+        console.log('[GUN] peer list →', gun.back('opt.peers'));
+        room.once(data => console.log('[GUN] initial data:', data));
+        room.on(data => console.log('[GUN] update event:', data));
 
 
-<script src="../assets/js/interview.js"></script>
+        // When local changes happen, push them to Gun
+        let incoming = false;
+        editor.onDidChangeModelContent(e => {
+          console.log('[MONACO] local change:', editor.getValue().slice(0, 20), '…');
+          if (incoming) { incoming = false; return; }
+          room.put({ text: editor.getValue() });
+        });
+
+        // Listen for remote updates and apply to Monaco
+        room.on(data => {
+          if (data && data.text != null && data.text !== editor.getValue()) {
+            incoming = true;
+            const pos = editor.getPosition();
+            editor.setValue(data.text);
+            editor.setPosition(pos);
+          }
+        });
+      });
+    });
+  </script>
 </body>
+
 </html>
