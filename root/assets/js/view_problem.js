@@ -1,7 +1,7 @@
 $(document).ready(function(){
     function loadProblems(){
         $.ajax({
-            url: "http://localhost/CB_BackEnd/view_problem.php",
+            url: "http://localhost/Coders_Battleground/Server/view_problem.php",
             method: "GET",
             dataType: "json",
             success: function (problems){

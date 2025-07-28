@@ -17,6 +17,13 @@ html, body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+button{
+  width: 65px;
+  padding: 5px;
+  background-color: gray;
+  font-weight: 700;
+  margin-left: 20px;
+}
 
 .ide-logo {
   font-size: 28px;

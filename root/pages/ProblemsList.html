@@ -52,8 +52,22 @@
         <li><a class="dropdown-item" href="#" data-sort="difficulty">Difficulty</a></li>
         <li><a class="dropdown-item" href="#" data-sort="acceptance">Acceptance</a></li>
       </ul>
+     
+
     </div>
+    
   </div>
+   <div class="dropdown mb-3">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="rangeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+    Range
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="rangeDropdown" id="range-options">
+    <li><a class="dropdown-item range-option" data-offset="0" data-limit="15" href="#">0–15</a></li>
+    <li><a class="dropdown-item range-option" data-offset="15" data-limit="30" href="#">15–45</a></li>
+    <li><a class="dropdown-item range-option" data-offset="45" data-limit="30" href="#">45–75</a></li>
+    
+  </ul>
+</div>
   </div>
   <div class="container mt-4">
     <div class="table-responsive">
@@ -88,7 +102,7 @@
             <th scope="col">#</th>
             <th scope="col">Title</th>
             <th scope="col">Difficulty</th>
-            <th scope="col">Acceptance</th>
+            
           </tr>
         </thead>
         <tbody id="problem-list">

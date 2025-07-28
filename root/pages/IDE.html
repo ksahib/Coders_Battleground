@@ -27,6 +27,8 @@
         <option value="cpp">C++</option>
         <option value="java">Java</option>
       </select>
+      <button id="runCode" class="btn btn-primary me-2">Run</button>
+      <button id="submitCode" class="btn btn-success" style="width: auto;">Submit</button>
     </div>
 
    
@@ -37,12 +39,8 @@
 
         <div class="io-section">
           <div class="io-box">
-            <label for="input" class="io-label">Custom Input</label>
+            <label for="input" class="io-label">Outputs</label>
             <textarea id="input" class="io-textarea" placeholder="Enter input..."></textarea>
-          </div>
-          <div class="io-box">
-            <label for="output" class="io-label">Output</label>
-            <textarea id="output" class="io-textarea" placeholder="Output will appear here..." readonly></textarea>
           </div>
         </div>
       </div>
@@ -57,5 +55,6 @@
 
   
   <script src="../assets/js/ide.js"></script>
+  <script src="../assets/js/compiler.js"></script>
 </body>
 </html>

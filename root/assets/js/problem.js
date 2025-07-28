@@ -10,11 +10,12 @@ $(document).ready(function () {
   }
 
   $.ajax({
-    url: "http://localhost/CB_BackEnd/problem_desc.php",
+    url: "http://localhost/Coders_Battleground/Server/problem_desc.php",
     method: "GET",
     data: { name: problemName },
     dataType: "json",
     success: function (problem) {
+      console.log(problem)
       problemData = {
         title: problem.name,
         difficulty: problem.difficulty,
@@ -23,7 +24,7 @@ $(document).ready(function () {
           <p>${problem.description}</p>
 
           <h4>Example:</h4>
-          <pre><code>Input: ${problem.input}<br>Output: ${problem.output}</code></pre>
+          <pre><code>Input: ${problem.i}<br>Output: ${problem.o}</code></pre>
         `
       };
 

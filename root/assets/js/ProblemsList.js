@@ -2,7 +2,6 @@ let allProblems = [];
 
 function renderProblems(problems) {
   const $tableBody = $('#problem-list');
-  
   $tableBody.empty();
   problems.forEach(problem => {
     const row = `
@@ -21,12 +20,14 @@ function renderProblems(problems) {
   });
 }
 
-function fetchProblems() {
+function fetchProblems(offset = 0, limit = 15) {
   $.ajax({
-    url: "http://localhost/CB_BackEnd/view_problem.php",
+    url: "http://localhost/Coders_Battleground/Server/view_problem.php",
     method: "GET",
     dataType: "json",
+    data: { offset, limit },
     success: function (data) {
+      console.log(data);
       allProblems = data;
       renderProblems(allProblems);
     },
@@ -37,15 +38,13 @@ function fetchProblems() {
 }
 
 $(document).ready(function () {
-  fetchProblems();
+  fetchProblems(); 
 
-  
   $('#search-box').on('input', function () {
     const keyword = $(this).val().toLowerCase();
     const filtered = allProblems.filter(p => p.name.toLowerCase().includes(keyword));
     renderProblems(filtered);
 
-    
     const $suggestions = $('#suggestions');
     $suggestions.empty();
     if (keyword.length > 0) {
@@ -55,61 +54,56 @@ $(document).ready(function () {
     }
   });
 
-  
   $(document).on('click', '.suggestion-item', function () {
     const name = $(this).text();
     $('#search-box').val(name).trigger('input');
     $('#suggestions').empty();
   });
 
-  
-  $('.dropdown-item').on('click', function () {
+  $('.dropdown-item[data-sort]').on('click', function () {
     const sort = $(this).data('sort');
-
     let sorted = [...allProblems];
-
     if (sort === 'name') {
       sorted.sort((a, b) => a.name.localeCompare(b.name));
     } else if (sort === 'difficulty') {
       const diffOrder = { 'Easy': 1, 'Medium': 2, 'Hard': 3 };
       sorted.sort((a, b) => diffOrder[a.difficulty] - diffOrder[b.difficulty]);
     }
-
     renderProblems(sorted);
   });
 
+  $(document).on('click', '.range-option', function () {
+    const offset = parseInt($(this).data('offset'));
+    const limit = parseInt($(this).data('limit'));
+    fetchProblems(offset, limit);
+  });
 
-
-
-  // Featured Card Section
+  // Featured Cards
   const $container = $('#cards-row-feature');
+  $container.append(createContentCard('Interview', 'Google <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #1E90FF 0%, #00FF85 100%)'));
+  $container.append(createContentCard('Interview', 'Amazon <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #7F00FF 0%, #E100FF 100%)'));
+  $container.append(createContentCard('Interview', 'Microsoft <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)'));
+  $container.append(createContentCard('Interview', 'Apple <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #ff9966 0%, #ff5e62 100%)'));
+  $container.append(createContentCard('Interview', 'Netflix <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #ff6a88 0%, #ff99ac 50%, #6dd5ed 100%)'));
+  $container.append(createContentCard('Interview', 'Conda <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #00c6fb 0%, #005bea 100%)'));
+  $container.append(createContentCard('Interview', 'Nvidia <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #f7971e 0%, #ffd200 100%)'));
+  $container.append(createContentCard('Interview', 'Linux <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #29323c 0%, #485563 100%)'));
 
-          $container.append(createContentCard('Interview', 'Google <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #1E90FF 0%, #00FF85 100%)'));
-          $container.append(createContentCard('Interview', 'Amazon <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #7F00FF 0%, #E100FF 100%)'));
-          $container.append(createContentCard('Interview', 'Microsoft <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)'));
-          $container.append(createContentCard('Interview', 'Apple <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #ff9966 0%, #ff5e62 100%)'));
-          $container.append(createContentCard('Interview', 'Netflix <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #ff6a88 0%, #ff99ac 50%, #6dd5ed 100%)'));
-          $container.append(createContentCard('Interview', 'Conda <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #00c6fb 0%, #005bea 100%)'));
-          $container.append(createContentCard('Interview', 'Nvidia <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #f7971e 0%, #ffd200 100%)'));
-          $container.append(createContentCard('Interview', 'Linux <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #29323c 0%, #485563 100%)'));
-      
+  // Load tags
+  const $tagContainer = $("#tag_holder_row");
+  $.ajax({
+    url: "http://localhost/Coders_Battleground/Server/get_tags.php",
+    method: "GET",
+    dataType: "json",
+    success: function(tags) {
+      $tagContainer.empty();
+      tags.forEach(tag => {
+        const $tag = $(`<div id="tag_card"><a href="tag_problems.html?tag=${encodeURIComponent(tag.tag_name)}" style="text-decoration:none;color:black;"><strong>${tag.tag_name}</strong></a></div>`);
+        $tagContainer.append($tag);
+      });
+    },
+    error: () => {
+      $tagContainer.html('<p class="text-danger">Failed to load tags.</p>');
+    }
+  });
 });
-
-  const $container=$("#tag_holder_row")
-    $(document).ready(function(){
-        $.ajax({
-          url: "http://localhost/CB_BackEnd/get_tags.php",
-          method: "GET",
-          dataType: "json",
-          success: function(tags){
-            console.log(tags);
-               $("#tag_holder_row").empty();
-               tags.forEach(tag => {
-                 const $tagelement=$(`<div id="tag_card"><a href="tag_problems.html?tag=${encodeURIComponent(tag.tag_name)}" style="text-decoration:none;color:black;"><strong>${tag.tag_name}</strong></a></div>`)
-                 $container.append($tagelement)
-               }); 
-          },
-          error: () => {
-        $('#tag_holder_row').html('<p class="text-danger">Failed to load tags.</p>');
-      }
-        })})

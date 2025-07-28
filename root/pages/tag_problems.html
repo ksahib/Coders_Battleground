@@ -47,7 +47,7 @@
             problems.forEach(problem => {
               const item = `
                 <li class="list-group-item bg-dark text-white">
-                  <a href="Problem_desc.html?id=${problem.problem_id}" class="text-info text-decoration-none fw-bold">${problem.name}</a>
+                  <a href="Problem_desc.html?name=${problem.name}" class="text-info text-decoration-none fw-bold">${problem.name}</a>
                   <span class="badge float-end ${
                     problem.difficulty === 'Easy' ? 'bg-success' :
                     problem.difficulty === 'Medium' ? 'bg-warning text-dark' : 'bg-danger'
