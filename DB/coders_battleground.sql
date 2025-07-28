@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.2-1.fc42
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jul 25, 2025 at 01:58 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Host: localhost
+-- Generation Time: Jul 27, 2025 at 01:10 PM
+-- Server version: 10.11.11-MariaDB
+-- PHP Version: 8.4.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `final_coders_battleground`
+-- Database: `coders_battleground`
 --
 
 -- --------------------------------------------------------
@@ -175,7 +175,7 @@ CREATE TABLE `interview` (
   `company_name` varchar(50) NOT NULL,
   `position_open` varchar(100) DEFAULT NULL,
   `location_id` varchar(64) NOT NULL,
-  `job_description` varchar(255) DEFAULT NULL,
+  `job_description` varchar(2000) DEFAULT NULL,
   `start` date DEFAULT NULL,
   `job_type` varchar(50) DEFAULT 'Full-time'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -186,6 +186,7 @@ CREATE TABLE `interview` (
 
 INSERT INTO `interview` (`interview_id`, `company_name`, `position_open`, `location_id`, `job_description`, `start`, `job_type`) VALUES
 (1234, 'Google', 'Software Engineer II', '123', 'MERN stack', '2025-07-16', 'Full-time'),
+(618641, 'Google', 'Senior Software Design', '123', 'At Google, we\'re dedicated to making the world\'s information accessible and useful. Our innovative products and technologies impact billions of lives globally, and we\'re constantly pushing the boundaries of what\'s possible. As a Senior Software Engineer, you\'ll be at the forefront of this mission, contributing to high-impact projects that define the future of technology.\n\nAbout the Role\n\nAs a Senior Software Engineer at Google, you will be responsible for designing, developing, testing, deploying, and maintaining large-scale software systems. You\'ll work on complex problems that require innovative solutions, collaborating with talented engineers and cross-functional teams. This role demands a strong technical background, a passion for building scalable and reliable software, and the ability to lead and mentor junior engineers.\n\nResponsibilities\n\n    Lead the design, development, and launch of new features and products.\n\n    Write clean, robust, and well-tested code in languages such as Java, C++, Python, or Go.\n\n    Participate in code reviews, providing constructive feedback to improve code quality and maintainability.\n\n    Collaborate with product managers, UX designers, and other engineering teams to define and implement solutions.', '2025-07-27', 'Full-time'),
 (730095, 'Admin', 'Systems Engineer', '124', 'Variable kinds of work', '2025-07-26', 'Internship'),
 (742547, 'Google', 'Sales', '123', 'Sell', '2025-07-28', 'Contract');
 
@@ -206,8 +207,12 @@ CREATE TABLE `interview_apply` (
 --
 
 INSERT INTO `interview_apply` (`interview_id`, `email`, `job_status`) VALUES
-(1234, 's@gmail.com', 'Applied'),
-(730095, 's@gmail.com', 'Applied');
+(1234, 'k@gmail.com', 'Rejected'),
+(1234, 's@gmail.com', 'Scheduled'),
+(618641, 'k@gmail.com', 'Scheduled'),
+(730095, 'k@gmail.com', 'Applied'),
+(730095, 's@gmail.com', 'Applied'),
+(742547, 's@gmail.com', 'Scheduled');
 
 -- --------------------------------------------------------
 
@@ -232,7 +237,31 @@ INSERT INTO `interview_round` (`round_id`, `interview_id`, `start`, `end`, `roun
 (2, 1234, '2025-07-16 14:00:00', '2025-07-16 15:30:00', 'Technical Round 2'),
 (3, 1234, '2025-07-17 10:00:00', '2025-07-17 11:00:00', 'HR Round'),
 (4, 730095, '2025-07-31 08:27:00', '2025-07-31 09:27:00', 'Behavioral'),
-(5, 742547, '2025-07-30 17:55:00', '2025-07-31 17:55:00', 'Behavioral');
+(5, 742547, '2025-07-30 17:55:00', '2025-07-31 17:55:00', 'Behavioral'),
+(6, 618641, '2025-07-28 23:03:00', '2025-07-28 12:22:00', 'Round 1');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `interview_schedule`
+--
+
+CREATE TABLE `interview_schedule` (
+  `user_email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `interview_id` int(64) NOT NULL,
+  `start` datetime NOT NULL,
+  `end` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `interview_schedule`
+--
+
+INSERT INTO `interview_schedule` (`user_email`, `interview_id`, `start`, `end`) VALUES
+('s@gmail.com', 1234, '2025-07-28 11:24:00', '2025-07-28 12:43:00'),
+('s@gmail.com', 742547, '2025-07-28 12:22:00', '2025-07-28 12:29:00'),
+('s@gmail.com', 1234, '2025-07-29 12:03:00', '2025-07-30 12:56:00'),
+('k@gmail.com', 618641, '2025-07-27 15:28:00', '2025-07-31 12:29:00');
 
 -- --------------------------------------------------------
 
@@ -417,7 +446,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`email`, `password`, `name`, `subscription_type`, `role`, `created_at`) VALUES
 ('AdminUser@gmail.com', 'AdminUser', 'AdminUser', 'free', 'user', '2025-07-25'),
-('g@gmail.com', '123', 'Google', 'free', 'company', '2025-07-14'),
+('g@gmail.com', '$2y$12$BbM2QPJ7ZXSsS6.NYWXwwOzIEWErCtYx0YTNyUacMk1Anuw7tLC1e', 'Google', 'free', 'company', '2025-07-14'),
+('k@gmail.com', '$2y$12$BbM2QPJ7ZXSsS6.NYWXwwOzIEWErCtYx0YTNyUacMk1Anuw7tLC1e', 'Sahib', 'free', 'user', '2025-07-26'),
 ('s@gmail.com', 'sss', 'sahib', 'free', 'user', '2025-07-13');
 
 --
@@ -489,6 +519,13 @@ ALTER TABLE `interview_round`
   ADD KEY `interview_id` (`interview_id`);
 
 --
+-- Indexes for table `interview_schedule`
+--
+ALTER TABLE `interview_schedule`
+  ADD KEY `user_email` (`user_email`),
+  ADD KEY `interview_id` (`interview_id`);
+
+--
 -- Indexes for table `locations`
 --
 ALTER TABLE `locations`
@@ -550,7 +587,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `interview_round`
 --
 ALTER TABLE `interview_round`
-  MODIFY `round_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `round_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `problems`
@@ -621,6 +658,13 @@ ALTER TABLE `interview_apply`
 --
 ALTER TABLE `interview_round`
   ADD CONSTRAINT `interview_round_ibfk_1` FOREIGN KEY (`interview_id`) REFERENCES `interview` (`interview_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `interview_schedule`
+--
+ALTER TABLE `interview_schedule`
+  ADD CONSTRAINT `interview_schedule_ibfk_1` FOREIGN KEY (`interview_id`) REFERENCES `interview` (`interview_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `interview_schedule_ibfk_2` FOREIGN KEY (`user_email`) REFERENCES `users` (`email`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `participants`

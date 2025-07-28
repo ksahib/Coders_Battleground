@@ -46,7 +46,7 @@ try {
     $data = [];
     foreach ($rows as $r) {
         $item = [
-            'interview_id' => (int)$r['interview_id'],
+            'interview_id' => $r['interview_id'],
             'company'      => $r['company'],
             'role'         => $r['role'],
             'location'     => $r['location'],
