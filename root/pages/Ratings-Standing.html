@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ranking - Coders Battleground</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" 
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="../assets/css/ratings-standing.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <div id="navbar-placeholder"></div>
+    <script>
+        $("#navbar-placeholder").load("../components/navbar.html");
+    </script>
+
+    <div class="ranking-section container my-4">
+        
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="mb-0">User Rankings</h3>
+        </div>
+
+        <h5 class="mb-3" id="ranking-title">Loading rankings...</h5>
+
+        <div id="ranking-table-placeholder">
+            <div class="text-center">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
+        
+        <div id="pagination-controls" class="d-flex justify-content-center mt-3"></div>
+    </div>
+    
+    <!-- Custom CSS for rating colors -->
+    <style>
+        .user-red { color: #ff0000; font-weight: bold; }
+        .user-orange { color: #ff8c00; font-weight: bold; }
+        .user-purple { color: #aa00aa; font-weight: bold; }
+        .user-blue { color: #0000ff; font-weight: bold; }
+        .user-cyan { color: #03a89e; font-weight: bold; }
+        .user-green { color: #008000; font-weight: bold; }
+        .user-gray { color: #808080; }
+        
+        .ranking-section {
+            background-color: #f8f9fa;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .table {
+            background-color: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .table thead th {
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+        
+        .pagination .page-link {
+            color: #007bff;
+        }
+        
+        .pagination .page-item.active .page-link {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        
+        h3 {
+            color: #333;
+            font-weight: 600;
+        }
+        
+        #ranking-title {
+            color: #666;
+            font-weight: 400;
+        }
+    </style>
+    
+    <script src="../assets/js/ratings_standing.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+</body>
+</html>

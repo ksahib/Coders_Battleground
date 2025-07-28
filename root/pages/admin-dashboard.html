@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="../assets/css/content-card.css">
+    <link rel="stylesheet" href="../assets/css/featured.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="../assets/css/admin-dashboard.css">
+    <script src="../assets/js/include.js"></script>
+    <script src="../assets/js/content-card.js"></script>
+</head>
+
+<body>
+    <div id="navbar-placeholder"></div>
+    <div class="container my-4">
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div id="create-contest-card"></div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div id="publish-contest-card"></div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div id="host-interview-card"></div>
+            </div>
+        </div>
+    </div>
+    <div class="container my-4">
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <div class="card">
+                    <div class="card-body d-flex flex-column">
+                        <h3 style="padding-bottom: 10%;"><strong>Ongoing Contests</strong></h3>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="live-status">
+                                    <div class="live-container">Ongoing</div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-5">
+                                <!-- dynamic title-->
+                                <h4 id="ongoing-title"><strong>Contest Title</strong></h4>
+                                <!-- dynamic participants here -->
+                                <p id="ongoing-participants">200 Participants</p>
+                            </div>
+
+                            <div class="col-md-3">
+                                <h4><strong>Time Remaining</strong></h4>
+                                <!-- dynamic duration -->
+                                <p id="ongoing-duration"><strong>2h 15m</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3" style="padding-left: 18%;">
+                <div class="card">
+                    <div class="card-body d-flex flex-column">
+                        <h3 style="padding-bottom: 10%;"><strong>Upcoming Interview</strong></h3>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4><strong>Role</strong></h4>
+                            </div>
+                            <div class="col-md-6">
+                                <h4><strong>Date</strong></h4>
+                            </div>
+                        </div>
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <!-- dynamic role -->
+                                <p id="upcoming-role">—</p>
+                            </div>
+                            <div class="col-md-6">
+                                <!-- dynamic date -->
+                                <p id="upcoming-date">—</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <div class="container my-4">
+        <div class="row">
+            <div class="col-md-8">
+                <!-- <div class="card h-50%" style="padding-bottom: 5%;">
+                    <div class="card-body d-flex flex-column">
+                        <h3 style="padding-bottom: 5%;"><strong>Manage Contests</strong></h1>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <h4><strong>Title</strong></h4>
+                                </div>
+                                <div class="col-md-3">
+                                    <h4><strong>Date</strong></h4>
+                                </div>
+                                <div class="col-md-3">
+                                    <h4><strong>Status</strong></h4>
+                                </div>
+                                <div class="col-md-3">
+                                    <h4><strong>Actions</strong></h4>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <p>Monthly Challenge</p>
+                                </div>
+                                <div class="col-md-3">
+                                    <p>June 25</p>
+                                </div>
+                                <div class="col-md-3">
+                                    <p>Draft</p>
+                                </div>
+                                <div class="col-md-3">
+                                    <i class="material-icons">edit</i>
+                                </div>
+                            </div>
+                    </div>
+                </div> -->
+                <div class="card h-50%">
+                    <div class="card-body d-flex flex-column">
+                        <h3 style="padding-bottom: 5%;"><strong>Interviews Archive</strong></h1>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <h4><strong>Company</strong></h4>
+                                </div>
+                                <div class="col-md-3">
+                                    <h4><strong>Role</strong></h4>
+                                </div>
+                                <div class="col-md-3">
+                                    <h4><strong>Host Date</strong></h4>
+                                </div>
+                                <div class="col-md-3">
+                                    <h4><strong>Recordings</strong></h4>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <p>Google</p>
+                                </div>
+                                <div class="col-md-3">
+                                    <p>SWE</p>
+                                </div>
+                                <div class="col-md-3">
+                                    <p>July 20</p>
+                                </div>
+                                <div class="col-md-3">
+                                    <i class="material-icons">cloud</i>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div id="total-contests" style="padding-bottom: 5%;"></div>
+                <div id="total-interviews" style="padding-bottom: 5%;"></div>
+                <div id="user-participated"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+
+        function onNavbarLoaded() {
+            const span = document.getElementById('nav-company-name');
+            if (span) span.textContent = '…loading…';
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', 'http://localhost/Server/admin.php', true);
+            xhr.withCredentials = true;
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onload = () => {
+                if (xhr.status === 200) {
+                    const resp = JSON.parse(xhr.responseText);
+                    // replace username
+                    if (span && resp.user) span.textContent = resp.user;
+
+
+                    // 1) Make sure we have at least one contest
+                    if (Array.isArray(resp.time) && resp.time.length > 0) {
+                        const contest = resp.time[0]; // the closest/upcoming contest
+
+                        // 2) Populate title
+                        document.getElementById('ongoing-title').textContent =
+                            contest.name || '—';
+
+                        // 3) Populate participants (if your JSON has a field, e.g. contest.participants)
+                        document.getElementById('ongoing-participants').textContent =
+                            (contest.participants ?? 0) + ' Participants';
+
+                        // 4) Populate duration
+                        document.getElementById('ongoing-duration').textContent =
+                            contest.duration || '—';
+                    }
+
+                    // nsure there's an upcoming interview
+                    if (resp.upcoming && resp.upcoming.interview_id) {
+                        // 2) Populate the Role
+                        document.getElementById('upcoming-role').textContent =
+                            resp.upcoming.position_open || resp.upcoming.company_name || '—';
+
+                        // 3) Populate the Date (you can format it if needed)
+                        //    If start is "2025-07-16", you might want to convert to "July 16, 2025":
+                        const raw = resp.upcoming.start;
+                        let formatted = raw;
+                        if (raw) {
+                            const dt = new Date(raw);
+                            formatted = dt.toLocaleDateString('en-US', {
+                                month: 'short',
+                                day: 'numeric',
+                                year: 'numeric'
+                            });
+                        }
+                        document.getElementById('upcoming-date').textContent = formatted;
+
+                        const dateCol = document.getElementById('upcoming-date').parentNode;
+
+                        dateCol.classList.add('d-flex', 'align-items-center', 'justify-content-between');
+
+                        const joinBtn = document.createElement('button');
+                        joinBtn.textContent = 'Join';
+                        joinBtn.className = 'btn btn-sm btn-primary ms-3';
+                        joinBtn.onclick = () => {
+                            window.location.href = `interview.html?interview_id=${resp.upcoming.interview_id}`;
+                        };
+
+                        dateCol.appendChild(joinBtn);
+                    }
+
+
+
+                    const createContestCard = document.getElementById("create-contest-card")
+                    createContestCard.appendChild(createContentCard(`<i class="material-icons" style="font-size:48px">add</i>`, "Create New <br> Contest", '20rem', '220px', 'Create-Contest.html', 'linear-gradient(135deg, #008080 0%, #00FFFF 100%)'))
+
+
+                    const publishContestCard = document.getElementById("publish-contest-card")
+                    publishContestCard.appendChild(createContentCard(`<i class="material-icons" style="font-size:48px">rocket</i>`, "Create <br> Problems", '20rem', '220px', 'create_problem.html', 'linear-gradient(135deg, #007FFF 0%, #007BA7 100%)'))
+
+
+                    const hostInterview = document.getElementById("host-interview-card")
+                    hostInterview.appendChild(createContentCard(`<i class="material-icons" style="font-size:48px">mic</i>`, "Host <br> Interview", '20rem', '220px', 'Create-Interview.html', 'linear-gradient(135deg, #550691 0%, #880ED4 100%)'))
+
+
+                    const totalContests = document.getElementById("total-contests")
+                    totalContests.appendChild(createContentCard("Total Contests", `${resp.total}`, '20rem', '150px', '#', 'linear-gradient(135deg, #008080 0%, #00FFFF 100%)'))
+
+                    const totalInterviews = document.getElementById("total-interviews")
+                    totalInterviews.appendChild(createContentCard("Total Interviews", `${resp.total_interviews}`, '20rem', '150px', '#', 'linear-gradient(135deg, #008080 0%, #00FFFF 100%)'))
+
+                    const userParticipated = document.getElementById("user-participated")
+                    userParticipated.appendChild(createContentCard("Users Participated", `${resp.total_participation}`, '20rem', '150px', '#', 'linear-gradient(135deg, #f44336 0%, #ff6156 100%)'))
+
+                }
+                else if (xhr.status === 401) {
+                    window.location.href = 'login_signup.html';
+                }
+            };
+            xhr.send(JSON.stringify({}));
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            includeHtml(
+                'navbar-placeholder',
+                '../components/admin-navbar.html',
+                onNavbarLoaded
+            );
+        });
+
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>

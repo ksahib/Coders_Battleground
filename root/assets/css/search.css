@@ -1,0 +1,108 @@
+.search-wrapper {
+      width: 100%;
+      margin: 20px 0;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      
+      position: relative;
+    }
+
+    .search-box {
+      position: relative;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+      border-radius: 50px;
+      transition: all 0.3s ease;
+      background-color: #fff;
+    }
+
+    .search-box:focus-within {
+      box-shadow: 0 3px 20px rgba(0, 0, 0, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .search-input {
+      width: 100%;
+      border-radius: 50px;
+      padding: 0 20px 0 45px;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+      height: 45px;
+      background-color: inherit;
+      color: inherit;
+    }
+
+    .search-input:focus {
+      border-color: #0d6efd;
+      box-shadow: none;
+      outline: none;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #6c757d;
+      z-index: 10;
+      font-size: 18px;
+    }
+
+    .search-button {
+      position: absolute;
+      right: 1px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-radius: 50px;
+      padding: 8px 14px;
+      transition: all 0.3s ease;
+      z-index: 10;
+    }
+
+    .search-button:hover {
+      background-color: #0b5ed7;
+      transform: translateY(-50%) scale(1.05);
+    }
+
+    
+    @media (max-width: 768px) {
+      .search-box {
+        max-width: 80%;
+      }
+
+      .search-wrapper {
+        padding-left: 5vw;
+        padding-right: 5vw;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .search-box {
+        max-width: 70%;
+      }
+
+      .search-wrapper {
+        padding-left: 3vw;
+        padding-right: 3vw;
+      }
+    }
+
+    
+    .search-box.dark {
+      background-color: #212529;
+    }
+
+    .search-box.dark .search-input {
+      background-color: #212529;
+      color: #fff;
+    }
+
+    .search-box.dark .search-input::placeholder {
+      color: #6c757d;
+    }
+
+    .search-box.dark .search-icon {
+      color: #6c757d;
+    }
