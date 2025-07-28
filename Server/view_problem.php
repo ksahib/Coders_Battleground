@@ -1,20 +1,23 @@
 <?php
-
-require_once 'config.php';
+include 'connection.php';
 
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: Content-Type');
 
-if($_SERVER['REQUEST_METHOD']=="GET"){
+$offset = isset($_GET['offset']) ? intval($_GET['offset']) : 0;
+$limit = isset($_GET['limit']) ? intval($_GET['limit']) : 100;
 
-    try{
-        $stmt=$pdo->query("SELECT * FROM problems");
-        $results=$stmt->fetchAll(PDO::FETCH_ASSOC);
+$query = "SELECT * FROM problems LIMIT :offset,:limit";
+$stmt = $pdo->prepare($query);
 
-        echo json_encode($results);
 
-    }catch(PDOException $e){
-        echo json_encode(["success"=>false,"error"=>"Could not access results".$e->getMessage()]);
-    }
-}
+$stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+$stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+
+$stmt->execute();
+$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+echo json_encode($result);
+exit;
+?>
