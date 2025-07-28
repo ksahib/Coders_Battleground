@@ -62,7 +62,7 @@
             <div class="col-md-6 mb-3" style="padding-left: 18%;">
                 <div class="card">
                     <div class="card-body d-flex flex-column">
-                        <h3 style="padding-bottom: 10%;"><strong>Upcoming Interview</strong></h3>
+                        <h3 style="padding-bottom: 10%;"><strong>Ongoing Interviews</strong></h3>
 
                         <div class="row">
                             <div class="col-md-6">
@@ -74,16 +74,10 @@
                         </div>
                         <hr>
 
-                        <div class="row">
-                            <div class="col-md-6">
-                                <!-- dynamic role -->
-                                <p id="upcoming-role">—</p>
-                            </div>
-                            <div class="col-md-6">
-                                <!-- dynamic date -->
-                                <p id="upcoming-date">—</p>
-                            </div>
+                        <div id="upcoming-list" class="d-flex flex-column gap-2">
+                            <!-- rows will be injected here -->
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -205,38 +199,61 @@
                     }
 
                     // nsure there's an upcoming interview
-                    if (resp.upcoming && resp.upcoming.interview_id) {
-                        // 2) Populate the Role
-                        document.getElementById('upcoming-role').textContent =
-                            resp.upcoming.position_open || resp.upcoming.company_name || '—';
+                    // clear out the container
+                    const upcomingList = document.getElementById('upcoming-list');
+                    upcomingList.innerHTML = '';
 
-                        // 3) Populate the Date (you can format it if needed)
-                        //    If start is "2025-07-16", you might want to convert to "July 16, 2025":
-                        const raw = resp.upcoming.start;
-                        let formatted = raw;
-                        if (raw) {
-                            const dt = new Date(raw);
-                            formatted = dt.toLocaleDateString('en-US', {
-                                month: 'short',
-                                day: 'numeric',
-                                year: 'numeric'
-                            });
-                        }
-                        document.getElementById('upcoming-date').textContent = formatted;
+                    if (Array.isArray(resp.upcoming) && resp.upcoming.length > 0) {
+                        resp.upcoming.forEach(interview => {
+                            // create a row div
+                            const row = document.createElement('div');
+                            row.className = 'row align-items-center';
 
-                        const dateCol = document.getElementById('upcoming-date').parentNode;
+                            // ROLE column
+                            const colRole = document.createElement('div');
+                            colRole.className = 'col-md-5';
+                            colRole.textContent = interview.position_open || interview.company_name || '—';
 
-                        dateCol.classList.add('d-flex', 'align-items-center', 'justify-content-between');
+                            // DATE column
+                            const colDate = document.createElement('div');
+                            colDate.className = 'col-md-4 d-flex align-items-center';
+                            let raw = interview.start; // e.g. "2025-07-28"
+                            let formatted = raw;
+                            if (raw) {
+                                const dt = new Date(raw);
+                                formatted = dt.toLocaleDateString('en-US', {
+                                    month: 'short',
+                                    day: 'numeric',
+                                    year: 'numeric'
+                                });
+                            }
+                            colDate.textContent = formatted;
 
-                        const joinBtn = document.createElement('button');
-                        joinBtn.textContent = 'Join';
-                        joinBtn.className = 'btn btn-sm btn-primary ms-3';
-                        joinBtn.onclick = () => {
-                            window.location.href = `interview.html?interview_id=${resp.upcoming.interview_id}`;
-                        };
+                            // JOIN button column
+                            const colBtn = document.createElement('div');
+                            colBtn.className = 'col-md-3 text-end';
+                            const joinBtn = document.createElement('button');
+                            joinBtn.textContent = 'Join';
+                            joinBtn.className = 'btn btn-sm btn-primary';
+                            joinBtn.onclick = () => {
+                                window.location.href = `interview.html?interview_id=${interview.interview_id}`;
+                            };
+                            colBtn.appendChild(joinBtn);
 
-                        dateCol.appendChild(joinBtn);
+                            // assemble row
+                            row.appendChild(colRole);
+                            row.appendChild(colDate);
+                            row.appendChild(colBtn);
+
+                            upcomingList.appendChild(row);
+                        });
+                    } else {
+                        // no upcoming interviews
+                        const empty = document.createElement('p');
+                        empty.textContent = 'No upcoming interviews.';
+                        upcomingList.appendChild(empty);
                     }
+
 
 
 

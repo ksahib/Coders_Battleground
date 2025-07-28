@@ -54,15 +54,23 @@ try {
     $total_interviews_stmt->execute(['company_name' => $user['name']]);
     $total_interviews_count = $total_interviews_stmt->fetchColumn();
 
-    $upcoming_sql = "SELECT *
-        FROM interview
-        WHERE start > NOW() AND company_name = :company_name
-        ORDER BY start ASC
-        LIMIT 1;
-    ";
-    $upcoming_stmt = $pdo->prepare($upcoming_sql);
-    $upcoming_stmt->execute(['company_name' => $user['name']]);
-    $upcoming = $upcoming_stmt->fetch(PDO::FETCH_ASSOC);
+    // fetch all interviews today or later
+$upcoming_sql = "
+  SELECT *
+    FROM interview
+   WHERE start >= :today
+     AND company_name = :company_name
+   ORDER BY start ASC
+";
+$upcoming_stmt = $pdo->prepare($upcoming_sql);
+$upcoming_stmt->execute([
+  'today'        => $today,            // e.g. "2025-07-28"
+  'company_name' => $user['name']
+]);
+// fetchAll returns an array of all matching rows
+$upcoming = $upcoming_stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
 
     echo json_encode([
         'success'  => true,
