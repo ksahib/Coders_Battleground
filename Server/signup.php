@@ -1,5 +1,8 @@
 <?php
 require_once 'config.php';
+header("Access-Control-Allow-Origin: https://codersbattleground.test");
+header("Access-Control-Allow-Credentials:true");
+header("Access-Control-Allow-Headers: Content-Type");
 header('Content-Type: application/json');
 
 $raw  = file_get_contents('php://input');
@@ -8,9 +11,10 @@ $data = json_decode($raw, true);
 // debug
 // file_put_contents(__DIR__.'/debug-signup.log', $raw . PHP_EOL, FILE_APPEND);
 
-$username = trim($data['username'] ?? '');
+$username = htmlspecialchars(trim($data['username'] ?? ''),ENT_QUOTES | ENT_HTML5, 'UTF-8');
 $email    = trim($data['email']    ?? '');
 $password = trim($data['password'] ?? '');
+$role=trim($data['role']);
 
 if ($username === '' || $email === '' || $password === '') {
     echo json_encode([
@@ -33,9 +37,9 @@ try {
     $hashed = password_hash($password, PASSWORD_DEFAULT);
     $insertSql = "INSERT INTO users
                     (email, password, name, subscription_type, role)
-                  VALUES (?, ?, ?, 'free', 'user')";
+                  VALUES (?, ?, ?, 'free', ?)";
     $stmt = $pdo->prepare($insertSql);
-    $stmt->execute([$email, $hashed, $username]);
+    $stmt->execute([$email, $hashed, $username,$role]);
 
     echo json_encode(['success'=>true,'message'=>'Signup successful!']);
     exit;

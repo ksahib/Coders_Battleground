@@ -170,7 +170,7 @@ window.addEventListener('load', function() {
 
             // Send via AJAX
             const xhr = new XMLHttpRequest();
-            xhr.open('POST', 'http://localhost/server/create_contest.php', true);
+            xhr.open('POST', 'http://localhost/Coders_Battleground/Server/create_contest.php', true);
             xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
 
             xhr.onreadystatechange = function() {

@@ -1,9 +1,10 @@
 <?php
 
-require_once 'connection.php';
+require_once 'config.php';
 
 header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');    
+header("Access-Control-Allow-Origin: https://codersbattleground.test");
+header("Access-Control-Allow-credentials:true");  
 header('Access-Control-Allow-Methods: POST'); 
 header('Access-Control-Allow-Headers: Content-Type');
 
@@ -17,6 +18,9 @@ if($data['type']=="INSERT"){
     $description=isset($data['description'])?$data['description']:null;
     $difficulty=isset($data['difficulty'])?$data['difficulty']:null;
     $tags = $data['tags'] ?? [];
+    $input=isset($data['input'])?$data['input']:null;
+    $output=isset($data['output'])?$data['output']:null;
+    
 
     if (empty($name) || empty($description) || empty($difficulty)) {
     echo json_encode(['success' => false, 'message' => 'Required fields missing']);
@@ -24,12 +28,15 @@ if($data['type']=="INSERT"){
 }
 
     try {
-    $stmt = $pdo->prepare("INSERT INTO problems (name, description, difficulty) VALUES (:name, :description,:difficulty)");
+    $stmt = $pdo->prepare("INSERT INTO problems (name, description, difficulty,input,output) VALUES (:name, :description,:difficulty
+    ,:input,:output)");
 
     $stmt->execute([
         ':name' => $name,
         ':description' => $description,
         ':difficulty' => $difficulty,
+        ':input'=>$input,
+        ':output'=>$output
     ]);
 
     $problemid=$pdo->lastInsertId();

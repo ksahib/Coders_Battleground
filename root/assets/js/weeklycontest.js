@@ -24,7 +24,7 @@ $(document).ready(function() {
 
     // Fetch contest data from the server
     $.ajax({
-        url: `http://localhost/server/get_contest_details.php?id=${contestId}`,
+        url: `localhost://Coders_Battleground/Server/get_contest_details.php?id=${contestId}`,
         type: 'GET',
         dataType: 'json',
         success: function(response) {

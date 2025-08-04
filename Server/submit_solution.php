@@ -1,20 +1,22 @@
 <?php
-require_once 'connection.php';
+require_once 'config.php';
 
 header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');    
+header("Access-Control-Allow-Origin: https://codersbattleground.test");
+header("Access-Control-Allow-credentials:true");  
 header('Access-Control-Allow-Methods: POST'); 
 header('Access-Control-Allow-Headers: Content-Type');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
    
-    $email = "sadik@gmail.com"; 
+    $email = $_SESSION['user']; 
 
-    $id   = $_POST['prbID'] ?? null;
-    $code = $_POST['code'] ?? null;
-    $time = $_POST['time'] ?? null;
-    $mem  = $_POST['mem'] ?? null;
-    $lang = $_POST['lang'] ?? null;
+$data = json_decode(file_get_contents("php://input"), true);
+$id   = $data['prbId'] ?? null;
+$code = htmlspecialchars(trim($data['code'] ?? ''));
+$time = $data['time'] ?? null;
+$mem  = $data['mem'] ?? null;
+$lang = $data['lang'] ?? null;
 
    
     if (!$id || !$code || !$time || !$mem || !$lang) {
@@ -24,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     try {
         $stmt = $pdo->prepare("
-            INSERT INTO solutions (problem_id, email, runtime, memory_usage, langauge, code_text)
+            INSERT INTO solutions (problem_id, email, runtime, memory_usage, language, code)
             VALUES (:id, :email, :time, :mem, :lang, :code)
         ");
         $stmt->execute([

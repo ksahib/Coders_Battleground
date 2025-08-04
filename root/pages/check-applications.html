@@ -76,8 +76,8 @@ $(function() {
   async function loadApplications() {
     // Fetch applications + rankings in parallel
     const [appsRes, ranksRes] = await Promise.all([
-      $.getJSON('http://localhost/Server/get-company-applications.php'),
-      $.getJSON('http://localhost/Server/get_rankings.php')
+      $.getJSON('http://localhost/Coders_Battleground/Server/get-company-applications.php'),
+      $.getJSON('http://localhost/Coders_Battleground/Server/get_rankings.php')
     ]);
     $('#loading').remove();
 
@@ -164,7 +164,7 @@ $(function() {
         // Reject handler
         $rejectBtn.click(async () => {
           await $.ajax({
-            url: 'http://localhost/Server/update-application-status.php',
+            url: 'http://localhost/Coders_Battleground/Server/update-application-status.php',
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({
@@ -192,7 +192,7 @@ $(function() {
           const start = $form.find('[name=start]').val();
           const end   = $form.find('[name=end]').val();
           await $.ajax({
-            url: 'http://localhost/Server/schedule-interview.php',
+            url: 'http://localhost/Coders_Battleground/Server/schedule-interview.php',
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({

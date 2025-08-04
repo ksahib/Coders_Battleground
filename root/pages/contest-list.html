@@ -1,33 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Contest List - Coders Battleground</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="../assets/css/content-card.css">
     <link rel="stylesheet" href="../assets/css/featured.css">
     <link rel="stylesheet" href="../assets/css/contest-list.css">
     <link rel="stylesheet" href="../assets/css/global-style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../assets/js/include.js"></script>
     <script src="../assets/js/list-renderer.js"></script>
-
+    <script src="../assets/js/content-card.js"></script>
 </head>
 
 <body>
     <div id="navbar-placeholder"></div>
-    <script>
-        includeHtml('navbar-placeholder', '../components/navbar.html');
-    </script>
 
     <div class="featured-section container my-4">
         <h2 class="mb-3">Featured</h2>
         <div id="cards-row-feature" class="featured-scroll d-flex flex-row gap-3">
-
         </div>
     </div>
+    
     <div class="contest-list container my-4">
         <div class="row">
             <div class="d-flex gap-3">
@@ -38,69 +35,22 @@
                     <div id="my-contest-btn" class="type-item">My Contests</div>
                 </div>
             </div>
-
         </div>
+        
+        <div id="loading-spinner" class="text-center my-3" style="display: none;">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+        
         <ul id="list-group-ul" class="list-group">
             <li id="list-contests" class="list-group-item"></li>
         </ul>
     </div>
 
-
-    <script src="../assets/js/content-card.js"></script>
-    <script>
-        const container = document.getElementById('cards-row-feature');
-        container.appendChild(createContentCard('Contest', 'Google <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #1E90FF 0%, #00FF85 100%)'));
-        container.appendChild(createContentCard('Contest', 'Amazon <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #7F00FF 0%, #E100FF 100%)'));
-        container.appendChild(createContentCard('Contest', 'Microsoft <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)'));
-        container.appendChild(createContentCard('Contest', 'Apple <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #ff9966 0%, #ff5e62 100%)'));
-        container.appendChild(createContentCard('Contest', 'Netflix <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #ff6a88 0%, #ff99ac 50%, #6dd5ed 100%)'));
-        container.appendChild(createContentCard('Contest', 'Conda <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #00c6fb 0%, #005bea 100%)'));
-        container.appendChild(createContentCard('Contest', 'Nvidia <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #f7971e 0%, #ffd200 100%)'));
-        container.appendChild(createContentCard('Contest', 'Linux <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #29323c 0%, #485563 100%)'));
-
-
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const contests = [
-                { label: "Contest A", url: "../pages/weeklycontest.html" },
-                { label: "Contest B", url: "../pages/weeklycontest.html" },
-                { label: "Contest C", url: "../pages/weeklycontest.html" },
-                { label: "Contest D", url: "../pages/weeklycontest.html" },
-                { label: "Contest E", url: "../pages/weeklycontest.html" },
-                { label: "Contest F", url: "../pages/weeklycontest.html" },
-                { label: "Contest G", url: "../pages/weeklycontest.html" },
-                { label: "Contest H", url: "../pages/weeklycontest.html" },
-                { label: "Contest I", url: "../pages/weeklycontest.html" },
-                { label: "Contest J", url: "../pages/weeklycontest.html" },
-                { label: "Contest K", url: "../pages/weeklycontest.html" },
-                { label: "Contest L", url: "../pages/weeklycontest.html" },
-            ];
-            const myContests = [
-                
-            ];
-
-            new ListRenderer({
-                containerId: 'list-group-ul',
-                dataSets: {
-                    contests: contests,
-                    mycontests: myContests
-                },
-                defaultKey: 'contests',
-                buttonMap: {
-                    contests: 'contest-btn',
-                    mycontests: 'my-contest-btn'
-                },
-                emptyMessage: "No Contests Found",
-                emptyClass: 'list-empty'
-            });
-        });
-
-
-    </script>
+    <script src="../assets/js/contest-list.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
-
 </body>
-
 </html>

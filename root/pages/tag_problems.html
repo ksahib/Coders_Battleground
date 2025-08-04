@@ -24,7 +24,7 @@
   </div>
 
   <script>
-    $(document).ready(function () {
+    $(document).ready(async function () {
       const urlParams = new URLSearchParams(window.location.search);
       const tag = urlParams.get("tag");
 
@@ -35,19 +35,56 @@
 
       $('#tag-title').text(`Problems tagged: ${tag}`);
 
-      $.ajax({
-        url: "http://localhost/Server/get_problems_by_tag.php",
-        type: "GET",
-        data: { tag: tag },
-        dataType: "json",
-        success: function (problems) {
-          if (problems.length === 0) {
+      // $.ajax({
+      //   url: "http://localhost/Coders_Battleground/Server/get_problems_by_tag.php",
+      //   type: "GET",
+      //   data: { tag: tag },
+      //   dataType: "json",
+      //   success: function (problems) {
+      //     if (problems.length === 0) {
+      //       $('#problem-list').html('<li class="list-group-item bg-dark text-warning">No problems found for this tag.</li>');
+      //     } else {
+      //       problems.forEach(problem => {
+      //         const item = `
+      //           <li class="list-group-item bg-dark text-white">
+      //             <a href="Problem_desc.html?id=${problem.problem_id}" class="text-info text-decoration-none fw-bold">${problem.name}</a>
+      //             <span class="badge float-end ${
+      //               problem.difficulty === 'Easy' ? 'bg-success' :
+      //               problem.difficulty === 'Medium' ? 'bg-warning text-dark' : 'bg-danger'
+      //             }">${problem.difficulty}</span>
+      //           </li>
+      //         `;
+      //         $('#problem-list').append(item);
+      //       });
+      //     }
+      //   },
+      //   error: function () {
+      //     $('#problem-list').html('<li class="list-group-item bg-dark text-danger">Failed to load problems.</li>');
+      //   }
+      // });
+    
+     try{
+     
+     const resp = await fetch(`http://localhost/Coders_Battleground/Server/get_problems_by_tag.php?tag=${encodeURIComponent(tag)}`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            
+      });
+      const result=await resp.json();
+      const problems=result.problems;
+      
+      if(result.success)
+      {
+        
+        if (problems.length === 0) {
             $('#problem-list').html('<li class="list-group-item bg-dark text-warning">No problems found for this tag.</li>');
-          } else {
+        }
+         else {
             problems.forEach(problem => {
               const item = `
                 <li class="list-group-item bg-dark text-white">
-                  <a href="Problem_desc.html?id=${problem.problem_id}" class="text-info text-decoration-none fw-bold">${problem.name}</a>
+                  <a href="Problem_desc.html?name=${problem.name}" class="text-info text-decoration-none fw-bold">${problem.name}</a>
                   <span class="badge float-end ${
                     problem.difficulty === 'Easy' ? 'bg-success' :
                     problem.difficulty === 'Medium' ? 'bg-warning text-dark' : 'bg-danger'
@@ -57,12 +94,12 @@
               $('#problem-list').append(item);
             });
           }
-        },
-        error: function () {
-          $('#problem-list').html('<li class="list-group-item bg-dark text-danger">Failed to load problems.</li>');
-        }
-      });
+      }
+    }catch(err){
+      $('#problem-list').html(`<li class="list-group-item bg-dark text-danger">${err}.Failed to load problems.</li>`);
+    }
     });
+   
   </script>
 </body>
 </html>

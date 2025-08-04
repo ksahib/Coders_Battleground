@@ -1,7 +1,8 @@
 <?php
 require_once "config.php";
-opcache_reset();
-header("Access-Control-Allow-Origin: *");
+// opcache_reset();
+header("Access-Control-Allow-Origin: https://codersbattleground.test");
+header("Access-Control-Allow-credentials:true");
 header("Access-Control-Allow-Headers: Content-Type");
 header("Content-Type: application/json");
 // ini_set('display_errors', 1);
@@ -40,6 +41,7 @@ if($_SERVER['REQUEST_METHOD']=== "POST"){
 
         if($user && password_verify($password, $user['password'])) {
             $_SESSION['user'] = $user['email'];
+            $_SESSION['role']=$user['role'];
             
             echo json_encode(["success" => true, "message" => "Login successful", "role" => $user['role']]);
             http_response_code(200);

@@ -18,7 +18,7 @@ $(document).ready(function() {
         showLoading();
         
         $.ajax({
-            url: 'http://localhost/server/get-contest-history.php',
+            url: 'http://localhost/Coders_Battleground/Server/get-contest-history.php',
             type: 'GET',
             dataType: 'json',
             success: function(response) {

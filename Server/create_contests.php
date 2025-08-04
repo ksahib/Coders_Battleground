@@ -4,6 +4,8 @@
     error_reporting(E_ALL);
     
     header('Content-Type: application/json');
+    header("Access-Control-Allow-Origin: https://codersbattleground.test");
+    header("Access-Control-Allow-credentials:true");
     session_start();
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         http_response_code(405);

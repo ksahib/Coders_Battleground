@@ -3,13 +3,14 @@
 require_once 'config.php';
 
 header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');
+header("Access-Control-Allow-Origin: https://codersbattleground.test");
+header("Access-Control-Allow-credentials:true");
 header('Access-Control-Allow-Headers: Content-Type');
 
 if($_SERVER['REQUEST_METHOD']=="GET"){
-    $name=$_GET['name'];
+    $name=isset($_GET['name'])?trim($_GET['name']):null;
     try{
-        $stmt=$pdo->prepare("SELECT p.*,s.*,u.username FROM solutions as s
+        $stmt=$pdo->prepare("SELECT p.*,s.* FROM solutions as s
         LEFT JOIN problems AS p
         ON p.problem_id=s.problem_id
         LEFT JOIN users AS u

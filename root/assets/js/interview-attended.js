@@ -15,7 +15,7 @@ $(document).ready(function() {
         showLoading();
         
         $.ajax({
-            url: 'http://localhost/server/get-interview-history.php',
+            url: 'http://localhost/Coders_Battleground/server/get-interview-history.php',
             type: 'GET',
             dataType: 'json',
             success: function(response) {

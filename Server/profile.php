@@ -4,7 +4,8 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Origin: https://codersbattleground.test");
+header("Access-Control-Allow-credentials:true");
 header("Access-Control-Allow-Headers: Content-Type");
 header("Content-Type: application/json");
 
@@ -30,13 +31,15 @@ try {
             COUNT(*) AS submissions_count
         FROM 
             solutions
+        WHERE email=:email
         GROUP BY 
             DATE(submission_time)
         ORDER BY 
             submission_day;
     ";
     
-    $submissions = $pdo->query($sql2);
+    $submissions = $pdo->prepare($sql2);
+    $submissions->execute([':email'=>$_SESSION['user']]);
     $submissions = $submissions->fetchAll(PDO::FETCH_KEY_PAIR);
 
     $lang_sql = "SELECT DISTINCT language FROM solutions WHERE email = :user_id";

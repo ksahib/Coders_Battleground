@@ -39,7 +39,8 @@ require(['vs/editor/editor.main'], function () {
   editor.onDidChangeModelContent(() => {
     const code = editor.getValue();
     const lang=editor.getModel().getLanguageId();
-    document.cookie = `savedCode_${problemName}=${encodeURIComponent(code)}; selected_lang_${problemName}=${encodeURIComponent(lang)};$path=/; max-age=${7 * 24 * 60 * 60}`;
+    document.cookie = `savedCode_${problemName}=${encodeURIComponent(code)}; path=/; max-age=${7 * 24 * 60 * 60}`;
+    document.cookie = `selected_lang_${problemName}=${encodeURIComponent(lang)}; path=/; max-age=${7 * 24 * 60 * 60}`;
   });
 
   document.getElementById('language-select').addEventListener('change', function () {
@@ -59,26 +60,54 @@ let languageMap = {
 const $problem_holder = $(".problem-description-section");
 let expectedOutput="";
 let prbId="";
-$(document).ready(function () {
+$(document).ready( async function () {
+  console.log(problemName);
   
-  $.ajax({
-    url: "http://localhost/Coders_Battleground/Server/problem_desc.php",
-    method: "GET",
-    data: { name: problemName },
-    dataType: "json",
-    success: function (problem) {
-      expectedOutput=problem.o;
-      prbId=problem.problem_id;
+//   $.ajax({
+//     url: "http://localhost/Coders_Battleground/Server/problem_desc.php",
+//     method: "GET",
+//     data: { name: problemName },
+//     dataType: "json",
+//     success: function (problem) {
+//       expectedOutput=problem.o;
+//       prbId=problem.problem_id;
+//       const html = `
+//         <h2>Problem: ${problem.name}</h2>
+//         <p>${problem.description}</p>
+//         <h4>Example:</h4>
+//         <pre><code>Input: ${problem.input}  
+// Output: ${problem.output}</code></pre>
+//       `;
+//       $problem_holder.append(html);
+//     }
+//   });
+
+   try {
+          const resp = await fetch(`http://localhost/Coders_Battleground/Server/problem_desc.php?title=${encodeURIComponent(problemName)}`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+           
+          });
+          const problem = await resp.json();
+          if(problem.success)
+          {
+             expectedOutput=problem.problem.output;
+      prbId=problem.problem.problem_id;
       const html = `
-        <h2>Problem: ${problem.name}</h2>
-        <p>${problem.description}</p>
+        <h2>Problem: ${problem.problem.name}</h2>
+        <p>${problem.problem.description}</p>
         <h4>Example:</h4>
-        <pre><code>Input: ${problem.i}  
-Output: ${problem.o}</code></pre>
+        <pre><code>Input: ${problem.problem.input}  
+Output: ${problem.problem.output}</code></pre>
       `;
       $problem_holder.append(html);
-    }
-  });
+          }
+
+        
+        } catch (err) {
+          $('#problem-title').text("Server error.");
+        }
 
   
   function base64Encode(str) {
@@ -105,16 +134,39 @@ Output: ${problem.o}</code></pre>
     const result = await response.json();
     const output = result.stdout ? atob(result.stdout).trim() : "";
     if (output === expectedOutput.trim()){
-      $.post("http://localhost/CB_BackEnd/submit_solution.php", {
+    //   $.post("http://localhost/Coders_Battleground/Server/submit_solution.php", {
       
-      prbID: prbId,
-      code: srcCode,
-      time:result.time,
-      mem:result.memory,
-      lang:lang
-    });
-      alert("Problem Submitted Successfully.");
-      $("#submitCode").text("Accepted");
+    //   prbID: prbId,
+    //   code: srcCode,
+    //   time:result.time,
+    //   mem:result.memory,
+    //   lang:lang
+    // });
+    try{
+      const resp=await fetch('http://localhost/Coders_Battleground/Server/submit_solution.php',{
+           method: 'POST',
+           headers: { 'Content-Type': 'application/json' },
+           credentials: 'include',
+           body: JSON.stringify({
+            prbId:prbId,
+            code:srcCode,
+            time:result.time,
+            mem:result.memory,
+            lang:lang
+           })
+          });
+      const ans=await resp.json();
+      console.log(ans);
+      if(ans.success)
+      { 
+        alert("Problem Submitted Successfully.");
+        $("#submitCode").text("Accepted");
+      }
+
+    }catch(err){
+        alert("Problem Connecting to server.");
+    }
+      
     }
 
   }

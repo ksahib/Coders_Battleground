@@ -12,7 +12,7 @@ $(document).ready(function () {
     // Load interviews from database
     function loadInterviews() {
         $.ajax({
-            url: 'http://localhost/Server/get_interviews.php',
+            url: 'http://localhost/Coders_Battleground/Server/get_interviews.php',
             type: 'GET',
             dataType: 'json',
             success: function (response) {
@@ -166,7 +166,7 @@ $(document).ready(function () {
         button.prop('disabled', true).text('Applying...');
 
         $.ajax({
-            url: 'http://localhost/Server/apply_interview.php',
+            url: 'http://localhost/Coders_Battleground/Server/apply_interview.php',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({ interview_id: interviewId }),

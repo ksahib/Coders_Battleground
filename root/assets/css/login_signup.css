@@ -1,307 +1,78 @@
-*{
-    margin: 0;
-padding: 0;
-box-sizing: border-box;
-font-family:"poppins",sans-serif ;
-
-}
-
-body{
-  
-    height :100 vh;
-    width: 100%;
-background: #101e3e;
-
-}
-
-.background
-{
-    background: url(../images/chobi.jpg) no-repeat;
-    background-position: center;
-    background-size: cover;
-    height: 100vh;
-    width: 100%;
-
-
-}
-
-.header {
-    position : fixed;
-    top: 0;
-    left:0;
-    width:100%;
-    padding : 15px 13%;
-    background: transparent;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 100;
-}
-
-.navbar a{
-
-    position :relative;
-    font-size: 16px; 
-    color: aliceblue;
-    margin-right: 30px;
-    text-decoration: none;
-}
-
-.navbar a::after{
-
-content: "";
-position:absolute;
-left: 0;
-width: 100%;
-height:2px;
-background: white;
-bottom: -5px;
-border-radius: 5px;
-transform: translateY(10px);
-opacity:0 ;
-transition: .5s ease;
-
-
-}
-
-
-.navbar a:hover:after{
-
-    transform:translateY(0);
-    opacity:1;
-}
-
-
-.container{
-
-    position: absolute;
-    left:50%;
-    top:50%;
-    transform: translate(-50%,-50%);
-    width:75%;
-    height: 500px;
-    margin-top: 30px;
-    color: aliceblue;
-    background: url(../images/chobi.jpg) no-repeat;
-    background-position: center;
-    background-size: cover;
-    border-radius: 20px;
-
-}
-.item{
-
-  position: absolute;
-  top: 0;
-  left:0;
-  width:58%;
-  height: 100%;
+body {
+  background: url('../images/chobi.jpg') no-repeat center center/cover; 
+  background-color: black;
+  font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   color: white;
-  background: transparent;
-  padding: 80px;
-  display:flex;
-  justify-content: space-between;
+  display: flex;
   flex-direction: column;
+  margin: 0;
+  border: 0;
 }
-
-.item .logo{
-   
-    color:white;
-    font-size:30px;
-}
-
-.text-item h2{
-
-    font-size:20px;
-    line-height:1;
-}
-
-.text-item .one{
-    
-    font-size: 10px;
-    line-height:1;
-
-}
-
-.text-item .two
-{
-   line-height:1 ;
-    font-size: 30px;
-    line-height: .5;
-    font-weight: 100;
-   
-}
-
-.text-item p
-{
-    font-size: 10px;
-    margin :20px 2px;
-    
+.sprite-icon {
+  display: inline-block;
+  width: 64px; height: 64px;
+  background:url('../images/css_sprites.png') -542px -10px;
+  background-repeat: no-repeat;
+  background-size: auto;
+  transition: transform 0.2s ease;
+ 
 }
 
 
-
-.container .login-section
-{
-    color: white;
-    position: absolute;
-    top:0;
-    right:0;
-    width: calc(100% - 58%);
-    color: black;
-    height :100%;
-    backdrop-filter: blur(20px);
-    overflow: hidden;
-   
+.bg-facebook {
+  background-position: -0 -64px;
+  /* width: 50px;
+  height: 50px; */
 }
 
-.login-section .form-box
-
-{  
-    position:absolute;
-    display:flex-end;
-    justify-content:center;
-    align-items: center;
-    color: white;
-    width:100%;
-    height:100%;
-
-}
-.login-section .form-box.register{
-    transform: translateX(2000px);
-    transition: transform .6s ease;
-    transition-delay: 0s;
-  
-}
-.login-section.active .form-box.register{
-    transform: translateX(0px);
-    transition-delay: .7s;
+.bg-instagram {
+  background-position: -64px -64px;
+   /* width: 50px;
+  height: 50px; */
 }
 
-.login-section .form-box.login{
-    transform: translateX(0px);
-    transition: transform .6s ease;
-    transition-delay: 0.7s;
-}
-.login-section.active .form-box.login{
-    transform: translateX(5000px);
-    transition-delay: 0s;
-}
-
-.login-section .form-box h2
-{
-    text-align:center;
-    font-size:25px;
-
+.form-container {
+  background: linear-gradient(45deg,black,rgb(5, 5, 89));
+  padding: 2rem;
+  border-radius: 20px;
+  height: 75vh;
+  width: 100%;
+  max-width: 400px;
 }
 
-.form-box .input-box
-{
-    width :340px;
-    height: 50px;
-    border-bottom:2px solid white;
-    margin :30px 0;
-    position:relative;
+.form-label {
+  color: white;
 }
 
-.input-box input
-{
-    width:100%;
-    background: transparent;
-    font-size: 16px;
-    border: none;
-    outline:none;
-    height:100%;
-    padding-right: 28px;
-    color: white;
-
+.form-control {
+  background-color: transparent;
+  color: white;
+  border: 1px solid white;
 }
 
-.input-box label{
- position: absolute;
- top:50%;
- left: 0;
- transform: translateY(-50%);
- font-size: 16px;
- font-weight: 600px;
- pointer-events: none;
- transition: .5 ease;
+.form-control:focus {
+  background-color: transparent;
+  color: white;
+  border-color: #f27d7a;
+  box-shadow: none;
 }
 
-.input-box .icon{
-    position: absolute;
-    top: 13px;
-    right: 0;
-    font-size:19px;
+.input-group-text {
+  background-color: transparent;
+  border: 1px solid white;
+  color: white;
 }
 
-.input-box input:focus~label,
-.input-box input:valid~label{
-
- top:-5px;
-
+.btn-primary {
+  background-color: #f27d7a;
+  border: none;
 }
 
-.remember-password
-{
-    font-size: 14px;
-    font-weight:500;
-    margin:-15px 0 15px;
-    display: flex;
-    justify-content:space-between;
+.btn-success {
+  background-color: #28a745;
+  border: none;
 }
 
-
-.remember-password label input
-{
-    accent-color: white;
-    margin-right: 3px ;
-
-}
-
-.remember-password a{
-    color: white;
-    text-decoration: none;
-}
-
-.remember-password a:hover{
-
-text-decoration: underline;
-
-}
-
-.btn
-{
-
-    background: white;
-    height: 45px;
-    width:100%;
-    outline: none;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    background: #f27d7a;
-    font-size: 16px;
-    color:white;
-    box-shadow: rgba(0,0,0,0.4);
-
-}
-
-.create-account
-{
-    font-size: 14.5px;
-    text-align: center;
-    margin:25px;
-}
-
-.create-account p a{
-    color:white;
-    font-weight: 600px;
-    text-decoration: none;
-
-}
-
-.create-account p a:hover{
-
-    text-decoration: underline;
-
+.form-check-label {
+  color: white;
 }

@@ -1,213 +1,143 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>project</title>
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="../assets/css/login_signup.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coders Battleground</title>
+   
+ 
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+  <link rel="stylesheet" href="../assets/css/login_signup.css" />
 </head>
 
 <body>
-    <header class="header">
-        <nav class="navbar">
-            <a href="">Home</a>
-            <a href="">About</a>
-            <a href="">Contact Us</a>
-            <a href="">Help</a>
-        </nav>
+  <!-- <nav class="navbar navbar-expand-lg px-4 py-2 mb-3" style="background-color: rgb(23, 23, 71);">
+  <div class="container-fluid d-flex align-items-center">
+    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="none" viewBox="0 0 24 24" class="me-2">
+      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.35709 16V5.78571c0-.43393.34822-.78571.77777-.78571H18.5793c.4296 0 .7778.35178.7778.78571V16M5.35709 16h-1c-.55229 0-1 .4477-1 1v1c0 .5523.44771 1 1 1H20.3571c.5523 0 1-.4477 1-1v-1c0-.5523-.4477-1-1-1h-1M5.35709 16H19.3571M9.35709 8l2.62501 2.5L9.35709 13m4.00001 0h2"/>
+    </svg>
+    <a class="navbar-brand fw-bold fs-4 text-white" href="#">Coders Battleground</a>
+  </div>
+</nav> -->
+  <div class="container d-flex flex-column align-items-center justify-content-center">
+    <h1 class="text-white mb-4" style="font-weight: bold;">CODERS BATTLEGROUND</h1>
 
+  
+    <div class="form-container">
+      <form id="loginForm">
+        <h2>Sign In</h2>
 
-    </header>
-
-    <div class="background">
-    </div>
-    <div class="container">
-        <div class="item">
-            <h2 class="logo"> CODERS BATTLEGROUND </h2><br>
-            <div class="text-item">
-                <br>
-                <h2>Welcome!<br>
-                    <span> To Our Website
-                    </span>
-                </h2>
-                <p class="one"> Step into the ultimate arena where logic meets creativity, speed challenges precision.
-                    Only the sharpest minds rise to the top. </p>
-                <p class="two">Code.Compete.Conquer.</p>
-                <p class="three">Are you ready to become your best?</p>
-            </div>
+        <div class="mb-3 position-relative">
+          <i class="bx bxs-envelope"></i>
+          <label for="email" class="form-label">Email</label>
+          
+          
+            
+            <input type="email" class="form-control" id="email" name="email" required />
+         
         </div>
 
-        <div class="login-section">
-            <div class="form-box login">
-                <form id="loginForm">
-                    <h2>Sign In</h2>
-
-                    <div class="input-box">
-                        <span class="icon"><i class="bx bxs-envelope"></i></span>
-                        <input type="email" id="email" name="email" required>
-                        <label>Email</label>
-                    </div>
-                    <div class="input-box">
-                        <span class="icon"><i class="bx bxs-lock-alt"></i></span>
-                        <input type="password" id="password" name="password" required>
-                        <label>Password</label>
-                    </div>
-                    <div class="remember-password">
-                        <label for=""><input type="checkbox">Remember Me</label>
-                        <a href="#">Forget Password</a>
-                    </div>
-                    <br>
-
-                    <div id="loginError" class="error-message" style="color: #c00; margin: .5em 0;"></div>
-
-                    <button type="submit" class="btn" id="signInBtn">Sign In</button>
-                    <div class="create-account">
-                        <p>Create A New Account? <a href="#" class="register-link">Sign Up</a></p>
-
-                    </div>
-                </form>
-
-            </div>
-
-
-
-            <div class="form-box register">
-                <form id="signupForm"> <!-- ← added form tag and id -->
-                    <h2>Sign Up</h2>
-
-                    <div class="input-box">
-                        <span class="icon"><i class='bx bxs-user'></i></span>
-                        <input type="text" id="username" name="username" required> <!-- ← added id/name -->
-                        <label>Username</label>
-                    </div>
-                    <div class="input-box">
-                        <span class="icon"><i class="bx bxs-envelope"></i></span>
-                        <input type="email" id="email" name="email" required>
-                        <label>Email</label>
-                    </div>
-                    <div class="input-box">
-                        <span class="icon"><i class="bx bxs-lock-alt"></i></span>
-                        <input type="password" id="password" name="password" required>
-                        <label>Password</label>
-                    </div>
-
-                    <div class="remember-password">
-                        <label>
-                            <input type="checkbox" id="agree" name="agree">
-                            I agree with this statement
-                        </label>
-                    </div>
-
-                    <!-- error display -->
-                    <div id="signupError" class="error-message" style="color: #c00; margin: .5em 0;"></div>
-
-                    <button type="submit" class="btn">Sign Up</button>
-
-                    <div class="create-account">
-                        <p>Already Have An Account? <a href="#" class="login-link">Sign In</a></p>
-                    </div>
-                </form>
-            </div>
-
-
+        <div class="mb-5 position-relative">
+            <i class="bx bxs-lock-alt"></i>
+          <label for="password" class="form-label">Password</label>
+        
+            <input type="password" class="form-control" id="password" name="password" required />
+        
         </div>
+
+        <!-- <div class="d-flex justify-content-between align-items-center mb-3">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="rememberMe" />
+            <label class="form-check-label" for="rememberMe">Remember Me</label>
+          </div>
+          <a href="#" class="text-white text-decoration-none">Forget Password?</a>
+        </div> -->
+
+        <div id="loginError" class="text-danger small mb-3"></div>
+
+        <button type="submit" class="btn btn-primary w-100">Sign In</button>
+
+        <div class="text-center mt-3">
+          <p>Don't have an account? <a href="#" class="text-decoration-underline text-white register-link">Sign Up</a></p>
+        </div>
+      </form>
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const form = document.getElementById('loginForm');
-            const errorDiv = document.getElementById('loginError');
 
-            form.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                errorDiv.textContent = '';
+    <!-- Signup Box -->
+    <div class="form-container d-none" id="signupBox">
+      <form id="signupForm">
+        <h2>Sign Up</h2>
 
-                const email = form.email.value.trim();
-                const password = form.password.value.trim();
+        <div class="mb-3 position-relative">
+          <label for="username" class="form-label">Username</label>
+          <div class="input-group">
+            <span class="input-group-text bg-transparent text-white"><i class="bx bxs-user"></i></span>
+            <input type="text" class="form-control" id="username" name="username" required />
+          </div>
+        </div>
 
-                // validation…
-                if (!email || !password) {
-                    errorDiv.textContent = 'Please fill in both fields.';
-                    return;
-                }
+        <div class="mb-3 position-relative">
+          <label for="signupEmail" class="form-label">Email</label>
+          <div class="input-group">
+            <span class="input-group-text bg-transparent text-white"><i class="bx bxs-envelope"></i></span>
+            <input type="email" class="form-control" id="signupEmail" name="email" required />
+          </div>
+        </div>
 
-                try {
-                    const resp = await fetch('http://localhost/Server/login.php', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        credentials: 'include',
-                        body: JSON.stringify({ email, password }),
-                    });
-                    const data = await resp.json();
+        <div class="mb-3 position-relative">
+          <label for="signupPassword" class="form-label">Password</label>
+          <div class="input-group">
+            <span class="input-group-text bg-transparent text-white"><i class="bx bxs-lock-alt"></i></span>
+            <input type="password" class="form-control" id="signupPassword" name="password" required />
+          </div>
+        </div>
 
-                    if (data.success) {
-                        if (data.role === 'company') {
-                            window.location.href = 'admin-dashboard.html';
-                        } else {
-                            window.location.href = 'home.html';
-                        }
-                    } else {
-                        errorDiv.textContent = data.error || 'Login failed.';
-                    }
-                } catch (err) {
-                    console.error(err);
-                    errorDiv.textContent = 'Server error.';
-                }
-            });
+        <!-- <div class="form-check mb-3 justify-content-start" style="display: flex;"> -->
+          <option selected>Choose role to sign up as:</option>
+  <select class="form-select" aria-label="Default select example" id="role" name="role">
+    <option value="user">User</option>
+    <option value="company">Company</option>
+    </select>
+        <!-- </div> -->
 
-            const signupForm = document.getElementById('signupForm');
-            const signupError = document.getElementById('signupError');
-            signupForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                signupError.textContent = '';
-                const username = signupForm.username.value.trim();
-                const email = signupForm.email.value.trim();
-                const password = signupForm.password.value.trim();
-                const agree = signupForm.agree.checked;
+        <div id="signupError" class="text-danger small mb-3"></div>
 
-                if (!username || !email || !password || !agree) {
-                    signupError.textContent = 'Please complete all fields and agree to the terms.';
-                    return;
-                }
+        <button type="submit" class="btn btn-success w-100">Sign Up</button>
 
-                const xhr = new XMLHttpRequest();
-                xhr.open('POST', 'http://localhost/Server/signup.php', true);
-                xhr.setRequestHeader('Content-Type', 'application/json');
-                xhr.withCredentials = true;
-                xhr.onreadystatechange = () => {
-                    if (xhr.readyState === XMLHttpRequest.DONE) {
-                        try {
-                            const res = JSON.parse(xhr.responseText);
-                            if (res.success) {
-                                window.location.href = 'home.html';
-                            } else {
-                                signupError.textContent = res.error || 'Signup failed.';
-                            }
-                        } catch (err) {
-                            signupError.textContent = 'Invalid server response.';
-                        }
-                    }
-                };
-                xhr.onerror = () => signupError.textContent = 'Server error.';
-                xhr.send(JSON.stringify({ username, email, password }));
-            });
+        <div class="text-center mt-3">
+          <p>Already have an account? <a href="#" class="text-decoration-underline text-white login-link">Sign In</a></p>
+        </div>
+      </form>
+    </div>
+  </div>
+  <footer class="text-white py-1 px-4 mt-5" style="background-color: rgb(23, 23, 71);">
+  <div class="container-fluid d-flex flex-wrap justify-content-between align-items-center">
+    <div class="d-flex align-items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.35709 16V5.78571c0-.43393.34822-.78571.77777-.78571H18.5793c.4296 0 .7778.35178.7778.78571V16M5.35709 16h-1c-.55229 0-1 .4477-1 1v1c0 .5523.44771 1 1 1H20.3571c.5523 0 1-.4477 1-1v-1c0-.5523-.4477-1-1-1h-1M5.35709 16H19.3571M9.35709 8l2.62501 2.5L9.35709 13m4.00001 0h2"/>
+      </svg>
+      <span class="fs-6">© 2025 Coders Battleground, Inc.</span>
+    </div>
 
-            // Toggle between forms
-            document.querySelectorAll('.register-link').forEach(el => el.addEventListener('click', () => {
-                document.querySelector('.login').classList.toggle('active');
-                document.querySelector('.register').classList.toggle('active');
-            }));
-            document.querySelectorAll('.login-link').forEach(el => el.addEventListener('click', () => {
-                document.querySelector('.login').classList.toggle('active');
-                document.querySelector('.register').classList.toggle('active');
-            }));
-        });
+    <ul class="nav list-unstyled d-flex gap-3 mb-0">
+      <li>
+        <a href="https://www.facebook.com" class="sprite-icon bg-facebook" title="Facebook"></a>
+      </li>
+      <li>
+        <a href="https://www.instagram.com" class="sprite-icon bg-instagram" title="Instagram"></a>
+      </li>
+    </ul>
+  </div>
+</footer>
 
-
-    </script>
-    <script src="../assets/js/login_signup.js"></script>
+  <!-- JS -->
+  <script src="../assets/js/login_signup.js"></script>
 </body>
 
 </html>

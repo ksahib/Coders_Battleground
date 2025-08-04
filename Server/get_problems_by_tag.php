@@ -1,15 +1,20 @@
 <?php
 
-require_once 'connection.php';
+require_once 'config.php';
 
 header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');
+header("Access-Control-Allow-Origin: https://codersbattleground.test");
+header("Access-Control-Allow-credentials:true");
 header('Access-Control-Allow-Headers: Content-Type');
 
 if ($_SERVER['REQUEST_METHOD'] == "GET") {
-    $tag = $_GET['tag'];
+    $tag = isset($_GET['tag']) ? trim($_GET['tag']) : null;
 
-    
+    if (empty($tag)) {
+        echo json_encode(["success" => false, "error" => "No tag provided"]);
+        exit;
+    }
+
     $redis = new Redis();
     try {
         $redis->connect('127.0.0.1', 6379);
@@ -20,9 +25,11 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
 
     $cacheKey = "tag_query:" . $tag;
 
-    
+    // Try Redis first
     if ($redis->exists($cacheKey)) {
-        echo $redis->get($cacheKey); 
+        $cached = json_decode($redis->get($cacheKey), true);
+        $cached["source"] = "redis";
+        echo json_encode($cached);
         exit;
     }
 
@@ -34,13 +41,18 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
         $stmt->execute([":tag" => $tag]);
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $jsonData = json_encode($results);
+        $response = [
+            "success" => true,
+            "problems" => $results,
+            "source" => "database"
+        ];
 
-        
-        $redis->setex($cacheKey, 600, $jsonData);
+        $jsonData = json_encode($response);
+
+        $redis->setex($cacheKey, 600, $jsonData); // Cache for 10 minutes
 
         echo $jsonData;
     } catch (PDOException $e) {
-        echo json_encode(["success" => false, "error" => "Could not access results: " . $e->getMessage()]);
+        echo json_encode(["success" => false, "error" => "Database error: " . $e->getMessage()]);
     }
 }

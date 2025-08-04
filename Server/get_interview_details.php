@@ -2,12 +2,13 @@
 require_once 'config.php';
 
 header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *');
+header("Access-Control-Allow-Origin: https://codersbattleground.test");
+header("Access-Control-Allow-credentials:true");
 header('Access-Control-Allow-Methods: GET');
 header('Access-Control-Allow-Headers: Content-Type');
 
 // Start session so we can check authentication
-session_start();
+// session_start();
 if (empty($_SESSION['user'])) {
     http_response_code(401);
     exit(json_encode(['status'=>'error','message'=>'Not authenticated']));

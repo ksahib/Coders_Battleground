@@ -1,75 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Coders Battleground Contest</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../assets/css/weeklycontest.css">
-  <!-- jQuery is required for our script -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
+
 <body>
 
-<div id="navbar-placeholder"></div>
-<script>
+  <div id="navbar-placeholder"></div>
+  <script>
     // Assuming you have a way to load the navbar. jQuery load is common.
     $("#navbar-placeholder").load("../components/navbar.html");
-</script>
+  </script>
 
-<div class="container mt-5">
-  <!-- Contest Title and Time will be populated by JS -->
-  <h1 id="contest-title" class="contest-title text-center">Loading Contest...</h1>
-  <p id="contest-time" class="text-center"></p>
-  
-  <div class="text-center">
-    <button class="btn btn-virtual px-4 py-2">Join Virtual Contest</button>
-  </div>
+  <div class="container mt-5">
+    <!-- Contest Title and Time will be populated by JS -->
+    <h1 id="contest-title" class="contest-title text-center">Loading Contest...</h1>
+    <p id="contest-time" class="text-center"></p>
 
-  <div class="bonus-section">
-    <h4>Contest Information</h4>
-    <p id="contest-info">Loading contest information...</p>
-  </div>
+    <div class="text-center">
+      <button id="join-contest-btn" class="btn btn-virtual px-4 py-2">Join Contest</button>
+    </div>
 
-  <!-- Links will be updated by JS -->
-  <div class="tab-buttons">
-    <a id="ranking-link" href="#" class="btn btn-outline-light">Ranking</a>
-    <a id="problems-link" href="#" class="btn btn-outline-light">Problems</a>
-  </div>
+    <div class="bonus-section">
+      <h4>Contest Information</h4>
+      <p id="contest-info">Loading contest information...</p>
+    </div>
 
-  <!-- Top Rankings will be populated by JS -->
-  <div class="tab-content active mt-4">
-    <div class="ranking-box">
-      <h5>Top Rankings</h5>
-      <ul id="top-rankings-container" class="list-group">
-        <li class="list-group-item">Loading...</li>
-      </ul>
+    <!-- Links will be updated by JS -->
+    <div class="tab-buttons">
+      <a id="ranking-link" href="#" class="btn btn-outline-light">Ranking</a>
+      <a id="problems-link" href="#" class="btn btn-outline-light">Problems</a>
+    </div>
+
+    <!-- Top Rankings will be populated by JS -->
+    <div class="tab-content active mt-4">
+      <div class="ranking-box">
+        <h5>Top Rankings</h5>
+        <ul id="top-rankings-container" class="list-group">
+          <li class="list-group-item">Loading...</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Problems will be populated by JS -->
+    <div class="tab-content mt-4">
+      <div class="problem-box">
+        <h5>Problems</h5>
+        <ul id="problems-list-container" class="list-group problem-list">
+          <li class="list-group-item">Loading...</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="note-section">
+      <h5>Notes</h5>
+      <ol>
+        <li>Write your own code. No copying allowed.</li>
+        <li>Wrong answers will add a 5-minute penalty.</li>
+        <li>Hidden test cases keep the contest fair.</li>
+      </ol>
     </div>
   </div>
 
-  <!-- Problems will be populated by JS -->
-  <div class="tab-content mt-4">
-    <div class="problem-box">
-      <h5>Problems</h5>
-      <ul id="problems-list-container" class="list-group problem-list">
-         <li class="list-group-item">Loading...</li>
-      </ul>
-    </div>
-  </div>
+  <script src="../assets/js/weeklycontest.js"></script>
 
-  <div class="note-section">
-    <h5>Notes</h5>
-    <ol>
-      <li>Write your own code. No copying allowed.</li>
-      <li>Wrong answers will add a 5-minute penalty.</li>
-      <li>Hidden test cases keep the contest fair.</li>
-    </ol>
-  </div>
-</div>
+  <script>
+    document.getElementById('join-contest-btn').addEventListener('click', async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const contestId = urlParams.get('id');
 
-<!-- Your custom JS file -->
-<script src="../assets/js/weeklycontest.js"></script>
-  
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+      if (!contestId) {
+        alert('Contest ID is missing from the URL.');
+        return;
+      }
+
+      try {
+        const response = await fetch('localhost://Coders_Battleground/Server/join_contest.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            contest_id: contestId,
+          })
+        });
+
+        const result = await response.json();
+        if (response.ok) {
+          alert('Successfully joined the contest!');
+          btn.textContent = 'Joined';
+          btn.disabled = true;
+        } else {
+          alert('Error: ' + result.message);
+        }
+      } catch (error) {
+        console.error('Network error:', error);
+        alert('Failed to join contest.');
+      }
+    });
+  </script>
+
+  <script>
+    async function checkJoinStatus() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const contestId = urlParams.get('id');
+      if (!contestId) return;
+
+      try {
+        const response = await fetch(`localhost://Coders_Battleground/Server/check_join_status.php?id=${contestId}`);
+        const result = await response.json();
+
+        if (response.ok && result.joined === true) {
+          const btn = document.getElementById('join-contest-btn');
+          btn.textContent = 'Joined';
+          btn.disabled = true;
+        }
+      } catch (error) {
+        console.error('Error checking join status:', error);
+      }
+    }
+
+    checkJoinStatus();
+  </script>
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

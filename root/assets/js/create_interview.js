@@ -181,7 +181,7 @@ window.addEventListener('load', function() {
 
             // Send via AJAX
             const xhr = new XMLHttpRequest();
-            xhr.open('POST', 'http://localhost/Server/create_interview.php', true);
+            xhr.open('POST', 'http://localhost/Coders_Battleground/Server/create_interview.php', true);
             xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
 
             xhr.onreadystatechange = function() {
