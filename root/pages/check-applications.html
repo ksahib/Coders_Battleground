@@ -114,7 +114,7 @@ $(function() {
               ? `<span class="status-badge ${badgeClass}">${status}</span>`
               : ''
             }
-            <h5>${user.name} <small class="text-muted">(${user.email})</small></h5>
+            <h5>${escape(user.name)}<small class="text-muted">(${escape(user.email)})</small></h5>
             <p><strong>Applied for:</strong> ${app.position}</p>
             <p><strong>Location:</strong> ${app.location}</p>
             <div class="d-flex flex-wrap mt-3">

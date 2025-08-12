@@ -1,71 +1,71 @@
 <?php
+require_once 'config.php';
+header('Content-Type: application/json');
 
-    ini_set('display_errors', 1);
-    error_reporting(E_ALL);
-    
-    header('Content-Type: application/json');
-    header("Access-Control-Allow-Origin: https://codersbattleground.test");
-    header("Access-Control-Allow-credentials:true");
-    session_start();
-    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        http_response_code(405);
-        echo json_encode(['error' => 'Only POST allowed']);
-        exit;
+// Read JSON payload
+$data = json_decode(file_get_contents('php://input'), true);
+if (!$data) {
+    echo json_encode(['status' => 'error', 'message' => 'Invalid JSON']);
+    exit;
+}
+
+// Validate contest fields
+$name = trim($data['contestName'] ?? '');
+$desc = trim($data['contestDescription'] ?? '');
+$start = $data['startTime'] ?? null;
+$end = $data['endTime'] ?? null;
+$problems = $data['problems'] ?? [];
+
+if (!$name || !$start || !$end || empty($problems)) {
+    echo json_encode(['status' => 'error', 'message' => 'Missing required fields']);
+    exit;
+}
+
+try {
+    $pdo->beginTransaction();
+
+    // Insert contest
+    $stmt = $pdo->prepare("INSERT INTO contests (name, description, company_name,start_time, end_time) VALUES (:name, :desc,:company, :start, :end)");
+    $stmt->execute([
+        ':name' => $name,
+        ':desc' => $desc,
+        'company'=>$_SESSION['name'],
+        ':start' => $start,
+        ':end' => $end
+    ]);
+
+    $contestId = $pdo->lastInsertId();
+
+    // Insert contest_questions for each problem
+    $insertQ = $pdo->prepare("INSERT INTO contest_questions (contest_id, problem_id, problem_title, score) VALUES (:contest_id, :problem_id, :problem_title, :score)");
+
+    // Fetch problem titles by IDs in one query to avoid separate queries inside loop
+    $problemIds = array_column($problems, 'problem_id');
+    $placeholders = implode(',', array_fill(0, count($problemIds), '?'));
+    $stmtTitles = $pdo->prepare("SELECT problem_id, name FROM problems WHERE problem_id IN ($placeholders)");
+    $stmtTitles->execute($problemIds);
+    $titlesMap = [];
+    while ($row = $stmtTitles->fetch(PDO::FETCH_ASSOC)) {
+        $titlesMap[$row['problem_id']] = $row['name'];
     }
 
-    // 2. Read & decode JSON
-    try {
-        $raw = file_get_contents('php://input');
-        $data = json_decode($raw, true);
-    } catch (ERRMODE_EXCEPTION $e) {
-        echo json_encode(["error"=> $e]);
+    foreach ($problems as $p) {
+        $pid = $p['problem_id'];
+        $score = $p['score'];
+        $title = $titlesMap[$pid] ?? 'Unknown Problem';
+
+        $insertQ->execute([
+            ':contest_id' => $contestId,
+            ':problem_id' => $pid,
+            ':problem_title' => $title,
+            ':score' => $score
+        ]);
     }
 
-    // handle JSON parse errors
-    if (json_last_error() !== JSON_ERROR_NONE) {
-        http_response_code(400);
-        echo json_encode(['error' => 'Invalid JSON']);
-        exit;
-    }
+    $pdo->commit();
 
-    // 3. Extract fields (with defaults)
-    $contestName        = trim($data['contestName'] ?? '');
-    $contestDescription = trim($data['contestDescription'] ?? '');
-    $startTime          = $data['startTime'] ?? '';
-    $endTime            = $data['endTime'] ?? '';
-    $problems           = $data['problems']     ?? []; 
-
-    require_once "config.php";
-    require_once "init.php";
-    $user_id = '123';
-    $_SESSION['user_id'] = $user_id;
-
-    try {
-        if(isset($_SESSION['user_id'])) {
-            $stmt = $pdo->prepare("
-            INSERT INTO contest
-                (id, name, company_id, description, start, end)
-            VALUES
-                (:id, :name, :company_id, :descr, :start, :end)
-            ");
-
-            $stmt->execute([
-            ':id' => mt_rand(),
-            ':name'  => $contestName,
-            ':company_id' => $_SESSION['user_id'],
-            ':descr' => $contestDescription,
-            ':start' => $startTime,
-            ':end'   => $endTime,
-            ]);
-            echo json_encode(["success"=>true]);
-        } else {
-            http_response_code(401);
-            echo json_encode(['error' => 'Not authenticated']);
-            exit;
-        }
-    } catch(PDOException $e){
-        echo json_encode(["success"=>false,"error"=>$e->getMessage()]);
-    }
-
-
-?>
+    echo json_encode(['status' => 'success', 'message' => 'Contest created successfully']);
+} catch (PDOException $e) {
+    $pdo->rollBack();
+    echo json_encode(['status' => 'error', 'message' => 'Database error: ' . $e->getMessage()]);
+}

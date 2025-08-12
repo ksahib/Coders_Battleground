@@ -4,7 +4,7 @@ require_once "config.php";
 // ini_set('display_startup_errors', 1);
 // error_reporting(E_ALL);
 
-header("Access-Control-Allow-Origin: https://codersbattleground.test");
+header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-credentials:true");
 header("Access-Control-Allow-Headers: Content-Type");
 header("Content-Type: application/json");
@@ -57,11 +57,13 @@ try {
 
     // fetch all interviews today or later
 $upcoming_sql = "
-  SELECT *
-    FROM interview
-   WHERE start >= :today
-     AND company_name = :company_name
-   ORDER BY start ASC
+  SELECT isl.*,i.*
+    FROM interview_schedule AS isl
+   LEFT JOIN interview AS i
+   ON isl.interview_id=i.interview_id
+   WHERE isl.start >= :today
+     AND i.company_name = :company_name
+   ORDER BY isl.start ASC
 ";
 $upcoming_stmt = $pdo->prepare($upcoming_sql);
 $upcoming_stmt->execute([

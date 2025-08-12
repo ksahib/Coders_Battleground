@@ -83,13 +83,14 @@
 
                     // render interviews
                     const container2 = document.getElementById('cards-row-interview');
+                    // console.log(resp.interviews);
                     resp.interviews.forEach(i => {
                         const gradient = generateGradient();
                         container2.appendChild(
                             createContentCard(
                                 'Interview',
                                 `${i.company_name}<br>${i.position_open}`,
-                                '18rem', '220px', '#', gradient
+                                '18rem', '220px', `Interview-details.html?interview_id=${encodeURI(i.interview_id)}`, gradient
                             )
                         );
                     });
@@ -111,7 +112,7 @@
                     window.location.href = 'login_signup.html';
                 }
             };
-            xhr.send(JSON.stringify({}));
+            xhr.send(JSON.stringify({accept:"Accepted"}));
         }
 
         document.addEventListener('DOMContentLoaded', () => {

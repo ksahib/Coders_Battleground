@@ -1,6 +1,5 @@
 <?php
 require_once "config.php";
-session_start();
 header("Content-Type: application/json");
 
 if (empty($_SESSION['user'])) {

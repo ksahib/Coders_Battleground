@@ -79,15 +79,6 @@ $(document).ready(function () {
   });
 
   // Featured Cards
-  const $container = $('#cards-row-feature');
-  $container.append(createContentCard('Interview', 'Google <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #1E90FF 0%, #00FF85 100%)'));
-  $container.append(createContentCard('Interview', 'Amazon <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #7F00FF 0%, #E100FF 100%)'));
-  $container.append(createContentCard('Interview', 'Microsoft <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)'));
-  $container.append(createContentCard('Interview', 'Apple <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #ff9966 0%, #ff5e62 100%)'));
-  $container.append(createContentCard('Interview', 'Netflix <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #ff6a88 0%, #ff99ac 50%, #6dd5ed 100%)'));
-  $container.append(createContentCard('Interview', 'Conda <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #00c6fb 0%, #005bea 100%)'));
-  $container.append(createContentCard('Interview', 'Nvidia <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #f7971e 0%, #ffd200 100%)'));
-  $container.append(createContentCard('Interview', 'Linux <br> Software Engineer', '18rem', '220px', '#', 'linear-gradient(135deg, #29323c 0%, #485563 100%)'));
 
   // Load tags
   const $tagContainer = $("#tag_holder_row");

@@ -1,11 +1,10 @@
 <?php
 require_once "config.php";
 
-header("Access-Control-Allow-Origin: https://codersbattleground.test");
+header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-credentials:true");
 header("Content-Type: application/json");
 
-session_start();
 
 if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
     http_response_code(405);

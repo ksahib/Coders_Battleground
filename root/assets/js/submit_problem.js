@@ -55,9 +55,10 @@ $(document).ready(function () {
             body: JSON.stringify(problem)
           });
           const data = await resp.json();
+          const success=data.success;
           console.log(data);
-          if (data.success) {
-             $('#submit-status').css('color', 'limegreen').text(result.message);
+          if (success) {
+             $('#submit-status').css('color', 'limegreen').text(data.message);
              $('#problem-submit-form')[0].reset();
           } else {
              $('#submit-status').html(`<span style="color:red;">${data.error}</span>`);
@@ -65,6 +66,7 @@ $(document).ready(function () {
           }
         } catch (err) {
            $('#submit-status').css('color', 'orange').text('Unexpected response format');
+           console.log(err);
         }
     })
 })

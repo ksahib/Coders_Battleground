@@ -42,12 +42,6 @@
         </div>
       </div>
 
-      <div class="candidate-info">
-        <p><strong>Candidate:</strong> John Doe</p>
-        <p><strong>Role:</strong> Software Engineer</p>
-        <p><strong>Company:</strong> Google</p>
-      </div>
-
       <div class="timer-box">
         <i class="fas fa-clock"></i> <span id="timer">00:00</span>
       </div>
@@ -77,6 +71,7 @@
       // Get room ID from URL
       const params = new URLSearchParams(window.location.search);
       const roomId = params.get('interview_id');
+      console.log(roomId);
 
       // Set up Jitsi container
       const containerElement = document.getElementById('jitsi-container');
@@ -109,13 +104,19 @@
         //Setting up Gun using public relays at gunjs.herokuapp.com by default
         const gun = Gun({
           peers: [
-            'https://gun-manhattan.herokuapp.com/gun',
-            'https://gun-eu.herokuapp.com/gun'
+           "https://gun-manhattan.herokuapp.com/gun",
+            "https://peer.wallie.io/gun",
+            "https://gundb-relay-mlccl.ondigitalocean.app/gun",
+            "https://plankton-app-6qfp3.ondigitalocean.app/gun",
+            "https://gun.defucc.me/gun",
+            "https://a.talkflow.team/gun",
+            "https://talkflow.team/gun",
+            "gun-manhattan.herokuapp.com"
           ]
         });
         const room = gun.get('code-room:' + roomId);
 
-        console.log('[GUN] peer list →', gun.back('opt.peers'));
+        //console.log('[GUN] peer list →', gun.back('opt.peers'));
         room.once(data => console.log('[GUN] initial data:', data));
         room.on(data => console.log('[GUN] update event:', data));
 

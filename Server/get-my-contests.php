@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-header("Access-Control-Allow-Origin: https://codersbattleground.test");
+header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-credentials:true");
 header('Access-Control-Allow-Methods: GET');
 header('Access-Control-Allow-Headers: Content-Type');
@@ -8,7 +8,6 @@ header('Access-Control-Allow-Headers: Content-Type');
 require_once 'config.php';
 
 // Start session to get user email
-session_start();
 
 try {
     // Check if user is logged in

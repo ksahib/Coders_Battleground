@@ -3,7 +3,7 @@
 require_once 'config.php';
 
 header('Content-Type: application/json');
-header("Access-Control-Allow-Origin: https://codersbattleground.test");
+header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-credentials:true");  
 header('Access-Control-Allow-Methods: POST'); 
 header('Access-Control-Allow-Headers: Content-Type');
@@ -54,9 +54,11 @@ if($data['type']=="INSERT"){
         
     }
 
-    echo json_encode(['success' => true, 'message' => 'Problem submitted successfully']);
+    echo json_encode(['success' => true, 'message' => 'Problem submitted successfully','kala'=>true]);
+    exit;
 } catch (PDOException $e) {
     echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
+    exit;
 }
     
     
@@ -81,8 +83,10 @@ if($data['type']=="UPDATE"){
             ':id'=>$id
         ]);
          echo json_encode(['success' => true, 'message' => 'Problem Updated successfully']);
+         exit;
     } catch (PDOException $e) {
     echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
+    exit;
 }
 
 }
@@ -96,8 +100,10 @@ if($data['type']=="DELETE"){
             ':id'=>$id
         ]);
          echo json_encode(['success' => true, 'message' => 'Problem Deleted successfully']);
+         exit;
     }catch (PDOException $e) {
     echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
+    exit;
 }
 }
 

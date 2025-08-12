@@ -4,23 +4,6 @@ $(document).ready(function() {
     
     // Featured cards
     const container = document.getElementById('cards-row-feature');
-    const featuredContests = [
-        { company: 'Google', title: 'Software Engineer', gradient: 'linear-gradient(135deg, #1E90FF 0%, #00FF85 100%)' },
-        { company: 'Amazon', title: 'Software Engineer', gradient: 'linear-gradient(135deg, #7F00FF 0%, #E100FF 100%)' },
-        { company: 'Microsoft', title: 'Software Engineer', gradient: 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)' },
-        { company: 'Apple', title: 'Software Engineer', gradient: 'linear-gradient(135deg, #ff9966 0%, #ff5e62 100%)' },
-        { company: 'Netflix', title: 'Software Engineer', gradient: 'linear-gradient(135deg, #ff6a88 0%, #ff99ac 50%, #6dd5ed 100%)' },
-        { company: 'Meta', title: 'Software Engineer', gradient: 'linear-gradient(135deg, #00c6fb 0%, #005bea 100%)' },
-        { company: 'Nvidia', title: 'Software Engineer', gradient: 'linear-gradient(135deg, #f7971e 0%, #ffd200 100%)' },
-        { company: 'OpenAI', title: 'Software Engineer', gradient: 'linear-gradient(135deg, #29323c 0%, #485563 100%)' }
-    ];
-    
-    featuredContests.forEach(contest => {
-        container.appendChild(
-            createContentCard('Contest', `${contest.company} <br> ${contest.title}`, '18rem', '220px', '#', contest.gradient)
-        );
-    });
-    
     // Contest list variables
     let allContests = [];
     let myContests = [];
@@ -56,7 +39,7 @@ $(document).ready(function() {
         showLoading();
         
         $.ajax({
-            url: 'localhost://Coders_Battleground/Server/get-contests.php',
+            url: 'http://localhost/Coders_Battleground/Server/get-contests.php',
             type: 'GET',
             dataType: 'json',
             success: function(response) {
@@ -83,7 +66,7 @@ $(document).ready(function() {
     // Fetch user's contests
     function fetchMyContests() {
         $.ajax({
-            url: 'localhost://Coders_Battleground/Server/get-my-contests.php',
+            url: 'http://localhost/Coders_Battleground/Server/get-my-contests.php',
             type: 'GET',
             dataType: 'json',
             success: function(response) {

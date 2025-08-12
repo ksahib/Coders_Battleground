@@ -2,7 +2,7 @@
 require_once "config.php";
 
 // CORS headers
-header("Access-Control-Allow-Origin: https://codersbattleground.test");
+header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-credentials:true");
 header("Content-Type: application/json");
 

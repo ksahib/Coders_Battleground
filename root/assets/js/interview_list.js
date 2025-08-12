@@ -17,7 +17,7 @@ $(document).ready(function () {
             dataType: 'json',
             success: function (response) {
                 loadingSpinner.hide();
-
+                
                 if (response.status === 'success') {
                     interviewListData = response.data;
                     displayInterviews();
@@ -132,12 +132,14 @@ $(document).ready(function () {
         // Page numbers
         for (let i = 1; i <= totalPages; i++) {
             const li = $(`<li class="page-item ${i === currentPage ? 'active' : ''}">
-                <a class="page-link" href="#">${i}</a>
+                <a class="page-link" href="interview_list.html?${encodeURI(currentPage)}">${i}</a>
             </li>`);
             li.on('click', function (e) {
                 e.preventDefault();
                 currentPage = i;
                 displayInterviews();
+                
+                
             });
             ul.append(li);
         }

@@ -3,7 +3,7 @@
 require_once 'config.php';
 
 header('Content-Type: application/json');
-header("Access-Control-Allow-Origin: https://codersbattleground.test");
+header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-credentials:true");
 header('Access-Control-Allow-Headers: Content-Type');
 
@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
 
     $cacheKey = "tag_query:" . $tag;
 
-    // Try Redis first
+    
     if ($redis->exists($cacheKey)) {
         $cached = json_decode($redis->get($cacheKey), true);
         $cached["source"] = "redis";

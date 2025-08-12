@@ -1,18 +1,26 @@
 <?php
 require_once "config.php";
-header("Access-Control-Allow-Origin: https://codersbattleground.test");
+header("Access-Control-Allow-Origin: *");
+
 header("Access-Control-Allow-credentials:true");
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
 header("Access-Control-Allow-Headers: Content-Type");
+header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Content-Type: application/json");
 
 
-// if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-//     http_response_code(405);
-//     exit(json_encode(['error' => 'Only POST allowed']));
-// }
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit;
+}
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+    exit(json_encode(['error' => 'Only POST allowed']));
+}
+
 
 if (empty($_SESSION['user'])) {
     http_response_code(402);

@@ -27,10 +27,11 @@
 .difficulty-item {
     background: #333;
     padding: 6px 10px;
+    margin-left: 20px;
     border-radius: 8px;
     display: flex;
     justify-content: space-between;
-    width: 200px;
+    width: auto;
 }
 
 .center-label {

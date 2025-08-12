@@ -35,7 +35,7 @@
     <!-- Links will be updated by JS -->
     <div class="tab-buttons">
       <a id="ranking-link" href="#" class="btn btn-outline-light">Ranking</a>
-      <a id="problems-link" href="#" class="btn btn-outline-light">Problems</a>
+      <button id="problems-link" class="btn btn-outline-light" onclick="fetchContestQuestions()">Problems</button>
     </div>
 
     <!-- Top Rankings will be populated by JS -->
@@ -49,14 +49,15 @@
     </div>
 
     <!-- Problems will be populated by JS -->
-    <div class="tab-content mt-4">
-      <div class="problem-box">
-        <h5>Problems</h5>
-        <ul id="problems-list-container" class="list-group problem-list">
-          <li class="list-group-item">Loading...</li>
-        </ul>
-      </div>
-    </div>
+    <div class="tab-content mt-4" id="problems-tab" style="display:none;">
+  <div class="problem-box">
+    <h5>Problems</h5>
+    <ul id="problems-list-container" class="list-group problem-list">
+      <li class="list-group-item">Loading...</li>
+    </ul>
+  </div>
+</div>
+
 
     <div class="note-section">
       <h5>Notes</h5>
@@ -81,7 +82,7 @@
       }
 
       try {
-        const response = await fetch('localhost://Coders_Battleground/Server/join_contest.php', {
+        const response = await fetch('http://localhost/Coders_Battleground/Server/join_contest.php', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -113,7 +114,7 @@
       if (!contestId) return;
 
       try {
-        const response = await fetch(`localhost://Coders_Battleground/Server/check_join_status.php?id=${contestId}`);
+        const response = await fetch(`http://localhost/Coders_Battleground/Server/check_join_status.php?id=${contestId}`);
         const result = await response.json();
 
         if (response.ok && result.joined === true) {
@@ -128,6 +129,72 @@
 
     checkJoinStatus();
   </script>
+   <script>
+let problemsLoaded = false;
+
+document.getElementById('problems-link').addEventListener('click', async () => {
+  // Hide rankings tab and show problems tab
+  // document.getElementById('ranking-tab').style.display = 'none';
+  document.getElementById('problems-tab').style.display = 'block';
+
+  // Fetch problems only once
+  if (!problemsLoaded) {
+    await fetchContestQuestions();
+    problemsLoaded = true;
+  }
+});
+
+// Optional: If you want ranking button to toggle back
+// document.getElementById('ranking-link').addEventListener('click', () => {
+//   document.getElementById('problems-tab').style.display = 'none';
+//   document.getElementById('ranking-tab').style.display = 'block';
+// });
+
+// Your existing fetchContestQuestions function
+async function fetchContestQuestions(e) {
+  const urlParams = new URLSearchParams(window.location.search);
+  const contestId = urlParams.get('id');
+
+  if (!contestId) {
+    document.getElementById('problems-list-container').innerHTML =
+      '<li class="list-group-item text-danger">Contest ID missing in URL.</li>';
+    return;
+  }
+
+  try {
+  const response = await fetch(`http://localhost/Coders_Battleground/Server/contest_question.php?id=${contestId}`);
+  const data = await response.json();
+  console.log(data);
+  const problemsList = document.getElementById('problems-list-container');
+  problemsList.innerHTML = ''; // Clear old items
+
+  if (response.ok && Array.isArray(data) && data.length > 0) {
+    data.forEach(q => {
+      const li = document.createElement('li');
+      li.className = 'list-group-item';
+
+      li.innerHTML = `
+        <strong>${q.name || 'Problem ID: ' + q.problem_id}</strong><br/>
+        <em>Description:</em> ${q.description || 'N/A'}<br/>
+        <em>Input:</em> ${q.input || 'N/A'}<br/>
+        <em>Output:</em> ${q.output || 'N/A'}<br/>
+        <a href="IDE.html?name=${encodeURI(q.name)}" target=_blank>Attemp problem</a>
+      `;
+
+      problemsList.appendChild(li);
+    });
+  } else {
+    problemsList.innerHTML =
+      '<li class="list-group-item text-warning">No questions found for this contest.</li>';
+  }
+} catch (error) {
+  console.error('Error fetching contest questions:', error);
+  document.getElementById('problems-list-container').innerHTML =
+    '<li class="list-group-item text-danger">Failed to load questions.</li>';
+}
+
+}
+</script>
 
 
 
